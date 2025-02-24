@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>READY Animation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Global Styles */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+    }
+    * { 
+      font-family: 'Montserrat', sans-serif; 
+    }
+    body {
+      background-color: #000;
+      background-image: linear-gradient(135deg, #000, #1a1a1a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      overflow: hidden;
+    }
+    .splash {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 8px;
+      animation: fadeIn 1s ease-out;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #facc15;
+      display: inline-block;
+    }
+    h1 span {
+      display: inline-block;
+      margin: 0 3px;
+    }
+    /* Kursor berkedip dengan tanda "|" yang selalu tampil */
+    .cursor {
+      font-weight: bold;
+      color: #facc15;
+      animation: blink 0.6s step-end infinite;
+      vertical-align: bottom;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Button & opsi dengan jarak yang lebih dekat */
+    .options {
+      margin-top: 0; /* Mengurangi jarak antara tulisan dan button */
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem; /* Jarak antar elemen di dalam container */
+      align-items: center;
+    }
+    .button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      border: 2px solid;
+      border-image-slice: 1;
+      animation: gradient 5s linear infinite; /* DIPERLAMBAT jadi 5s */
+      background: transparent;
+      color: #facc15;
+      transition: background 0.3s, color 0.3s;
+      width: 250px;
+      text-align: center;
+    }
+    
+    /* Animasi border gradient berlawanan arah jarum jam */
+    @keyframes gradient {
+      0% {
+        border-image-source: linear-gradient(0deg, #facc15, #1a1a1a);
+      }
+      25% {
+        border-image-source: linear-gradient(270deg, #1a1a1a, #facc15);
+      }
+      50% {
+        border-image-source: linear-gradient(180deg, #facc15, #1a1a1a);
+      }
+      75% {
+        border-image-source: linear-gradient(90deg, #1a1a1a, #facc15);
+      }
+      100% {
+        border-image-source: linear-gradient(360deg, #facc15, #1a1a1a);
+      }
+    }
+    .button:hover {
+      background: #facc15;
+      color: #1a202c;
+    }
+    .no-music {
+      font-size: 1.2rem;
+      color: #facc15;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.3s, color 0.3s;
+      width: 250px;
+      text-align: center;
+    }
+    .no-music:hover {
+      color: #ecc94b;
+      transform: scale(1.05);
+    }
+    /* Media Queries */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      .button {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+        width: 200px;
+      }
+      .no-music {
+        font-size: 1rem;
+        width: 200px;
+      }
+    }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .button {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.2rem;
+        width: 180px;
+      }
+      .no-music {
+        font-size: 0.9rem;
+        width: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="splash">
+    <h1 id="title"></h1>
+    <div class="options">
+      <button id="btnStart" class="button">START</button>
+      <div id="noMusic" class="no-music">start without music</div>
+    </div>
+  </div>
+  <script>
+    const text = "READY";
+    const title = document.getElementById("title");
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // Menghasilkan huruf acak dari A-Z
+    function getRandomLetter() {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      return letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+
+    // Fungsi animasi perhuruf: tampilkan huruf acak secara berkala, lalu berhenti pada huruf final
+    function animateLetter(span, finalLetter) {
+      return new Promise(resolve => {
+        const duration = 800;       // durasi animasi tiap huruf (ms)
+        const intervalTime = 50;    // interval pergantian huruf
+        const iterations = duration / intervalTime;
+        let count = 0;
+        const interval = setInterval(() => {
+          span.textContent = getRandomLetter();
+          count++;
+          if (count >= iterations) {
+            clearInterval(interval);
+            span.textContent = finalLetter;
+            resolve();
+          }
+        }, intervalTime);
+      });
+    }
+
+    // Fungsi utama untuk menjalankan seluruh siklus animasi
+    async function animateCycle() {
+      // Pastikan kursor selalu ada
+      let cursor = title.querySelector(".cursor");
+      if (!cursor) {
+        cursor = document.createElement("span");
+        cursor.className = "cursor";
+        cursor.textContent = "|";
+        title.appendChild(cursor);
+      }
+
+      while (true) {
+        // Hapus huruf-huruf yang tersisa (jika ada), tetapi biarkan kursor
+        const existingSpans = Array.from(title.querySelectorAll("span:not(.cursor)"));
+        existingSpans.forEach(span => span.remove());
+        
+        // Untuk tiap huruf di target "READY"
+        for (let i = 0; i < text.length; i++) {
+          let letterSpan = document.createElement("span");
+          letterSpan.textContent = "";
+          // Sisipkan huruf sebelum kursor agar kursor tetap berada di akhir
+          title.insertBefore(letterSpan, cursor);
+          await animateLetter(letterSpan, text[i]);
+          await delay(200);
+        }
+        // Tambahkan animasi untuk tanda "?" di akhir
+        let qSpan = document.createElement("span");
+        qSpan.textContent = "";
+        title.insertBefore(qSpan, cursor);
+        await animateLetter(qSpan, "?");
+
+        // Biarkan tampilan lengkap (dengan kursor) selama 1 detik
+        await delay(1000);
+
+        // Hapus huruf-huruf (tetapi jangan hapus kursor) satu per satu, tanpa fade-out
+        const letterSpans = Array.from(title.querySelectorAll("span:not(.cursor)"));
+        for (let i = letterSpans.length - 1; i >= 0; i--) {
+          letterSpans[i].remove();
+          await delay(100);
+        }
+        // Jeda sebelum memulai ulang siklus
+        await delay(500);
+      }
+    }
+
+    // Mulai animasi ketika halaman sudah siap
+    window.addEventListener("DOMContentLoaded", animateCycle);
+
+    // Fungsi untuk mengalihkan halaman (sesuai script asli)
+    function redirectWithChoice(choice) {
+      localStorage.setItem('playMusic', choice);
+      document.querySelector('.splash').style.animation = 'fadeOut 0.5s ease-out forwards';
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 500);
+    }
+    
+    document.getElementById('btnStart').addEventListener('click', function() {
+      redirectWithChoice('true');
+    });
+    document.getElementById('noMusic').addEventListener('click', function() {
+      redirectWithChoice('false');
+    });
+    
+    document.addEventListener('keydown', function(e) {
+      if (e.key.toLowerCase() === 's') {
+        redirectWithChoice('true');
+      } else if (e.key.toLowerCase() === 'w') {
+        redirectWithChoice('false');
+      }
+    });
+  </script>
+</body>
+</html>
