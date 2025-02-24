@@ -1056,5 +1056,22 @@
       });
     }
   </script>
+
+  <script>
+  function redirectWithChoice(choice) {
+    localStorage.setItem('playMusic', choice);
+    document.querySelector('.splash').style.animation = 'fadeOut 0.5s ease-out forwards';
+
+    if (choice === 'true') {
+      let audio = new Audio('https://raw.githubusercontent.com/belajarit45/WEBSITE/main/audio.mp3');
+      audio.play().catch(error => console.log("Audio gagal diputar:", error));
+    }
+
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 500);
+  }
+  </script>
+
 </body>
 </html>
