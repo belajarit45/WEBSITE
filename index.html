@@ -23,6 +23,20 @@
     main {
       padding: 2rem;
     }
+    /* Style untuk tombol play cadangan */
+    #playButton {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #facc15;
+      color: #1a1a1a;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
@@ -34,13 +48,30 @@
     <!-- Konten website utama lainnya -->
   </main>
   <script>
-    // Periksa pilihan musik yang disimpan di localStorage dari splash page
+    // Periksa pilihan musik yang disimpan dari splash page
     const playMusic = localStorage.getItem('playMusic');
     if (playMusic === 'true') {
       const audio = new Audio("https://raw.githubusercontent.com/belajarit45/WEBSITE/main/audio.mp3");
       audio.loop = true;
-      // Mulai putar audio (pastikan browser mengizinkan autoplay karena sudah ada interaksi pengguna sebelumnya)
-      audio.play().catch(error => console.log("Error memulai audio:", error));
+      
+      // Coba mulai audio otomatis
+      audio.play().then(() => {
+        console.log("Audio mulai diputar otomatis.");
+      }).catch(err => {
+        console.log("Autoplay gagal, tampilkan tombol play.", err);
+        // Tampilkan tombol play cadangan jika autoplay gagal
+        const playButton = document.createElement('button');
+        playButton.id = 'playButton';
+        playButton.textContent = 'Play Music';
+        document.body.appendChild(playButton);
+        playButton.addEventListener('click', () => {
+          audio.play().then(() => {
+            playButton.remove();
+          }).catch(error => {
+            console.error("Gagal memulai audio:", error);
+          });
+        });
+      });
     }
   </script>
 </body>
