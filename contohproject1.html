@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Monitoring Lalu Lintas Pekanbaru</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --bg-light: #f5f7fa;
+            --bg-dark: #222831;
+            --text-light: #2c3e50;
+            --text-dark: #ecf0f1;
+            --card-light: #ffffff;
+            --card-dark: #393e46;
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .date-time {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .time {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .date {
+            font-size: 14px;
+        }
+
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        .dark-mode-toggle i {
+            font-size: 18px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-light);
+            border-radius: 10px;
+            box-shadow: var(--shadow-light);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .dark-mode .card {
+            background-color: var(--card-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        #map-container {
+            height: 450px;
+        }
+
+        #map {
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        .traffic-legend {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .low {
+            background-color: #2ecc71;
+        }
+
+        .medium {
+            background-color: #f39c12;
+        }
+
+        .high {
+            background-color: #e74c3c;
+        }
+
+        .weather-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 10px 0;
+        }
+
+        .weather-icon {
+            font-size: 36px;
+            color: var(--primary-color);
+        }
+
+        .weather-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .temperature {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .weather-details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .weather-detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .weather-detail i {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .congested-roads {
+            max-height: 245px;
+            overflow-y: auto;
+            padding-right: 15px; /* Agar scrollbar tidak menutupi lingkaran status */
+        }
+
+        .road-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .road-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .road-item:last-child {
+            border-bottom: none;
+        }
+
+        .road-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .prayer-times {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .prayer-time {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+        }
+
+        .dark-mode .prayer-time {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .mosque-list {
+            max-height: 500px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        .mosque-item {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .mosque-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mosque-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .news-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .news-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .dark-mode .news-meta {
+            color: #aaa;
+        }
+        
+        .news-link a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .news-link a:hover {
+            text-decoration: underline;
+        }
+
+        .service-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .service-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .service-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-item:last-child {
+            border-bottom: none;
+        }
+
+        .service-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .service-detail {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .service-detail i {
+            color: var(--primary-color);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .dark-mode .tabs {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid var(--primary-color);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .history-container {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .history-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-date {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .history-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .complaint-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 500px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: var(--bg-light);
+        }
+
+        .dark-mode .form-group input,
+        .dark-mode .form-group textarea,
+        .dark-mode .form-group select {
+            background-color: #333;
+            border-color: #555;
+            color: var(--text-dark);
+        }
+
+        .submit-btn {
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Updated styling untuk tab Donasi */
+        .donation-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 35px;
+        }
+
+        .donation-item {
+            background-color: var(--card-light);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            transition: transform 0.2s;
+        }
+
+        .donation-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .donation-item h3,
+        .donation-item p {
+            grid-column: 1;
+            margin: 0;
+        }
+
+        .donation-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .donation-item p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .donation-item img {
+            grid-column: 2;
+            max-width: 120px;
+            border-radius: 5px;
+            justify-self: center;
+            align-self: center;
+        }
+
+        .dark-mode .donation-item {
+            background-color: var(--card-dark);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Styling untuk box Pesan Inspiratif */
+        .looping-messages {
+            height: 120px; /* Disesuaikan agar tidak terlalu panjang kebawah */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+            transition: opacity 0.5s ease;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+        }
+
+        .dark-mode footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Media query untuk perangkat dengan lebar layar sedang */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Media query tambahan untuk perangkat HP */
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+            .container {
+                padding: 10px;
+            }
+            .card {
+                padding: 15px;
+            }
+            .card-title {
+                font-size: 16px;
+            }
+            .logo h1 {
+                font-size: 18px;
+            }
+            .time {
+                font-size: 20px;
+            }
+            .date {
+                font-size: 12px;
+            }
+            .weather-icon {
+                font-size: 28px;
+            }
+            .temperature {
+                font-size: 20px;
+            }
+            .looping-messages {
+                font-size: 14px;
+                padding: 10px;
+            }
+            /* Perbaikan tampilan header di HP */
+            header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .header-right {
+                margin-top: 10px;
+            }
+            /* Perbaikan tampilan untuk bagian Cuaca Pekanbaru (Realtime) */
+            .weather-container,
+            .weather-details,
+            .weather-forecast {
+                text-align: center;
+            }
+            /* Perbaikan tampilan tab Informasi Lanjutan di HP: disusun dua kolom sesuai keinginan */
+            .tabs {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto auto;
+                grid-template-areas:
+                  "news mosque"
+                  "history complaint"
+                  "services donasi";
+                gap: 5px;
+                justify-items: center;
+            }
+            .tabs .tab:nth-child(1) { grid-area: news; }
+            .tabs .tab:nth-child(2) { grid-area: history; }
+            .tabs .tab:nth-child(3) { grid-area: services; }
+            .tabs .tab:nth-child(4) { grid-area: mosque; }
+            .tabs .tab:nth-child(5) { grid-area: complaint; }
+            .tabs .tab:nth-child(6) { grid-area: donasi; }
+            .tab {
+                padding: 8px 10px;
+                font-size: 14px;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-map-marked-alt"></i>
+                <h1>Dashboard Monitoring Lalu Lintas Pekanbaru</h1>
+            </div>
+            <div class="header-right">
+                <div class="date-time">
+                    <div class="time" id="current-time">00:00:00</div>
+                    <div class="date" id="current-date">Senin, 01 Januari 2024</div>
+                </div>
+                <button class="dark-mode-toggle" id="dark-mode-toggle">
+                    <i class="fas fa-moon"></i>
+                    <span>Mode Malam</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="left-column">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Peta Kepadatan Lalu Lintas Pekanbaru (Realtime)</div>
+                    </div>
+                    <div id="map-container">
+                        <div id="map"></div>
+                    </div>
+                    <div class="traffic-legend">
+                        <div class="legend-item">
+                            <div class="legend-color low"></div>
+                            <span>Lancar</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color medium"></div>
+                            <span>Sedang</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color high"></div>
+                            <span>Padat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Informasi Lanjutan</div>
+                    </div>
+                    <div class="tabs">
+                        <div class="tab active" data-tab="news">Berita Terkini</div>
+                        <div class="tab" data-tab="history">Riwayat Kepadatan</div>
+                        <div class="tab" data-tab="services">Layanan Penting</div>
+                        <div class="tab" data-tab="mosque">Masjid di Pekanbaru</div>
+                        <div class="tab" data-tab="complaint">Pengaduan Warga</div>
+                        <div class="tab" data-tab="donasi">Donasi</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="news-tab">
+                        <div class="news-container" id="news-container">
+                            <!-- News items will be populated dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="history-tab">
+                        <div class="history-container">
+                            <div class="history-item">
+                                <div class="history-date">Senin, 24 Februari 2025</div>
+                                <div class="history-detail">
+                                    <span>Jalan Sudirman</span>
+                                    <span>Padat (17:30-19:00)</span>
+                                </div>
+                                <div class="history-detail">
+                                    <span>Cuaca: Hujan Ringan</span>
+                                    <span>Suhu: 26°C</span>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-date">Minggu, 23 Februari 2025</div>
+                                <div class="history-detail">
+                                    <span>Jalan HR Soebrantas</span>
+                                    <span>Sedang (15:00-17:30)</span>
+                                </div>
+                                <div class="history-detail">
+                                    <span>Cuaca: Cerah Berawan</span>
+                                    <span>Suhu: 29°C</span>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-date">Sabtu, 22 Februari 2025</div>
+                                <div class="history-detail">
+                                    <span>Jalan Ahmad Yani</span>
+                                    <span>Padat (09:00-11:30)</span>
+                                </div>
+                                <div class="history-detail">
+                                    <span>Cuaca: Cerah</span>
+                                    <span>Suhu: 31°C</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="services-tab">
+                        <div class="service-container">
+                            <div class="service-item">
+                                <div class="service-name">RSUD Petala Bumi (Bumi Riau Pekanbaru)</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(0761) 23024</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>rsudpetalabumi.riau.go.id</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">RSUD Arifin Achmad</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(0761) 21618</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>rsudarifinachmad.riau.go.id</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">RS Prima Pekanbaru</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(0811) 7526-222</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>rsprimapekanbaru.com</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">RS Santa Maria Pekanbaru</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(0761) 22213</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>rssantamariapekanbaru.com</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">EKA Hospital Pekanbaru</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>1-500-129</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>ekahospital.com/hospital/eka-hospital-pekanbaru</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">Pemadam Kebakaran Pekanbaru</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(0761) 21112</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>damkar.pekanbaru.go.id</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">Basarnas Pekanbaru</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(0761) 674821 / 08117770115</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>basarnas.go.id</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">Ambulance Pekanbaru Center</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(082385306274)</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>ambulancepekanbarucenter.com</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">BNPB (Badan Nasional Penanggulangan Bencana) Pekanbaru</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(08117651464)</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>bpbd.pekanbaru.go.id</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">Dinas Perhubungan Kota Pekanbaru</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(0761) 28288</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>dishub.pekanbaru.go.id</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">Polresta Pekanbaru</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(0761) 21110</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>polrestapekanbaru.riau.polri.go.id</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-name">GSM366 Prowin Layanan Derek Pekanbaru</div>
+                                <div class="service-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(0812-6817-5544)</span>
+                                </div>
+                                <div class="service-detail">
+                                    <i class="fas fa-globe"></i>
+                                    <span>derekpekanbaru.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="mosque-tab">
+                        <div class="mosque-list" id="mosque-list">
+                            <!-- Mosque list will be populated dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="complaint-tab">
+                        <form class="complaint-form">
+                            <div class="form-group">
+                                <label for="name">Nama Lengkap</label>
+                                <input type="text" id="name" placeholder="Masukkan nama lengkap Anda" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Nomor Telepon</label>
+                                <input type="tel" id="phone" placeholder="Masukkan nomor telepon Anda" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Lokasi Kejadian</label>
+                                <input type="text" id="location" placeholder="Masukkan lokasi kejadian" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="complaint-type">Jenis Pengaduan</label>
+                                <select id="complaint-type" required>
+                                    <option value="">Pilih jenis pengaduan</option>
+                                    <option value="traffic">Kemacetan</option>
+                                    <option value="accident">Kecelakaan</option>
+                                    <option value="road-damage">Kerusakan Jalan</option>
+                                    <option value="flood">Banjir</option>
+                                    <option value="other">Lainnya</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Deskripsi Pengaduan</label>
+                                <textarea id="description" rows="5" placeholder="Jelaskan pengaduan Anda secara detail" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">Kirim Pengaduan</button>
+                        </form>
+                    </div>
+                    
+                    <div class="tab-content" id="donasi-tab">
+                        <div class="donation-container">
+                            <div class="donation-item">
+                                <h3>Donasi untuk Palestina</h3>
+                                <p>Bantu meringankan beban saudara-saudara kita di Palestina dengan donasi untuk bantuan kemanusiaan.</p>
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Donasi%20Palestina" alt="QR Code Donasi Palestina">
+                            </div>
+                            <div class="donation-item">
+                                <h3>Donasi untuk Yatim Piatu</h3>
+                                <p>Beri harapan baru bagi anak-anak yatim piatu dengan membantu mereka mendapatkan pendidikan dan kebutuhan sehari-hari.</p>
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Donasi%20Yatim%20Piatu" alt="QR Code Donasi Yatim Piatu">
+                            </div>
+                            <div class="donation-item">
+                                <h3>Donasi untuk Mesjid</h3>
+                                <p>Dukung pembangunan dan perawatan mesjid sebagai pusat ibadah dan kegiatan keagamaan di komunitas kita.</p>
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Donasi%20Mesjid" alt="QR Code Donasi Mesjid">
+                            </div>
+                            <div class="donation-item">
+                                <h3>Donasi untuk Pembuat Website</h3>
+                                <p>Dukung pembuat website dalam mengembangkan dan meningkatkan kualitas website ini.</p>
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Donasi%20Pembuat%20Website" alt="QR Code Donasi Pembuat Website">
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Cuaca Pekanbaru (Realtime)</div>
+                    </div>
+                    <div class="weather-container">
+                        <div class="weather-icon">
+                            <i class="fas fa-cloud-sun" id="weather-icon"></i>
+                        </div>
+                        <div class="weather-info">
+                            <div class="temperature" id="current-temp">29°C</div>
+                            <div id="weather-desc">Cerah Berawan</div>
+                        </div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="weather-detail">
+                            <i class="fas fa-wind"></i>
+                            <span>Angin</span>
+                            <strong id="wind-speed">10 km/jam</strong>
+                        </div>
+                        <div class="weather-detail">
+                            <i class="fas fa-tint"></i>
+                            <span>Kelembapan</span>
+                            <strong id="humidity">75%</strong>
+                        </div>
+                        <div class="weather-detail">
+                            <i class="fas fa-cloud-rain"></i>
+                            <span>Hujan</span>
+                            <strong id="rain-chance">20%</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Jalan Yang Sedang Ramai</div>
+                    </div>
+                    <div class="congested-roads" id="congested-roads">
+                        <!-- Road items will be populated dynamically -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Prediksi Cuaca</div>
+                    </div>
+                    <div class="weather-forecast" id="weather-forecast">
+                        <!-- Weather forecast will be populated dynamically -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Jadwal Sholat Hari Ini</div>
+                    </div>
+                    <div class="prayer-times" id="prayer-times">
+                        <!-- Prayer times will be populated dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Card Pesan Inspiratif -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Pesan Inspiratif</div>
+                    </div>
+                    <div class="looping-messages" id="looping-messages">
+                        <!-- Pesan akan tampil di sini -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2025 Dashboard Monitoring Lalu Lintas Pekanbaru. Dikembangkan untuk membantu masyarakat Pekanbaru.
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <script>
+        // API Key container (secure)
+        const API_KEYS = {
+            openWeatherMap: 'YOUR_OPENWEATHERMAP_API_KEY',
+            googleMaps: 'YOUR_GOOGLE_MAPS_API_KEY',
+            newsAPI: 'YOUR_NEWS_API_KEY',
+            prayerTimesAPI: 'YOUR_PRAYER_TIMES_API_KEY'
+        };
+
+        // Pekanbaru Coordinates
+        const PEKANBARU_COORDS = {
+            lat: 0.5070677,
+            lng: 101.4477793
+        };
+
+        // Initialize Map
+        const map = L.map('map').setView([PEKANBARU_COORDS.lat, PEKANBARU_COORDS.lng], 13);
+        
+        // Add OpenStreetMap tiles (free and doesn't require API key)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Sample congested roads data - will be replaced with real API data
+        const congestedRoads = [
+            { name: 'Jalan Sudirman', status: 'high', coordinates: [0.5083, 101.4478] },
+            { name: 'Jalan HR Soebrantas', status: 'medium', coordinates: [0.4662, 101.3905] },
+            { name: 'Jalan Ahmad Yani', status: 'high', coordinates: [0.5320, 101.4445] },
+            { name: 'Jalan Riau', status: 'medium', coordinates: [0.5194, 101.4367] },
+            { name: 'Jalan Tuanku Tambusai', status: 'low', coordinates: [0.5075, 101.4280] },
+            { name: 'Jalan Arifin Ahmad', status: 'medium', coordinates: [0.4953, 101.4262] },
+            { name: 'Jalan Soekarno-Hatta', status: 'high', coordinates: [0.4731, 101.4200] },
+            { name: 'Jalan Gajah Mada', status: 'medium', coordinates: [0.5100, 101.4300] }
+        ];
+
+        // Sample weather forecast data - will be replaced with real API data
+        const weatherForecast = [
+            { time: '09:00', temp: '28°C', icon: 'fa-cloud-sun', desc: 'Cerah Berawan' },
+            { time: '12:00', temp: '31°C', icon: 'fa-sun', desc: 'Cerah' },
+            { time: '15:00', temp: '30°C', icon: 'fa-cloud', desc: 'Berawan' },
+            { time: '18:00', temp: '27°C', icon: 'fa-cloud-rain', desc: 'Hujan Ringan' },
+            { time: '21:00', temp: '25°C', icon: 'fa-cloud-moon-rain', desc: 'Hujan Malam' }
+        ];
+
+        // Sample prayer times data - will be replaced with real API data
+        const prayerTimes = [
+            { name: 'Subuh', time: '05:07' },
+            { name: 'Dzuhur', time: '12:15' },
+            { name: 'Ashar', time: '15:30' },
+            { name: 'Maghrib', time: '18:22' },
+            { name: 'Isya', time: '19:32' }
+        ];
+
+        // Sample mosque data - will be replaced with real API data
+        const mosquesData = [
+            { name: 'Masjid Raya Pekanbaru', address: 'Jl. Jend. Sudirman, Simpang Empat' },
+            { name: 'Masjid Agung An-Nur', address: 'Jl. Hang Tuah, Sumahilang' },
+            { name: 'Masjid Ar-Rahman', address: 'Jl. Arifin Ahmad, Sidomulyo Timur' },
+            { name: 'Masjid Al-Falah', address: 'Jl. Tuanku Tambusai, Delima' },
+            { name: 'Masjid Baiturrahman', address: 'Jl. Kaharuddin Nasution, Maharatu' }
+        ];
+
+        // Sample news data - now termasuk properti url untuk mengarahkan ke website sumber
+        const newsData = [
+            { title: 'Pembangunan Flyover Sudirman-Harapan Raya Dimulai', date: '28 Feb 2025', source: 'RiauPos', url: 'https://www.riaupos.com' },
+            { title: 'BMKG Prediksi Hujan Lebat Akhir Pekan di Pekanbaru', date: '27 Feb 2025', source: 'Tribun Pekanbaru', url: 'https://www.tribunpekanbaru.com' },
+            { title: 'Dishub Terapkan Sistem One Way di Jalan Sudirman', date: '26 Feb 2025', source: 'Antara Riau', url: 'https://www.antarariau.com' },
+            { title: 'Wali Kota Resmikan Jalur Sepeda di Pusat Kota', date: '25 Feb 2025', source: 'Riau24', url: 'https://www.riau24.com' }
+        ];
+
+        // Render congested roads on map and in list
+        function renderCongestedRoads() {
+            const roadsContainer = document.getElementById('congested-roads');
+            roadsContainer.innerHTML = '';
+
+            congestedRoads.forEach(road => {
+                // Add to map
+                const color = road.status === 'high' ? '#e74c3c' : road.status === 'medium' ? '#f39c12' : '#2ecc71';
+                const circle = L.circle([road.coordinates[0], road.coordinates[1]], {
+                    color: color,
+                    fillColor: color,
+                    fillOpacity: 0.6,
+                    radius: 300
+                }).addTo(map);
+
+                circle.bindPopup(`<b>${road.name}</b><br>Status: ${getStatusText(road.status)}`);
+
+                // Add to list
+                const roadItem = document.createElement('div');
+                roadItem.className = 'road-item';
+                roadItem.innerHTML = `
+                    <span>${road.name}</span>
+                    <div class="road-status">
+                        <span>${getStatusText(road.status)}</span>
+                        <div class="status-indicator ${road.status}"></div>
+                    </div>
+                `;
+                roadsContainer.appendChild(roadItem);
+            });
+        }
+
+        function getStatusText(status) {
+            return status === 'high' ? 'Padat' : status === 'medium' ? 'Sedang' : 'Lancar';
+        }
+
+        // Render weather forecast
+        function renderWeatherForecast() {
+            const forecastContainer = document.getElementById('weather-forecast');
+            forecastContainer.innerHTML = '';
+
+            const forecastHTML = weatherForecast.map(item => `
+                <div class="weather-detail" style="text-align: center;">
+                    <strong>${item.time}</strong>
+                    <i class="fas ${item.icon}" style="font-size: 24px; margin: 8px 0;"></i>
+                    <span>${item.temp}</span>
+                    <small>${item.desc}</small>
+                </div>
+            `).join('');
+
+            forecastContainer.innerHTML = `
+                <div class="weather-details" style="justify-content: space-between; margin-top: 0;">${forecastHTML}</div>
+            `;
+        }
+
+        // Render prayer times
+        function renderPrayerTimes() {
+            const prayerTimesContainer = document.getElementById('prayer-times');
+            prayerTimesContainer.innerHTML = '';
+
+            prayerTimes.forEach(prayer => {
+                const prayerItem = document.createElement('div');
+                prayerItem.className = 'prayer-time';
+                prayerItem.innerHTML = `
+                    <span>${prayer.name}</span>
+                    <strong>${prayer.time}</strong>
+                `;
+                prayerTimesContainer.appendChild(prayerItem);
+            });
+        }
+
+        // Render mosques
+        function renderMosques() {
+            const mosqueContainer = document.getElementById('mosque-list');
+            mosqueContainer.innerHTML = '';
+
+            mosquesData.forEach(mosque => {
+                const mosqueItem = document.createElement('div');
+                mosqueItem.className = 'mosque-item';
+                mosqueItem.innerHTML = `
+                    <div><strong>${mosque.name}</strong></div>
+                    <div><small>${mosque.address}</small></div>
+                `;
+                mosqueContainer.appendChild(mosqueItem);
+            });
+        }
+
+        // Render news with "Baca selengkapnya"
+        function renderNews() {
+            const newsContainer = document.getElementById('news-container');
+            newsContainer.innerHTML = '';
+
+            newsData.forEach(news => {
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+                newsItem.innerHTML = `
+                    <div class="news-title">${news.title}</div>
+                    <div class="news-meta">
+                        <span>${news.date}</span>
+                        <span>${news.source}</span>
+                    </div>
+                    <div class="news-link">
+                        <a href="${news.url}" target="_blank">Baca selengkapnya</a>
+                    </div>
+                `;
+                newsContainer.appendChild(newsItem);
+            });
+        }
+
+        // Update clock and date
+        function updateDateTime() {
+            const now = new Date();
+            const timeElement = document.getElementById('current-time');
+            const dateElement = document.getElementById('current-date');
+
+            // Format time: HH:MM:SS
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+
+            // Format date: Weekday, DD Month YYYY
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = now.toLocaleDateString('id-ID', options);
+        }
+
+        // Fetch current weather data - simulated
+        function fetchWeatherData() {
+            // In a real implementation, you would use the OpenWeatherMap API:
+            // const url = `https://api.openweathermap.org/data/2.5/weather?lat=${PEKANBARU_COORDS.lat}&lon=${PEKANBARU_COORDS.lng}&units=metric&appid=${API_KEYS.openWeatherMap}`;
+            
+            // For demo purposes, we'll use simulated data
+            simulateWeatherData();
+        }
+
+        function simulateWeatherData() {
+            // Simulate real-time changes in weather data
+            const weatherIcons = ['fa-sun', 'fa-cloud-sun', 'fa-cloud', 'fa-cloud-rain', 'fa-cloud-showers-heavy'];
+            const weatherDescs = ['Cerah', 'Cerah Berawan', 'Berawan', 'Hujan Ringan', 'Hujan Lebat'];
+            
+            const randomIndex = Math.floor(Math.random() * 3); // Mostly sunny/partly cloudy
+            const iconElement = document.getElementById('weather-icon');
+            const descElement = document.getElementById('weather-desc');
+            
+            iconElement.className = `fas ${weatherIcons[randomIndex]}`;
+            descElement.textContent = weatherDescs[randomIndex];
+            
+            // Randomize temperature between 26-32°C
+            const tempElement = document.getElementById('current-temp');
+            const randomTemp = Math.floor(26 + Math.random() * 6);
+            tempElement.textContent = `${randomTemp}°C`;
+            
+            // Randomize wind speed between 5-15 km/h
+            const windElement = document.getElementById('wind-speed');
+            const randomWind = Math.floor(5 + Math.random() * 10);
+            windElement.textContent = `${randomWind} km/jam`;
+            
+            // Randomize humidity between 65-85%
+            const humidityElement = document.getElementById('humidity');
+            const randomHumidity = Math.floor(65 + Math.random() * 20);
+            humidityElement.textContent = `${randomHumidity}%`;
+            
+            // Randomize rain chance
+            const rainElement = document.getElementById('rain-chance');
+            const randomRain = Math.floor(Math.random() * 50);
+            rainElement.textContent = `${randomRain}%`;
+        }
+
+        // Fetch traffic data - simulated
+        function fetchTrafficData() {
+            // In a real implementation, you would use an API like Google Maps or TomTom or local traffic data API
+            // For demo purposes, we'll use simulated data with small variations
+            simulateTrafficChanges();
+        }
+
+        function simulateTrafficChanges() {
+            // Randomly change some road statuses to simulate traffic changes
+            congestedRoads.forEach(road => {
+                const rand = Math.random();
+                if (rand < 0.2) { // 20% chance to change status
+                    const statuses = ['low', 'medium', 'high'];
+                    const currentIndex = statuses.indexOf(road.status);
+                    let newIndex;
+                    
+                    // Move up or down one level, but stay within bounds
+                    if (currentIndex === 0) {
+                        newIndex = Math.random() < 0.7 ? 1 : 0; // More likely to increase
+                    } else if (currentIndex === 2) {
+                        newIndex = Math.random() < 0.7 ? 1 : 2; // More likely to decrease
+                    } else {
+                        newIndex = Math.random() < 0.5 ? currentIndex - 1 : currentIndex + 1;
+                    }
+                    
+                    road.status = statuses[newIndex];
+                }
+            });
+            
+            // Re-render roads
+            renderCongestedRoads();
+        }
+
+        // Toggle dark mode
+        function setupDarkModeToggle() {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const icon = darkModeToggle.querySelector('i');
+            const text = darkModeToggle.querySelector('span');
+            
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                    text.textContent = 'Mode Terang';
+                } else {
+                    icon.className = 'fas fa-moon';
+                    text.textContent = 'Mode Malam';
+                }
+            });
+        }
+
+        // Setup tab functionality
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to current tab
+                    tab.classList.add('active');
+                    const tabId = `${tab.dataset.tab}-tab`;
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
+        // Handle form submission
+        function setupComplaintForm() {
+            const form = document.querySelector('.complaint-form');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    // In a real implementation, you would send the form data to a server
+                    alert('Pengaduan berhasil dikirim! Petugas akan segera menindaklanjuti.');
+                    form.reset();
+                });
+            }
+        }
+        
+        // Fungsi untuk memulai animasi pesan inspiratif
+        function startLoopingMessages() {
+            const messageContainer = document.getElementById('looping-messages');
+            const messages = [
+                "Segunung emas tidak akan cukup bagi orang yang serakah , tetapi sepiring nasi akan cukup bagi orang yang bersyukur.",
+                "Tak perlu harta melimpah untuk menyalakan obor kebaikan, satu butir kasih yang tulus mampu menerangi gelapnya kesepian.",
+                "Setetes empati yang kau bagikan hari ini bisa jadi embun penyejuk jiwa yang kering di tengah teriknya kehidupan.",
+                "Berbagi sejatinya bukan soal besar kecilnya pemberian, melainkan keikhlasan hati yang mengubah sepi menjadi kehangatan kebersamaan.",
+                "Di tengah badai kesulitan, satu langkah kecil menolong sesama mampu menyulam jalinan harapan yang membuat dunia terasa lebih hangat."
+            ];
+            let index = 0;
+            messageContainer.textContent = messages[index];
+            setInterval(() => {
+                messageContainer.style.opacity = 0;
+                setTimeout(() => {
+                    index = (index + 1) % messages.length;
+                    messageContainer.textContent = messages[index];
+                    messageContainer.style.opacity = 1;
+                }, 500);
+            }, 5000);
+        }
+
+        // Initialize all functionality
+        function initApp() {
+            // Initial renders
+            renderCongestedRoads();
+            renderWeatherForecast();
+            renderPrayerTimes();
+            renderMosques();
+            renderNews();
+            
+            // Setup event listeners
+            setupDarkModeToggle();
+            setupTabs();
+            setupComplaintForm();
+            
+            // Update date and time immediately and then every second
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // Fetch initial data
+            fetchWeatherData();
+            
+            // Set up periodic updates
+            setInterval(fetchWeatherData, 60000); // Update weather every minute
+            setInterval(fetchTrafficData, 30000); // Update traffic every 30 seconds
+            
+            // Mulai animasi pesan inspiratif
+            startLoopingMessages();
+        }
+
+        // Call initialization when DOM is ready
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        /* 
+        API Integration Guide:
+
+        For a production version, you should replace the simulated data with real API calls. 
+        Here are recommended APIs for each feature:
+
+        1. Map and Traffic Data:
+           - Google Maps JavaScript API with Traffic Layer
+           - TomTom Traffic API
+           - HERE Traffic API
+           - Local government traffic API if available
+
+        2. Weather Data:
+           - OpenWeatherMap API (Current weather and forecasts)
+           - AccuWeather API
+           - Weather.gov API (if in the US)
+           - BMKG API (Indonesia's weather agency)
+
+        3. Prayer Times:
+           - Aladhan API (https://aladhan.com/prayer-times-api)
+           - PrayerTimes.date API
+
+        4. News:
+           - NewsAPI.org
+           - Local news outlets RSS feeds
+           - Government news API if available
+
+        Implementation steps:
+        1. Obtain API keys for each service
+        2. Replace the API_KEYS object values with your actual keys
+        3. Replace the simulated data functions with real API calls
+        4. Implement proper error handling for API failures
+        5. Add caching mechanisms to reduce API calls
+        6. Implement rate limiting to stay within API usage limits
+
+        Sample OpenWeatherMap API call:
+        
+        async function fetchRealWeatherData() {
+            try {
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${PEKANBARU_COORDS.lat}&lon=${PEKANBARU_COORDS.lng}&units=metric&appid=${API_KEYS.openWeatherMap}`);
+                const data = await response.json();
+                
+                if (data) {
+                    // Update DOM with real weather data
+                    document.getElementById('current-temp').textContent = `${Math.round(data.main.temp)}°C`;
+                    document.getElementById('weather-desc').textContent = data.weather[0].description;
+                    document.getElementById('humidity').textContent = `${data.main.humidity}%`;
+                    document.getElementById('wind-speed').textContent = `${Math.round(data.wind.speed * 3.6)} km/jam`; // Convert m/s to km/h
+                    
+                    // Update weather icon based on weather code
+                    const weatherIconClass = getWeatherIconClass(data.weather[0].id);
+                    document.getElementById('weather-icon').className = `fas ${weatherIconClass}`;
+                }
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                // Fallback to simulated data in case of failure
+                simulateWeatherData();
+            }
+        }
+        
+        function getWeatherIconClass(weatherCode) {
+            // Map OpenWeatherMap weather codes to Font Awesome icons
+            if (weatherCode >= 200 && weatherCode < 300) return 'fa-bolt'; // Thunderstorm
+            if (weatherCode >= 300 && weatherCode < 500) return 'fa-cloud-drizzle'; // Drizzle
+            if (weatherCode >= 500 && weatherCode < 600) return 'fa-cloud-rain'; // Rain
+            if (weatherCode >= 600 && weatherCode < 700) return 'fa-snowflake'; // Snow
+            if (weatherCode >= 700 && weatherCode < 800) return 'fa-smog'; // Atmosphere (fog, mist, etc.)
+            if (weatherCode === 800) return 'fa-sun'; // Clear sky
+            if (weatherCode > 800) return 'fa-cloud-sun'; // Clouds
+            return 'fa-cloud'; // Default
+        }
+        */
+    </script>
+</body>
+</html>
