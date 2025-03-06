@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AnDev404</title>
+  
+  <!-- Link Google Fonts untuk Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  
+  <!-- Alpine.js & AOS -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.2/dist/cdn.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+  <!-- Font Awesome untuk Carousel (digunakan jika ada ikon lain yang tidak diubah) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    /* -----------------------------------------------
+       Style Website dengan Palet Warna Langsung
+    ----------------------------------------------- */
+    /* Global */
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden; /* Mencegah horizontal scroll */
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #1a202c; /* Latar belakang utama gelap */
+      color: #E5E5E5; /* Teks utama terang */
+      overflow-x: hidden;
+    }
+    /* Kelas untuk menonaktifkan scroll saat modal terbuka */
+    .modal-open, html.modal-open, body.modal-open {
+      overflow: hidden;
+    }
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    /* Utility Classes */
+    .text-center { text-align: center; }
+    .font-bold { font-weight: bold; }
+    .rounded-full { border-radius: 9999px; }
+    .shadow-lg { 
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
+                  0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+    /* Responsive Typography untuk Hero */
+    .hero h1 {
+      font-size: 2.25rem;
+      margin: 0;
+      color: #FFFFFF;
+    }
+    .hero h2 {
+      font-size: 2.25rem;
+      margin: 0.5rem 0;
+      color: #60A5FA;
+      white-space: nowrap;
+    }
+    .hero p {
+      margin-top: 0.75rem;
+      font-size: 1.125rem;
+      color: #CBD5E1;
+    }
+    @media (min-width: 640px) {
+      .hero h1,
+      .hero h2 { font-size: 3rem; }
+      .hero p { font-size: 1.25rem; }
+    }
+    @media (min-width: 768px) {
+      .hero h1,
+      .hero h2 { font-size: 3.75rem; }
+    }
+    /* Video Background */
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    @media (max-width: 768px) {
+      video { object-position: center; }
+    }
+    /* Navbar */
+    nav {
+      position: fixed;
+      width: 100%;
+      padding: 1rem;
+      transition: background-color 300ms, box-shadow 300ms;
+      z-index: 50;
+    }
+    nav.bg-transparent { background-color: transparent; }
+    nav.bg-scrolled { 
+      background-color: #2d3748;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
+                  0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #FFFFFF;
+    }
+    .nav-logo a {
+      text-decoration: none;
+      color: inherit;
+      display: inline-block;
+    }
+    /* Logo teks dan huruf */
+    .logo-text {
+      position: relative;
+      display: inline-block;
+    }
+    .logo-text::after {
+      content: "";
+      display: block;
+      height: 2px;
+      background: #60A5FA;
+      width: 0;
+      transition: width 0.3s ease;
+      margin-top: 5px;
+    }
+    .logo-letter {
+      display: inline-block;
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+    .logo-dot {
+      display: inline-block;
+      vertical-align: bottom;
+      margin-left: 2px;
+      transform: translate(0, -8px);
+      transition: text-shadow 0.3s ease;
+      color: #60A5FA;
+    }
+    @keyframes hoverDotSequence {
+      0% { transform: translate(0, -8px); }
+      40% { transform: translate(0, 5px); }
+      70% { transform: translate(0, 5px); }
+      80% { transform: translate(70px, 5px); }
+      90% { transform: translate(55px, 5px); }
+      100% { transform: translate(60px, 5px); }
+    }
+    @keyframes unhoverDotSequence {
+      0% { transform: translate(60px, 5px); }
+      50% { transform: translate(0, 5px); }
+      100% { transform: translate(0, -8px); }
+    }
+    .nav-logo a:hover .logo-letter {
+      transform: scale(1.2) translateY(-5px);
+      text-shadow: 0 0 8px #60A5FA;
+    }
+    .nav-logo a:hover .logo-text::after {
+      width: 100%;
+      transition-delay: 0.5s;
+    }
+    .nav-logo a:hover .logo-dot {
+      animation: hoverDotSequence 1s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+      text-shadow: 0 0 8px #60A5FA;
+    }
+    .nav-logo a:not(:hover) .logo-dot {
+      animation: unhoverDotSequence 1s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+    }
+    .nav-logo a:not(:hover) .logo-text::after {
+      width: 0;
+      transition-delay: 0.5s;
+    }
+    .hamburger {
+      background: none;
+      border: none;
+      color: #60A5FA;
+      cursor: pointer;
+      display: none;
+    }
+    .nav-menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+    .nav-menu li { margin-left: 1.5rem; }
+    .nav-menu li a {
+      text-decoration: none;
+      color: #FFFFFF;
+      transition: color 300ms;
+    }
+    .nav-menu li a:hover { color: #60A5FA; }
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #2d3748;
+        flex-direction: column;
+        padding: 1rem;
+        display: none;
+      }
+      .nav-menu.show { display: block; }
+      .nav-menu li { margin: 0.5rem 0; }
+    }
+    .nav-menu li a.active {
+      background-color: #60A5FA;
+      color: #1a202c;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+    .hero .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+    /* Secara default, konten hero ditampilkan di sebelah kiri */
+    .hero .content { 
+      position: relative; 
+      z-index: 10; 
+      margin-left: 8%; 
+    }
+    .max-w-xl { max-width: 36rem; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-3 { margin-top: 0.75rem; }
+    .mt-5 { margin-top: 1.25rem; }
+    /* Tombol */
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 300ms, color 300ms;
+    }
+    .btn-primary {
+      background-color: #60A5FA;
+      color: #1a202c;
+      border: none;
+    }
+    .btn-primary:hover { background-color: #3b82f6; }
+    .btn-outline {
+      border: 2px solid #60A5FA;
+      color: #60A5FA;
+      margin-left: 1rem;
+    }
+    .btn-outline:hover {
+      background-color: #60A5FA;
+      color: #1a202c;
+    }
+    /* Sections Umum */
+    .section {
+      padding: 4rem 1.5rem;
+      scroll-margin-top: 5rem;
+    }
+    /* About Saya */
+    .about {
+      max-width: 48rem;
+      margin: 0 auto;
+    }
+    .about h2 {
+      font-size: 1.875rem;
+      font-weight: bold;
+      color: #60A5FA;
+    }
+    .about p {
+      margin-top: 1rem;
+      color: #CBD5E1;
+      line-height: 1.6;
+    }
+    .about img {
+      margin-top: 1.5rem;
+      width: 8rem;
+      height: 8rem;
+      border-radius: 9999px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
+                  0 4px 6px -2px rgba(0,0,0,0.05);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* Experience */
+    .experience {
+      background-color: #2d3748;
+    }
+    .experience h2 {
+      font-size: 1.875rem;
+      font-weight: bold;
+      color: #60A5FA;
+    }
+    .experience p {
+      margin-top: 1rem;
+      color: #CBD5E1;
+      line-height: 1.6;
+    }
+    .experience h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      color: #60A5FA;
+    }
+    .experience-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .experience-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .experience-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .skill-card {
+      background-color: #2d3748;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
+                  0 4px 6px -2px rgba(0,0,0,0.05);
+      transition: background-color 300ms, transform 300ms;
+      text-align: center;
+    }
+    .skill-card:hover {
+      background-color: #60A5FA;
+      transform: scale(1.05);
+    }
+    .skill-card img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1rem;
+    }
+    /* Tambahan aturan untuk gambar pada carousel agar ukurannya konsisten */
+    .carousel-feature .skill-item img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+    .skill-card h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin: 0;
+    }
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .project-card {
+      cursor: pointer;
+      border: 2px solid transparent;
+      padding: 10px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      border-radius: 8px;
+    }
+    .project-card:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 2px solid transparent;
+      border-radius: 8px;
+    }
+    .project-thumbnail {
+      background-color: transparent;
+      border-radius: 8px;
+      padding: 5px;
+      transition: background-color 0.3s;
+    }
+    .project-thumbnail img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .project-card h3 {
+      color: #FFFFFF;
+      margin-top: 0.5rem;
+    }
+    /* Contact */
+    .contact h2 {
+      font-size: 1.875rem;
+      font-weight: bold;
+      color: #60A5FA;
+    }
+    .contact p {
+      margin-top: 1rem;
+      color: #CBD5E1;
+    }
+    .contact a {
+      color: #60A5FA;
+      text-decoration: none;
+      transition: text-decoration 300ms;
+    }
+    .contact {
+      background-color: #2d3748;
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+    .contact-title {
+      font-size: 2.5rem;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    .contact-intro {
+      font-size: 1.1rem;
+      color: #CBD5E1;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+    .contact-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #000 !important;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .contact-link:hover {
+      color: #FFFFFF !important;
+      transform: translateY(-3px);
+    }
+    .contact-link i {
+      font-size: 2rem;
+      margin-right: 0.5rem;
+      color: inherit;
+    }
+    .separator {
+      color: #000;
+      font-size: 1.2rem;
+      padding: 0 0.5rem;
+      transition: color 0.3s ease;
+    }
+    .contact-links:hover .separator {
+      color: #FFFFFF;
+    }
+    @media (max-width: 480px) {
+      .contact-links { flex-direction: column; }
+      .separator { display: none; }
+    }
+    /* Footer */
+    footer {
+      background-color: #1a202c;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    footer p {
+      color: #A3A3A3;
+      margin: 0;
+    }
+    /* -----------------------------------------------
+       Additional CSS untuk Fitur Carousel
+    ----------------------------------------------- */
+    .carousel-feature {
+      margin: 2rem 0;
+    }
+    .carousel-feature .container-carousel {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .carousel-feature .carousel-box {
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+    }
+    .carousel-feature h2 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      color: #60A5FA;
+    }
+    .carousel-feature .carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100px;
+    }
+    .carousel-feature .carousel-inner {
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.5s ease-in-out;
+    }
+    .carousel-feature .skill-item {
+      height: 100px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      background: #1a202c;
+      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+    }
+    .carousel-feature .skill-text {
+      text-align: left;
+    }
+    .carousel-feature .skill-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #60A5FA;
+    }
+    .carousel-feature .skill-desc {
+      font-size: 14px;
+      color: #A3A3A3;
+    }
+    /* -----------------------------------------------
+       CSS untuk Back-to-Top Button
+    ----------------------------------------------- */
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: none;
+      background-color: #60A5FA;
+      border-radius: 50%;
+      padding: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: opacity 0.3s;
+      z-index: 100;
+    }
+    .back-to-top img {
+      width: 30px;
+      height: 30px;
+    }
+    
+    /* ------------------------------------------------
+       Modifikasi Bagian Projects dan Modal Project
+    ------------------------------------------------ */
+    .project-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+    .project-modal-content {
+      position: relative;
+      background-color: #1a202c;
+      border-radius: 25px;
+      padding-bottom: 60px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90%;
+      overflow-y: auto;
+      text-align: left;
+    }
+    @media (max-width: 480px) {
+      .project-modal-content {
+        width: 95%;
+        max-width: 95%;
+        margin: 0 auto;
+      }
+    }
+    .project-modal-content .modal-thumbnail {
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+    }
+    .project-modal-content .modal-title {
+      color: #FFFFFF;
+      margin-top: 10px;
+      padding: 0 20px;
+    }
+    .project-modal-content .modal-description {
+      color: #CBD5E1;
+      margin-top: 10px;
+      padding: 0 20px;
+    }
+    .project-modal-content .modal-visit {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #60A5FA;
+      color: #1a202c;
+      text-decoration: none;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      border-radius: 4px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* -----------------------------------------------
+       Custom Neumorphic Scrollbar Styling
+    ----------------------------------------------- */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(26, 32, 44, 0.5);
+      border-radius: 10px;
+      box-shadow: inset 5px 5px 10px rgba(0,0,0,0.25),
+                  inset -5px -5px 10px rgba(255,255,255,0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2d3748;
+      border-radius: 10px;
+      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2),
+                  inset -2px -2px 5px rgba(255,255,255,0.05);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3b4b5b;
+    }
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #2d3748 rgba(26, 32, 44, 0.5);
+    }
+    
+    /* ------------------------------------------------
+       Additional Responsive Adjustments
+    ------------------------------------------------ */
+    @media (max-width: 480px) {
+      .container { padding: 0 1rem; }
+      .hero h1, .hero h2 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      /* Perbaikan tampilan hero pada perangkat mobile:
+         - Hilangkan margin kiri agar konten di tengah
+         - Center align teks */
+      .hero .content {
+        margin-left: 0;
+        text-align: center;
+      }
+      .nav-menu { padding: 0.5rem; }
+      .nav-menu li { margin: 0.5rem 0; }
+      .section { padding: 3rem 1rem; }
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      AOS.init({
+        easing: 'ease-out-cubic',
+        once: true,
+      });
+    });
+  </script>
+</head>
+<body>
+  <!-- Video Background -->
+  <video autoplay muted loop>
+    <source src="https://github.com/belajarit45/WEBSITE/blob/main/456479_Timelapse_Time-lapse_1920x1080.mp4?raw=true" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  
+  <!-- Navbar -->
+  <nav x-data="{ scrolled: false, open: false }" 
+       @scroll.window="scrolled = (window.scrollY > 50)" 
+       :class="scrolled ? 'bg-scrolled' : 'bg-transparent'">
+    <div class="container nav-container">
+      <h1 class="nav-logo">
+        <a href="main.html">
+          <span class="logo-text">
+            <span class="logo-letter">P</span>
+            <span class="logo-letter">F</span>
+            <span class="logo-letter">O</span>
+            <span class="logo-letter">L</span>
+            <span class="logo-letter">I</span>
+            <span class="logo-letter">O</span>
+          </span>
+          <span class="logo-dot">.</span>
+        </a>
+      </h1>
+      <button @click="open = !open" class="hamburger">
+        <svg x-show="!open" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg x-show="open" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <ul :class="open ? 'nav-menu show' : 'nav-menu'">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <header id="home" class="hero">
+    <div class="overlay"></div>
+    <div class="container content">
+      <div class="max-w-xl">
+        <h1>Hello, I'm</h1>
+        <h2>Muhammad Andrian</h2>
+        <!-- Elemen untuk animasi mengetik dengan prefix statis "Saya suka " -->
+        <p id="typing-text"></p>
+        <div class="mt-5">
+          <a href="#contact" class="btn btn-primary">Hubungi Saya</a>
+          <a href="faq.html" class="btn btn-outline">Tanya Saya</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- About Saya -->
+  <section id="about" class="section" data-aos="fade-up" data-aos-duration="800">
+    <div class="container about text-center">
+      <h2>About</h2>
+      <p>Hi, Saya Muhammad Andrian dari Pekanbaru, Riau, Indonesia. Saya adalah seorang profesional IT berpengalaman dalam instalasi, konfigurasi, dan troubleshooting jaringan serta perangkat keras. Keahlian saya meliputi perakitan komputer, pengelolaan sistem CCTV, dan penguasaan perangkat lunak, dengan dasar pemrograman HTML, CSS, PHP, dan Python.</p>
+      <p>Di luar teknologi, saya tertarik pada olahraga dan traveling. Saya selalu berusaha memperluas wawasan dengan mempelajari perkembangan terbaru dalam bidang teknologi. Bagi saya, tantangan dan pengalaman baru adalah kunci untuk terus berkembang, baik secara pribadi maupun profesional.</p>
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/cutecatnations-20250223-0001.jpg?raw=true" alt="Foto Profil" class="rounded-full shadow-lg">
+    </div>
+  </section>
+  
+  <!-- Experience -->
+  <section id="experience" class="section experience" data-aos="fade-up" data-aos-duration="800">
+    <div class="container text-center">
+      <h2>Experience</h2>
+      <p><strong>Kenapa Memilih Saya?</strong> <br>
+      Saya sangat profesional dan memiliki jiwa tanggung jawab yang besar dalam menyelesaikan masalah. Dengan pengalaman yang luas dan keahlian teknis yang mumpuni, saya siap memberikan solusi terbaik untuk setiap tantangan IT. Saya percaya pada pentingnya kualitas dan kecepatan dalam setiap proyek yang saya kerjakan.</p>
+      
+      <!-- Fitur Skill Carousel -->
+      <div class="carousel-feature">
+        <div class="container-carousel">
+          <!-- Carousel 1 -->
+          <div class="carousel-box">
+            <div class="carousel" id="carousel1">
+              <div class="carousel-inner">
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/googledrive-andev404.svg?raw=true" alt="Google Drive">
+                  <div class="skill-text">
+                    <div class="skill-title">Google Drive</div>
+                    <div class="skill-desc">Cloud Storage</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/onedrive-andev404.svg?raw=true" alt="OneDrive">
+                  <div class="skill-text">
+                    <div class="skill-title">OneDrive</div>
+                    <div class="skill-desc">Cloud Backup</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/dropbox-andev404.svg?raw=true" alt="Dropbox">
+                  <div class="skill-text">
+                    <div class="skill-title">Dropbox</div>
+                    <div class="skill-desc">File Synchronization</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftexcel2013-andev404.svg?raw=true" alt="Microsoft Excel">
+                  <div class="skill-text">
+                    <div class="skill-title">Microsoft Excel</div>
+                    <div class="skill-desc">Data Analysis</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftword2013-andev404.svg?raw=true" alt="Microsoft Word">
+                  <div class="skill-text">
+                    <div class="skill-title">Microsoft Word</div>
+                    <div class="skill-desc">Document Processing</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftpowerpoint2013-andev404.svg?raw=true" alt="Microsoft PowerPoint">
+                  <div class="skill-text">
+                    <div class="skill-title">Microsoft PowerPoint</div>
+                    <div class="skill-desc">Presentation</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/canva-andev404.svg?raw=true" alt="Canva">
+                  <div class="skill-text">
+                    <div class="skill-title">Canva</div>
+                    <div class="skill-desc">Graphic Design</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Carousel 2 -->
+          <div class="carousel-box">
+            <div class="carousel" id="carousel2">
+              <div class="carousel-inner">
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/teamviewer-andev404.png?raw=true" alt="TeamViewer">
+                  <div class="skill-text">
+                    <div class="skill-title">TeamViewer</div>
+                    <div class="skill-desc">Remote Access</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/anydesk-andev404.svg?raw=true" alt="AnyDesk" style="border-radius:10%;">
+                  <div class="skill-text">
+                    <div class="skill-title">AnyDesk</div>
+                    <div class="skill-desc">Remote Desktop Control</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftremotedesktop-andev404.png?raw=true" alt="RDP">
+                  <div class="skill-text">
+                    <div class="skill-title">RDP</div>
+                    <div class="skill-desc">Remote Access</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/linux-andev404.png?raw=true" alt="Linux">
+                  <div class="skill-text">
+                    <div class="skill-title">Linux</div>
+                    <div class="skill-desc">Operating System</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/netdata-andev404.svg?raw=true" alt="Netdata">
+                  <div class="skill-text">
+                    <div class="skill-title">Netdata</div>
+                    <div class="skill-desc">System Monitoring</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/ngrok-andev404.svg?raw=true" alt="ngrok">
+                  <div class="skill-text">
+                    <div class="skill-title">ngrok</div>
+                    <div class="skill-desc">Local Tunneling</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Carousel 3 -->
+          <div class="carousel-box">
+            <div class="carousel" id="carousel3">
+              <div class="carousel-inner">
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/visualstudiocode-andev404.svg?raw=true" alt="Visual Studio Code">
+                  <div class="skill-text">
+                    <div class="skill-title">Visual Studio Code</div>
+                    <div class="skill-desc">Code Editor</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/xampp-andev404.svg?raw=true" alt="XAMPP">
+                  <div class="skill-text">
+                    <div class="skill-title">XAMPP</div>
+                    <div class="skill-desc">PHP Development</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/html5-andev404.svg?raw=true" alt="HTML">
+                  <div class="skill-text">
+                    <div class="skill-title">HTML</div>
+                    <div class="skill-desc">Basic Development</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/css3-andev404.svg?raw=true" alt="CSS">
+                  <div class="skill-text">
+                    <div class="skill-title">CSS</div>
+                    <div class="skill-desc">Web Styling</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/php-andev404.svg?raw=true" alt="PHP">
+                  <div class="skill-text">
+                    <div class="skill-title">PHP</div>
+                    <div class="skill-desc">Back-End Development</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/python-andev404.svg?raw=true" alt="Python">
+                  <div class="skill-text">
+                    <div class="skill-title">Python</div>
+                    <div class="skill-desc">Programming &amp; Scripting</div>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/github-andev404.svg?raw=true" alt="GitHub" style="background-color:#fff; border-radius:50%;">
+                  <div class="skill-text">
+                    <div class="skill-title">GitHub</div>
+                    <div class="skill-desc">Version Control</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <br><br><br>
+      <h2>Services</h2>
+      <p><strong>Apa yang Anda cari?</strong> <br>
+      Saya selalu memperioritaskan ketepatan dan kecepatan dalam mengembangkan ide maupun memecahkan masalah. Dengan pengalaman yang luas di berbagai bidang IT, saya siap membantu Anda mencapai tujuan dengan solusi yang efektif dan efisien. Beberapa layanan yang saya kuasai.</p>
+      <div class="experience-grid">
+        <div class="skill-card">
+          <div style="margin-bottom: 1rem;">
+            <img src="https://img.icons8.com/ios/96/ffffff/network.png" alt="Jaringan &amp; IT Support">
+          </div>
+          <h4>Jaringan &amp; IT Support</h4>
+        </div>
+        <div class="skill-card">
+          <div style="margin-bottom: 1rem;">
+            <img src="https://img.icons8.com/ios/96/ffffff/lock.png" alt="Keamanan &amp; Manajemen IT">
+          </div>
+          <h4>Keamanan &amp; Manajemen IT</h4>
+        </div>
+        <div class="skill-card">
+          <div style="margin-bottom: 1rem;">
+            <img src="https://img.icons8.com/ios/96/ffffff/code.png" alt="Web Development">
+          </div>
+          <h4>Web Development</h4>
+        </div>
+        <div class="skill-card">
+          <div style="margin-bottom: 1rem;">
+            <img src="https://img.icons8.com/ios/96/ffffff/indoor-camera.png" alt="Instalasi &amp; Manajemen CCTV">
+          </div>
+          <h4>Instalasi &amp; Manajemen CCTV</h4>
+        </div>
+        <div class="skill-card">
+          <div style="margin-bottom: 1rem;">
+            <img src="https://img.icons8.com/ios/96/ffffff/flow-chart.png" alt="Desain &amp; Pengembangan Sistem">
+          </div>
+          <h4>Desain &amp; Pengembangan Sistem</h4>
+        </div>
+        <div class="skill-card">
+          <div style="margin-bottom: 1rem;">
+            <img src="https://img.icons8.com/ios/96/ffffff/toolbox.png" alt="Perakitan &amp; Diagnostik Perangkat Keras">
+          </div>
+          <h4>Perakitan &amp; Diagnostik Perangkat Keras</h4>
+        </div>
+        <div class="skill-card">
+          <div style="margin-bottom: 1rem;">
+            <img src="https://img.icons8.com/ios/96/ffffff/internet-of-things.png" alt="Manajemen Sistem IoT">
+          </div>
+          <h4>Manajemen Sistem IoT</h4>
+        </div>
+        <div class="skill-card">
+          <div style="margin-bottom: 1rem;">
+            <img src="https://img.icons8.com/ios/96/ffffff/combo-chart.png" alt="Optimasi Aplikasi Produktivitas">
+          </div>
+          <h4>Optimasi Aplikasi Produktivitas</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Projects Section dengan Fitur Modal -->
+  <section id="projects" class="section" data-aos="fade-up" data-aos-duration="800">
+    <div class="container text-center">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" data-project="0">
+          <div class="project-thumbnail">
+            <img src="https://github.com/belajarit45/WEBSITE/blob/main/Dashboard%20Monitoring%20Lalu%20Lintas%20Pekanbaru.png?raw=true" alt="Dashboard Monitoring Lalu Lintas Pekanbaru">
+          </div>
+          <h3>Dashboard Monitoring Lalu Lintas Pekanbaru</h3>
+        </div>
+        <div class="project-card" data-project="1">
+          <div class="project-thumbnail">
+            <img src="https://github.com/belajarit45/WEBSITE/blob/main/Portofolio.png?raw=true" alt="Muhammad Andrian - Portofolio">
+          </div>
+          <h3>Muhammad Andrian - Portofolio</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Modal Project (Box muncul saat project diklik) -->
+  <div id="projectModal" class="project-modal">
+    <div class="project-modal-content">
+      <img class="modal-thumbnail" src="" alt="">
+      <h3 class="modal-title"></h3>
+      <p class="modal-description"></p>
+      <a class="modal-visit" href="#" target="_blank">Visit</a>
+    </div>
+  </div>
+  
+  <!-- Contact Section -->
+  <section id="contact" class="section contact" data-aos="fade-up" data-aos-duration="800">
+    <div class="container">
+      <h2 class="contact-title">Contact</h2>
+      <p class="contact-intro">
+        <strong>Tertarik Bekerja Sama? Hubungi Saya!</strong> <br>
+        Saya siap menjalin kerja sama yang produktif. Hubungi saya untuk memulai kolaborasi.
+      </p>
+      <div class="contact-links">
+        <a class="contact-link whatsapp" href="https://wa.me/6281234567890?text=Halo%20saya%20tertarik%20untuk%20berkonsultasi" target="_blank" rel="noopener">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>WhatsApp</span>
+        </a>
+        <span class="separator">|</span>
+        <a class="contact-link email" href="mailto:email@domain.com">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Email</span>
+        </a>
+        <span class="separator">|</span>
+        <a class="contact-link github" href="https://github.com/username" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <p><small>Copyright &copy; 2025 Muhammad Andrian. All Rights Reserved.</small></p>
+  </footer>
+  
+  <!-- Back-to-Top Button dengan ikon GIF baru -->
+  <a href="#home" id="backToTop" class="back-to-top">
+    <img src="https://github.com/belajarit45/WEBSITE/blob/main/icons8-up.gif?raw=true" alt="Back to Top">
+  </a>
+  
+  <!-- Script Typing Effect dengan Typewriter Animation dan prefix statis "Saya suka " -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const prefix = "Saya suka ";
+      const textArray = [
+        "Ngoding untuk bikin hal keren.",
+        "Olahraga biar tetap bugar.",
+        "Traveling cari pengalaman baru.",
+        "Main game buat seru-seruan!"
+      ];
+      let textIndex = 0;
+      let charIndex = 0;
+      const typingElement = document.getElementById("typing-text");
+
+      function type() {
+        if (charIndex < textArray[textIndex].length) {
+          typingElement.innerHTML = prefix + textArray[textIndex].substring(0, charIndex + 1);
+          charIndex++;
+          setTimeout(type, 100);
+        } else {
+          setTimeout(erase, 2000);
+        }
+      }
+
+      function erase() {
+        if (charIndex > 0) {
+          typingElement.innerHTML = prefix + textArray[textIndex].substring(0, charIndex - 1);
+          charIndex--;
+          setTimeout(erase, 50);
+        } else {
+          textIndex = (textIndex + 1) % textArray.length;
+          setTimeout(type, 500);
+        }
+      }
+
+      if (typingElement) setTimeout(type, 500);
+    });
+  </script>
+  
+  <!-- Script untuk Skill Carousel -->
+  <script>
+    function initCarousel(carouselId) {
+      const carouselInner = document.querySelector(`#${carouselId} .carousel-inner`);
+      const items = document.querySelectorAll(`#${carouselId} .skill-item`);
+      const totalItems = items.length;
+      const firstClone = items[0].cloneNode(true);
+      carouselInner.appendChild(firstClone);
+
+      let index = 0;
+      let autoScroll;
+
+      function updateCarousel() {
+        carouselInner.style.transition = 'transform 0.5s ease-in-out';
+        carouselInner.style.transform = `translateY(-${index * 100}px)`;
+
+        if (index === totalItems) {
+          setTimeout(() => {
+            carouselInner.style.transition = 'none';
+            index = 0;
+            carouselInner.style.transform = `translateY(0)`;
+          }, 500);
+        }
+      }
+
+      function nextSlide() {
+        index++;
+        updateCarousel();
+      }
+
+      function startAutoScroll() {
+        autoScroll = setInterval(nextSlide, 3000);
+      }
+
+      function stopAutoScroll() {
+        clearInterval(autoScroll);
+      }
+
+      startAutoScroll();
+      document.getElementById(carouselId).addEventListener('mouseenter', stopAutoScroll);
+      document.getElementById(carouselId).addEventListener('mouseleave', startAutoScroll);
+    }
+
+    initCarousel('carousel1');
+    initCarousel('carousel2');
+    initCarousel('carousel3');
+  </script>
+  
+  <!-- Script untuk Menampilkan Back-to-Top Button -->
+  <script>
+    window.addEventListener('scroll', function() {
+      const aboutSection = document.getElementById('about');
+      const backToTopButton = document.getElementById('backToTop');
+      const aboutOffset = aboutSection.getBoundingClientRect().top;
+      
+      if (aboutOffset <= window.innerHeight / 2) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+  </script>
+
+  <!-- Script untuk Fitur Modal Project -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const projectCards = document.querySelectorAll('.project-card');
+      const modal = document.getElementById('projectModal');
+      const modalThumbnail = modal.querySelector('.modal-thumbnail');
+      const modalTitle = modal.querySelector('.modal-title');
+      const modalDescription = modal.querySelector('.modal-description');
+      const modalVisit = modal.querySelector('.modal-visit');
+
+      const projectsData = [
+        {
+          thumbnail: "https://github.com/belajarit45/WEBSITE/blob/main/Dashboard%20Monitoring%20Lalu%20Lintas%20Pekanbaru.png?raw=true",
+          link: "https://belajarit45.github.io/WEBSITE/contohproject1.html",
+          title: "Dashboard Monitoring Lalu Lintas Pekanbaru",
+          description: "Sebuah solusi digital canggih yang mengintegrasikan data real-time lalu lintas dan cuaca ke dalam tampilan yang bersih dan mudah digunakan. Dengan peta interaktif serta pembaruan informasi terkini, platform ini membantu Anda memantau kondisi jalan dan merencanakan perjalanan secara cepat dan efisien. Dirancang menggunakan teknologi web modern, dashboard ini mendukung mobilitas kota yang lebih aman dan responsif, serta memberikan pengalaman pengguna yang optimal dalam menghadapi dinamika kehidupan perkotaan."
+        },
+        {
+          thumbnail: "https://github.com/belajarit45/WEBSITE/blob/main/Portofolio.png?raw=true",
+          link: "https://belajarit45.github.io/WEBSITE/main.html",
+          title: "Muhammad Andrian - Portofolio",
+          description: "Implementasi website portofolio yang menonjolkan desain modern dan antarmuka yang bersih, mencerminkan kreativitas serta kemampuan teknis dalam pengembangan web dan solusi IT. Dirancang dengan kesederhanaan yang memukau, platform ini menampilkan keunggulan profesional dan dedikasi melalui tampilan elegan yang optimal."
+        }
+      ];
+
+      projectCards.forEach(card => {
+        card.addEventListener('click', function() {
+          const index = this.getAttribute('data-project');
+          const project = projectsData[index];
+          if(project) {
+            modalThumbnail.src = project.thumbnail;
+            modalTitle.textContent = project.title;
+            modalDescription.textContent = project.description;
+            modalVisit.href = project.link;
+            modal.style.display = 'flex';
+            document.body.classList.add('modal-open');
+            document.documentElement.classList.add('modal-open');
+          }
+        });
+      });
+
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          document.body.classList.remove('modal-open');
+          document.documentElement.classList.remove('modal-open');
+        }
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-menu li a');
+
+      const observerOptions = { threshold: 0.5 };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && window.pageYOffset > 0) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            const id = entry.target.getAttribute('id');
+            const activeLink = document.querySelector(`.nav-menu li a[href="#${id}"]`);
+            if (activeLink) activeLink.classList.add('active');
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => observer.observe(section));
+
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset === 0) {
+          navLinks.forEach(link => link.classList.remove('active'));
+        }
+      });
+    });
+  </script>
+</body>
+</html>
