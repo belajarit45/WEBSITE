@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Bawah Sederhana</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding-bottom: 60px; /* untuk menghindari konten tertutup navbar */
+      font-family: Arial, sans-serif;
+    }
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #eee;
+      z-index: 100;
+    }
+    .bottom-nav a {
+      flex: 1;
+      padding: 10px 0;
+      text-align: center;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    .bottom-nav a .icon {
+      font-size: 18px;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .bottom-nav a.active, 
+    .bottom-nav a:hover {
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Konten website -->
+  <div style="padding:20px;">
+    <h1>Contoh Konten</h1>
+    <p>Isi halaman website kamu di sini.</p>
+  </div>
+
+  <!-- Navbar Bawah -->
+  <nav class="bottom-nav">
+    <a href="#home" class="active">
+      <span class="icon"><i class="fas fa-home"></i></span>
+      <span>Beranda</span>
+    </a>
+    <a href="#search">
+      <span class="icon"><i class="fas fa-search"></i></span>
+      <span>Cari</span>
+    </a>
+    <a href="#favorites">
+      <span class="icon"><i class="fas fa-heart"></i></span>
+      <span>Favorit</span>
+    </a>
+    <a href="#profile">
+      <span class="icon"><i class="fas fa-user"></i></span>
+      <span>Akun</span>
+    </a>
+  </nav>
+
+</body>
+</html>
