@@ -1,0 +1,979 @@
+buah:
+  - id: 1
+    name: "Apel"
+    benefits:
+      - "Pencernaan: Kaya serat yang membantu melancarkan proses pencernaan."
+      - "Jantung: Menurunkan kolesterol jahat dan mendukung kesehatan jantung."
+      - "Berat Badan: Rendah kalori namun mengenyangkan."
+      - "Otak: Mengandung flavonoid yang bermanfaat untuk fungsi otak."
+      - "Imunitas: Sumber vitamin C untuk meningkatkan sistem kekebalan."
+  - id: 2
+    name: "Pisang"
+    benefits:
+      - "Energi: Sumber karbohidrat cepat untuk energi."
+      - "Jantung: Mengandung kalium yang mendukung fungsi jantung."
+      - "Pencernaan: Serat membantu kelancaran sistem pencernaan."
+      - "Otak: Kandungan vitamin B6 mendukung fungsi otak."
+  - id: 3
+    name: "Jeruk"
+    benefits:
+      - "Imunitas: Tinggi vitamin C untuk meningkatkan daya tahan tubuh."
+      - "Kulit: Mendukung produksi kolagen agar kulit sehat."
+      - "Antioksidan: Membantu melawan radikal bebas."
+      - "Pencernaan: Serat bermanfaat bagi sistem pencernaan."
+  - id: 4
+    name: "Mangga"
+    benefits:
+      - "Mata & Kulit: Kaya vitamin A dan C, baik untuk kesehatan mata dan kulit."
+      - "Antioksidan: Melawan radikal bebas."
+      - "Imunitas: Meningkatkan sistem kekebalan tubuh."
+      - "Pencernaan: Enzim pektin membantu pencernaan."
+  - id: 5
+    name: "Kiwi"
+    benefits:
+      - "Imunitas: Sangat tinggi vitamin C."
+      - "Pencernaan: Serat membantu menjaga sistem pencernaan."
+      - "Tekanan Darah: Kalium mendukung pengaturan tekanan darah."
+      - "Kulit: Antioksidan mendukung kesehatan kulit."
+  - id: 6
+    name: "Anggur"
+    benefits:
+      - "Jantung: Resveratrol membantu menjaga kesehatan jantung."
+      - "Antioksidan: Melawan peradangan dan radikal bebas."
+      - "Imunitas: Mengandung vitamin C dan K."
+      - "Energi: Sumber energi alami."
+  - id: 7
+    name: "Semangka"
+    benefits:
+      - "Hidrasi: Kandungan air yang tinggi membantu menghidrasi tubuh."
+      - "Kulit & Mata: Likopen dan vitamin A mendukung kesehatan kulit dan mata."
+      - "Pencernaan: Serat alami mendukung kelancaran pencernaan."
+      - "Jantung: Membantu sirkulasi darah yang sehat."
+  - id: 8
+    name: "Pepaya"
+    benefits:
+      - "Pencernaan: Enzim papain membantu mencerna protein."
+      - "Imunitas: Kaya vitamin A dan C."
+      - "Antioksidan: Melawan radikal bebas dan peradangan."
+      - "Kulit: Mendukung regenerasi kulit."
+  - id: 9
+    name: "Nanas"
+    benefits:
+      - "Pencernaan: Bromelain membantu memecah protein dan mengurangi peradangan."
+      - "Imunitas: Sumber vitamin C yang kuat."
+      - "Metabolisme: Mendukung metabolisme protein."
+      - "Sendi: Sifat anti-inflamasi bermanfaat untuk kesehatan sendi."
+  - id: 10
+    name: "Strawberry"
+    benefits:
+      - "Imunitas: Tinggi vitamin C dan antioksidan."
+      - "Kulit: Mendukung kesehatan kulit."
+      - "Jantung: Baik untuk kesehatan jantung."
+      - "Pencernaan: Serat membantu menjaga kelancaran pencernaan."
+  - id: 11
+    name: "Lemon"
+    benefits:
+      - "Imunitas: Sumber vitamin C yang tinggi."
+      - "Detoksifikasi: Membantu membersihkan tubuh."
+      - "Pencernaan: Sifat alkalin mendukung sistem pencernaan."
+      - "Kulit: Mencerahkan dan mendukung kesehatan kulit."
+  - id: 12
+    name: "Pir (Pears)"
+    benefits:
+      - "Pencernaan: Kandungan serat tinggi membantu pencernaan."
+      - "Imunitas: Mengandung vitamin C dan K."
+      - "Gula Darah: Membantu mengatur kadar gula darah."
+      - "Jantung: Baik untuk kesehatan jantung."
+  - id: 13
+    name: "Alpukat (Avocado)"
+    benefits:
+      - "Lemak Sehat: Kaya lemak tak jenuh tunggal yang mendukung kesehatan jantung."
+      - "Vitamin & Mineral: Mengandung vitamin E, C, B, dan kalium."
+      - "Pencernaan: Serat tinggi membantu pencernaan."
+      - "Antioksidan: Melindungi sel dari kerusakan oksidatif."
+  - id: 14
+    name: "Delima (Pomegranate)"
+    benefits:
+      - "Antioksidan: Sangat tinggi antioksidan untuk melawan radikal bebas."
+      - "Jantung: Menurunkan tekanan darah dan mendukung kesehatan jantung."
+      - "Peradangan: Mengurangi peradangan dalam tubuh."
+      - "Kanker: Potensi mencegah pertumbuhan sel kanker (berdasarkan penelitian awal)."
+  - id: 15
+    name: "Blueberry"
+    benefits:
+      - "Antioksidan: Mendukung kesehatan otak dan melawan radikal bebas."
+      - "Memori: Meningkatkan daya ingat."
+      - "Kardiovaskuler: Baik untuk kesehatan jantung."
+      - "Anti-penuaan: Membantu melawan tanda-tanda penuaan."
+  - id: 16
+    name: "Raspberry"
+    benefits:
+      - "Serat Tinggi: Membantu pencernaan."
+      - "Vitamin: Mengandung vitamin C dan K."
+      - "Antioksidan: Mendukung sistem kekebalan tubuh."
+      - "Kalori Rendah: Cocok untuk diet rendah kalori."
+  - id: 17
+    name: "Persik (Peach)"
+    benefits:
+      - "Kulit: Kaya antioksidan untuk kesehatan kulit."
+      - "Pencernaan: Serat mendukung sistem pencernaan."
+      - "Vitamin: Mengandung vitamin A dan C."
+      - "Hidrasi: Kandungan air membantu menjaga hidrasi."
+  - id: 18
+    name: "Plum"
+    benefits:
+      - "Pencernaan: Serat membantu melancarkan pencernaan."
+      - "Antioksidan: Mengandung senyawa pelawan radikal bebas."
+      - "Jantung: Baik untuk kesehatan jantung."
+      - "Imunitas: Mendukung kekebalan tubuh."
+  - id: 19
+    name: "Guava (Jambu Biji)"
+    benefits:
+      - "Vitamin C: Kandungan vitamin C yang tinggi."
+      - "Pencernaan: Serat membantu kelancaran pencernaan."
+      - "Imunitas: Mendukung sistem kekebalan tubuh."
+      - "Mata: Mengandung vitamin A untuk kesehatan mata."
+  - id: 20
+    name: "Sirsak"
+    benefits:
+      - "Antioksidan: Kaya antioksidan dengan sifat anti-inflamasi."
+      - "Imunitas: Mendukung sistem kekebalan tubuh."
+      - "Pencernaan: Enzim dan serat membantu pencernaan."
+      - "Pencegahan Kanker: Potensi menghambat pertumbuhan sel kanker."
+  - id: 21
+    name: "Manggis (Mangosteen)"
+    benefits:
+      - "Antioksidan: Tinggi xanton berperan sebagai antioksidan."
+      - "Anti-inflamasi: Mengurangi peradangan."
+      - "Imunitas: Mendukung sistem kekebalan tubuh."
+      - "Kulit: Baik untuk kesehatan kulit."
+  - id: 22
+    name: "Durian"
+    benefits:
+      - "Energi: Kaya kalori dan lemak sehat untuk energi."
+      - "Imunitas: Mengandung vitamin C dan B kompleks."
+      - "Pencernaan: Serat membantu pencernaan."
+      - "Unik: Dikenal dengan aroma khas dan nutrisi melimpah."
+  - id: 23
+    name: "Belimbing (Starfruit)"
+    benefits:
+      - "Vitamin: Kaya vitamin C dan rendah kalori."
+      - "Pencernaan: Serat mendukung kesehatan pencernaan."
+      - "Kulit: Baik untuk kesehatan kulit dan pengaturan berat badan."
+  - id: 24
+    name: "Rambutan"
+    benefits:
+      - "Antioksidan: Mengandung vitamin C dan zat besi."
+      - "Imunitas: Meningkatkan daya tahan tubuh."
+      - "Pencernaan: Kandungan serat dan air membantu pencernaan."
+  - id: 25
+    name: "Jambu Air"
+    benefits:
+      - "Hidrasi: Tinggi kandungan air untuk menjaga hidrasi."
+      - "Vitamin: Mengandung vitamin C dan serat."
+      - "Mata & Kulit: Mendukung kesehatan mata dan kulit."
+  - id: 26
+    name: "Kedondong (Ambarella)"
+    benefits:
+      - "Pencernaan: Membantu melancarkan sistem pencernaan."
+      - "Imunitas: Kaya vitamin C."
+      - "Ringan: Teksturnya segar dan menyegarkan."
+  - id: 27
+    name: "Nangka (Jackfruit)"
+    benefits:
+      - "Energi: Sumber serat, vitamin B, dan kalium."
+      - "Pencernaan: Membantu kelancaran pencernaan."
+      - "Jantung: Baik untuk kesehatan jantung."
+  - id: 28
+    name: "Salak (Snake Fruit)"
+    benefits:
+      - "Serat: Membantu pencernaan dan menyehatkan kulit."
+      - "Antioksidan: Mengandung zat pelawan radikal bebas."
+      - "Rasa: Manis dengan tekstur yang unik."
+  - id: 29
+    name: "Mengkudu"
+    benefits:
+      - "Antioksidan: Kaya senyawa pendukung kekebalan."
+      - "Detoksifikasi: Membantu mengeluarkan racun tubuh."
+      - "Kesehatan Umum: Digunakan secara tradisional untuk mendukung vitalitas."
+  - id: 30
+    name: "Cempedak"
+    benefits:
+      - "Pencernaan: Mengandung serat yang baik untuk sistem pencernaan."
+      - "Nutrisi: Kaya vitamin dan mineral."
+      - "Rasa: Manis dengan aroma khas mirip nangka."
+  - id: 31
+    name: "Srikaya (Custard Apple)"
+    benefits:
+      - "Vitamin: Mengandung vitamin B kompleks dan vitamin C."
+      - "Energi: Sumber energi alami."
+      - "Pencernaan: Serat mendukung kelancaran pencernaan."
+  - id: 32
+    name: "Sawo (Sapodilla)"
+    benefits:
+      - "Gula Alami: Mengandung gula alami yang mudah dicerna."
+      - "Vitamin: Sumber vitamin A dan C."
+      - "Pencernaan: Serat mendukung sistem pencernaan."
+  - id: 33
+    name: "Langsat"
+    benefits:
+      - "Rasa: Manis dan asam, kaya vitamin dan mineral."
+      - "Pencernaan: Mengandung serat yang membantu pencernaan."
+      - "Imunitas: Mendukung sistem kekebalan tubuh."
+  - id: 34
+    name: "Jambu Batu"
+    benefits:
+      - "Hidrasi: Tinggi kandungan air yang membantu hidrasi tubuh."
+      - "Vitamin: Sumber vitamin C yang baik."
+      - "Pencernaan: Mengandung serat yang mendukung kelancaran pencernaan."
+  - id: 35
+    name: "Leci"
+    benefits:
+      - "Vitamin: Mengandung vitamin C tinggi untuk meningkatkan imunitas."
+      - "Antioksidan: Membantu melawan radikal bebas."
+      - "Pencernaan: Serat membantu mendukung proses pencernaan."
+  - id: 36
+    name: "Matoa"
+    benefits:
+      - "Nutrisi: Kaya vitamin dan mineral, terutama zat besi."
+      - "Pencernaan: Serat alami mendukung kelancaran pencernaan."
+      - "Imunitas: Mendukung sistem kekebalan tubuh."
+  - id: 37
+    name: "Jeruk Bali (Pomelo)"
+    benefits:
+      - "Hidrasi: Kandungan air tinggi menyegarkan."
+      - "Imunitas: Kaya vitamin C untuk meningkatkan daya tahan tubuh."
+      - "Pencernaan: Serat mendukung kelancaran pencernaan."
+      - "Jantung: Kalium membantu menjaga kesehatan jantung."
+  - id: 38
+    name: "Kepel"
+    benefits:
+      - "Pencernaan: Kaya serat dan enzim yang mendukung sistem pencernaan."
+      - "Imunitas: Mengandung vitamin dan antioksidan untuk melawan radikal bebas."
+      - "Kesehatan Mulut: Secara tradisional digunakan untuk mengatasi masalah tenggorokan."
+  - id: 39
+    name: "Sukun (Breadfruit)"
+    benefits:
+      - "Energi: Sumber karbohidrat kompleks dan serat, baik untuk energi tahan lama."
+      - "Pencernaan: Menyediakan serat yang membantu melancarkan pencernaan."
+      - "Nutrisi: Mengandung vitamin dan mineral esensial."
+  - id: 40
+    name: "Buah Naga (Dragon Fruit)"
+    benefits:
+      - "Antioksidan: Kaya akan senyawa pelawan radikal bebas."
+      - "Pencernaan: Mengandung serat yang mendukung sistem pencernaan."
+      - "Hidrasi: Tinggi kandungan air untuk menjaga hidrasi."
+      - "Vitamin: Sumber vitamin C dan B untuk mendukung imunitas."
+  - id: 41
+    name: "Markisa (Passion Fruit)"
+    benefits:
+      - "Antioksidan: Mengandung antioksidan yang membantu melawan stres oksidatif."
+      - "Pencernaan: Kaya serat yang mendukung kelancaran pencernaan."
+      - "Imunitas: Mengandung vitamin C untuk sistem kekebalan."
+      - "Jantung: Kandungan kalium dan serat baik untuk kesehatan jantung."
+  - id: 42
+    name: "Jeruk Keprok"
+    benefits:
+      - "Vitamin: Varietas lokal kaya vitamin C dan antioksidan."
+      - "Pencernaan: Serat membantu melancarkan pencernaan."
+      - "Kulit: Baik untuk kesehatan kulit dan menjaga kelembapan."
+      - "Imunitas: Mendukung sistem kekebalan tubuh."
+  - id: 43
+    name: "Melon Lokal"
+    benefits:
+      - "Hidrasi: Tinggi air, membantu hidrasi tubuh."
+      - "Vitamin: Sumber vitamin A dan C, baik untuk kulit dan mata."
+      - "Pencernaan: Serat membantu proses pencernaan."
+      - "Rasa: Manis dan menyegarkan."
+  - id: 44
+    name: "Duku"
+    benefits:
+      - "Rasa: Manis dengan tekstur berair khas."
+      - "Pencernaan: Mengandung serat dan enzim alami."
+      - "Vitamin: Sumber vitamin C dan B kompleks."
+  - id: 45
+    name: "Rambai"
+    benefits:
+      - "Rasa: Manis-asam dengan tekstur unik."
+      - "Antioksidan: Mengandung senyawa alami yang mendukung kekebalan."
+      - "Pencernaan: Membantu melancarkan sistem pencernaan."
+  - id: 46
+    name: "Jambu Bol"
+    benefits:
+      - "Kelezatan: Memiliki rasa segar dan renyah."
+      - "Hidrasi: Kandungan air yang tinggi mendukung hidrasi."
+      - "Nutrisi: Mengandung vitamin dan serat yang bermanfaat."
+  - id: 47
+    name: "Asam Jawa"
+    benefits:
+      - "Rasa: Asam yang khas, sering dipakai sebagai bumbu."
+      - "Pencernaan: Membantu memperlancar pencernaan dan detoksifikasi."
+      - "Antioksidan: Mengandung senyawa pelawan radikal bebas."
+  - id: 48
+    name: "Pisang Raja"
+    benefits:
+      - "Varietas Unggul: Varietas lokal dengan rasa manis dan tekstur lembut."
+      - "Energi: Sumber karbohidrat yang sangat baik untuk stamina."
+      - "Nutrisi: Mengandung vitamin dan mineral penting."
+  - id: 49
+    name: "Pisang Mas"
+    benefits:
+      - "Rasa: Lebih kecil dengan rasa yang pekat dan manis."
+      - "Kelezatan: Cocok dikonsumsi langsung atau sebagai camilan."
+      - "Nutrisi: Sumber energi alami dan serat."
+  - id: 50
+    name: "Pisang Kepok"
+    benefits:
+      - "Tekstur: Lembut dan mudah dicerna."
+      - "Serbaguna: Sering diolah sebagai makanan ringan tradisional."
+      - "Nutrisi: Kaya akan kalium dan vitamin, mendukung kesehatan jantung."
+
+sayur:
+  - id: 1
+    name: "Bayam"
+    benefits:
+      - "Zat Besi: Membantu produksi sel darah merah dan mencegah anemia."
+      - "Antioksidan: Melawan radikal bebas serta menjaga kesehatan sel."
+      - "Mata: Mengandung vitamin A dan lutein untuk kesehatan mata."
+      - "Tulang: Kaya vitamin K untuk kekuatan tulang."
+      - "Pencernaan: Serat mendukung kelancaran pencernaan."
+  - id: 2
+    name: "Wortel"
+    benefits:
+      - "Mata: Kaya beta-karoten yang esensial bagi kesehatan mata."
+      - "Kulit: Nutrisi mendukung kesehatan kulit."
+      - "Pencernaan: Serat membantu melancarkan sistem pencernaan."
+  - id: 3
+    name: "Tomat"
+    benefits:
+      - "Antioksidan: Mengandung lycopene untuk melawan radikal bebas."
+      - "Jantung: Mendukung kesehatan jantung dengan vitamin C dan kalium."
+      - "Imunitas: Vitamin C meningkatkan sistem kekebalan."
+      - "Kulit: Nutrisi mendukung regenerasi kulit."
+  - id: 4
+    name: "Brokoli"
+    benefits:
+      - "Imunitas & Tulang: Kaya vitamin C dan K."
+      - "Antioksidan: Senyawa anti-kanker mendukung kesehatan sel."
+      - "Pencernaan: Serat tinggi untuk sistem pencernaan yang sehat."
+      - "Nutrisi: Sumber folat dan zat besi."
+  - id: 5
+    name: "Kubis"
+    benefits:
+      - "Pencernaan: Serat tinggi membantu melancarkan pencernaan."
+      - "Imunitas: Mengandung vitamin C dan antioksidan."
+      - "Jantung: Mendukung kesehatan jantung."
+      - "Kanker: Senyawa bioaktif berpotensi mencegah kanker."
+  - id: 6
+    name: "Kacang Hijau"
+    benefits:
+      - "Protein & Serat: Sumber protein nabati dan serat untuk pencernaan."
+      - "Mata & Imunitas: Mengandung vitamin A dan C."
+      - "Antioksidan: Mendukung kesehatan tubuh secara menyeluruh."
+  - id: 7
+    name: "Buncis (Kacang Panjang)"
+    benefits:
+      - "Pencernaan: Kaya serat untuk melancarkan buang air besar."
+      - "Imunitas: Mengandung vitamin A, C, dan K."
+      - "Tulang: Mendukung kesehatan tulang."
+      - "Gizi: Rendah kalori namun bergizi."
+  - id: 8
+    name: "Timun"
+    benefits:
+      - "Hidrasi: Kandungan air yang tinggi membantu menjaga hidrasi."
+      - "Pencernaan: Serat lembut mendukung sistem pencernaan."
+      - "Kulit: Sifat menyegarkan mendukung kesehatan kulit."
+      - "Vitamin: Sumber vitamin K dan antioksidan."
+  - id: 9
+    name: "Terong"
+    benefits:
+      - "Pencernaan: Serat membantu mengontrol berat badan dan melancarkan pencernaan."
+      - "Antioksidan: Mengandung senyawa pelawan radikal bebas."
+      - "Jantung: Nutrisi seimbang mendukung kesehatan jantung."
+      - "Rendah Kalori: Kaya gizi dengan kalori minim."
+  - id: 10
+    name: "Kangkung"
+    benefits:
+      - "Imunitas & Mata: Kaya vitamin A, C, dan zat besi."
+      - "Pencernaan: Serat mendukung sistem pencernaan."
+      - "Antioksidan: Membantu melawan peradangan."
+  - id: 11
+    name: "Sawi (Sawi Hijau)"
+    benefits:
+      - "Imunitas: Kaya vitamin A dan C."
+      - "Pencernaan: Serat membantu melancarkan pencernaan."
+      - "Tulang: Mengandung kalsium untuk kesehatan tulang."
+      - "Mineral: Mendukung kesehatan secara menyeluruh."
+  - id: 12
+    name: "Labu"
+    benefits:
+      - "Mata & Kulit: Beta-karoten baik untuk mata dan kulit."
+      - "Pencernaan: Serat tinggi mendukung pencernaan."
+      - "Rendah Kalori: Bergizi tanpa beban kalori."
+      - "Imunitas: Kaya vitamin A."
+  - id: 13
+    name: "Paprika (Bell Pepper)"
+    benefits:
+      - "Imunitas: Sangat kaya vitamin C (terutama pada paprika merah)."
+      - "Kulit & Mata: Mengandung vitamin A dan antioksidan."
+      - "Sirkulasi: Mendukung kesehatan pembuluh darah."
+      - "Pencernaan: Serat baik untuk sistem pencernaan."
+  - id: 14
+    name: "Bawang Putih"
+    benefits:
+      - "Anti-inflamasi & Antibakteri: Allicin membantu melawan infeksi."
+      - "Jantung: Menurunkan tekanan darah dan mendukung kesehatan jantung."
+      - "Imunitas: Meningkatkan sistem kekebalan tubuh."
+      - "Detoksifikasi: Membantu membersihkan racun tubuh."
+  - id: 15
+    name: "Kubis Merah"
+    benefits:
+      - "Imunitas: Kaya vitamin C dan antioksidan."
+      - "Pencernaan: Serat mendukung sistem pencernaan."
+      - "Kulit: Mendukung kesehatan kulit dan sirkulasi."
+      - "Jantung: Baik untuk kesehatan jantung."
+  - id: 16
+    name: "Kale"
+    benefits:
+      - "Nutrisi Lengkap: Kaya vitamin A, C, dan K serta mineral seperti kalsium dan zat besi."
+      - "Detoksifikasi: Mendukung pembersihan racun tubuh."
+      - "Antioksidan: Melawan radikal bebas dan peradangan."
+      - "Pencernaan: Serat mendukung sistem pencernaan."
+  - id: 17
+    name: "Asparagus"
+    benefits:
+      - "Folat & Vitamin K: Baik untuk pembekuan darah dan pertumbuhan sel."
+      - "Pencernaan: Serat mendukung pencernaan."
+      - "Antioksidan: Meningkatkan imunitas."
+      - "Detoksifikasi: Mendukung fungsi hati."
+  - id: 18
+    name: "Selada"
+    benefits:
+      - "Hidrasi: Tinggi air untuk menjaga hidrasi."
+      - "Serat: Mendukung pencernaan."
+      - "Rendah Kalori: Cocok untuk diet penurunan berat badan."
+      - "Vitamin: Sumber vitamin A dan K."
+  - id: 19
+    name: "Bawang Bombay"
+    benefits:
+      - "Antioksidan: Quercetin berperan sebagai antioksidan."
+      - "Imunitas: Meningkatkan sistem kekebalan tubuh."
+      - "Pencernaan: Menyediakan prebiotik untuk pencernaan."
+      - "Anti-inflamasi: Mengurangi peradangan."
+  - id: 20
+    name: "Seledri"
+    benefits:
+      - "Hidrasi: Tinggi air dan elektrolit."
+      - "Detoksifikasi: Membantu mengeluarkan racun tubuh."
+      - "Pencernaan: Serat mendukung pencernaan."
+      - "Antioksidan: Melindungi sel dari kerusakan."
+  - id: 21
+    name: "Daun Bawang"
+    benefits:
+      - "Vitamin: Mengandung vitamin A dan C."
+      - "Pencernaan: Mendukung pencernaan dengan serat alami."
+      - "Antioksidan: Menambah sistem kekebalan."
+      - "Rendah Kalori: Menambah rasa tanpa beban kalori."
+  - id: 22
+    name: "Jagung Manis"
+    benefits:
+      - "Energi: Sumber karbohidrat untuk energi."
+      - "Serat: Mendukung pencernaan."
+      - "Vitamin: Mengandung vitamin B kompleks."
+      - "Antioksidan: Lutein mendukung kesehatan mata."
+  - id: 23
+    name: "Ubi Jalar"
+    benefits:
+      - "Pencernaan: Kaya serat untuk sistem pencernaan."
+      - "Vitamin: Sumber vitamin A yang sangat baik."
+      - "Antioksidan: Melawan radikal bebas."
+      - "Energi: Karbohidrat kompleks untuk energi tahan lama."
+  - id: 24
+    name: "Lobak"
+    benefits:
+      - "Pencernaan: Serat membantu melancarkan pencernaan."
+      - "Detoksifikasi: Membantu mengeluarkan racun tubuh."
+      - "Vitamin: Sumber vitamin C dan potassium."
+      - "Kulit: Mendukung kesehatan kulit."
+  - id: 25
+    name: "Bit (Beetroot)"
+    benefits:
+      - "Darah: Meningkatkan sirkulasi dan menurunkan tekanan darah."
+      - "Antioksidan: Kaya antioksidan untuk kesehatan sel."
+      - "Energi: Meningkatkan stamina dan performa olahraga."
+      - "Pencernaan: Serat membantu sistem pencernaan."
+  - id: 26
+    name: "Tauge (Kecambah)"
+    benefits:
+      - "Pencernaan: Mengandung enzim pendukung pencernaan."
+      - "Nutrisi: Sumber vitamin C dan protein nabati."
+      - "Detoksifikasi: Membantu membersihkan tubuh."
+      - "Rendah Kalori: Cocok untuk diet seimbang."
+  - id: 27
+    name: "Cabai"
+    benefits:
+      - "Metabolisme: Capsaicin meningkatkan metabolisme."
+      - "Sirkulasi: Mendukung aliran darah."
+      - "Anti-inflamasi: Sifat anti-inflamasi."
+      - "Rasa: Menambah cita rasa pada masakan."
+  - id: 28
+    name: "Daun Singkong"
+    benefits:
+      - "Vitamin & Mineral: Kaya vitamin, zat besi, dan kalsium."
+      - "Pencernaan: Serat membantu melancarkan pencernaan."
+      - "Tradisional: Biasa dijadikan sayur rebus atau lalapan."
+  - id: 29
+    name: "Daun Pepaya"
+    benefits:
+      - "Antioksidan: Mengandung enzim dan vitamin yang mendukung kekebalan."
+      - "Pencernaan: Membantu mengoptimalkan pencernaan."
+      - "Tradisional: Digunakan dalam masakan tradisional."
+  - id: 30
+    name: "Pare (Bitter Melon)"
+    benefits:
+      - "Gula Darah: Senyawa membantu mengatur kadar gula darah."
+      - "Detoksifikasi: Mendukung pembersihan tubuh."
+      - "Pencernaan: Serat membantu kelancaran pencernaan."
+  - id: 31
+    name: "Daun Katuk"
+    benefits:
+      - "Protein & Vitamin: Kaya protein, vitamin, dan mineral."
+      - "Energi: Mendukung vitalitas tubuh."
+      - "Tradisional: Sering digunakan dalam jamu dan salad."
+  - id: 32
+    name: "Daun Melinjo"
+    benefits:
+      - "Antioksidan: Mengandung antioksidan yang mendukung kesehatan sel."
+      - "Nutrisi: Sumber vitamin dan mineral."
+      - "Tradisional: Populer di beberapa daerah di Indonesia."
+  - id: 33
+    name: "Bawang Merah"
+    benefits:
+      - "Antioksidan: Kaya akan senyawa antioksidan."
+      - "Imunitas: Meningkatkan daya tahan tubuh."
+      - "Jantung: Mendukung kesehatan jantung."
+  - id: 34
+    name: "Cabe Rawit"
+    benefits:
+      - "Metabolisme: Capsaicin meningkatkan metabolisme."
+      - "Sirkulasi: Membantu peredaran darah."
+      - "Rasa: Menambah cita rasa pedas khas masakan Indonesia."
+  - id: 35
+    name: "Daun Pegagan"
+    benefits:
+      - "Otak & Memori: Dikenal untuk meningkatkan fungsi otak dan daya ingat."
+      - "Antioksidan: Mengandung senyawa pendukung peredaran darah."
+      - "Kulit: Mendukung penyembuhan luka serta kesehatan kulit."
+  - id: 36
+    name: "Daun Kemangi"
+    benefits:
+      - "Vitamin: Mengandung vitamin dan mineral penting."
+      - "Antioksidan: Mendukung sistem kekebalan tubuh."
+      - "Aroma & Rasa: Sering dipakai sebagai penyedap dan hiasan dalam masakan tradisional."
+  - id: 37
+    name: "Petai"
+    benefits:
+      - "Antioksidan: Kaya senyawa sulfur yang berperan sebagai antioksidan."
+      - "Pencernaan: Membantu melancarkan pencernaan dan meningkatkan metabolisme."
+      - "Khas: Populer sebagai sayuran pendamping dalam masakan Indonesia."
+  - id: 38
+    name: "Labu Siam"
+    benefits:
+      - "Pencernaan: Kaya serat yang membantu melancarkan pencernaan."
+      - "Rendah Kalori: Baik untuk diet."
+      - "Nutrisi: Mengandung vitamin dan mineral penting."
+  - id: 39
+    name: "Daun Kelor"
+    benefits:
+      - "Nutrisi: Sangat kaya vitamin, mineral, dan antioksidan."
+      - "Imunitas: Mendukung sistem kekebalan tubuh."
+      - "Energi: Meningkatkan vitalitas dan kesehatan secara menyeluruh."
+  - id: 40
+    name: "Daun Kesum"
+    benefits:
+      - "Detoksifikasi: Membantu mengeluarkan racun dari tubuh."
+      - "Antioksidan: Mendukung sistem kekebalan tubuh."
+      - "Tradisional: Digunakan sebagai bumbu dan obat di beberapa daerah."
+  - id: 41
+    name: "Kecipir (Winged Bean)"
+    benefits:
+      - "Protein & Serat: Tinggi protein nabati dan serat yang mendukung kesehatan pencernaan."
+      - "Vitamin: Mengandung vitamin A dan C."
+      - "Kesehatan Tulang: Mineral di dalamnya bermanfaat untuk pertumbuhan tulang."
+  - id: 42
+    name: "Rebung (Bamboo Shoot)"
+    benefits:
+      - "Serat & Nutrisi: Sumber serat yang mendukung kelancaran pencernaan."
+      - "Kalori Rendah: Baik untuk diet penurunan berat badan."
+      - "Mineral: Mengandung potasium dan magnesium."
+  - id: 43
+    name: "Okra (Bendi)"
+    benefits:
+      - "Serat: Membantu pencernaan dan mengatur kadar gula darah."
+      - "Antioksidan: Mengandung vitamin C dan antioksidan."
+      - "Kesehatan Jantung: Mendukung fungsi jantung dengan kandungan serat dan mineral."
+  - id: 44
+    name: "Daun Jeruk"
+    benefits:
+      - "Aroma & Rasa: Digunakan sebagai bumbu untuk memberikan aroma segar pada masakan."
+      - "Antioksidan: Mengandung minyak atsiri dengan sifat anti-inflamasi."
+      - "Detoksifikasi: Membantu mendukung proses pencernaan dan detoksifikasi."
+  - id: 45
+    name: "Daun Salam"
+    benefits:
+      - "Aroma & Rasa: Sering digunakan sebagai penyedap dalam masakan tradisional Indonesia."
+      - "Antioksidan: Mengandung senyawa pendukung sistem kekebalan tubuh."
+      - "Pencernaan: Dipercaya membantu meningkatkan proses pencernaan."
+  - id: 46
+    name: "Talas (Taro)"
+    benefits:
+      - "Pencernaan: Kaya serat dan kalium, baik untuk sistem pencernaan."
+      - "Energi: Sumber karbohidrat kompleks untuk energi tahan lama."
+      - "Tradisional: Sering digunakan dalam masakan lokal sebagai sayur rebus."
+  - id: 47
+    name: "Bengkuang (Jicama)"
+    benefits:
+      - "Hidrasi & Serat: Mengandung banyak air dan serat, mendukung pencernaan."
+      - "Rasa: Memberikan kerenyahan segar pada salad dan hidangan lain."
+      - "Nutrisi: Sumber vitamin dan mineral ringan."
+  - id: 48
+    name: "Daun Jambu"
+    benefits:
+      - "Tradisional: Digunakan sebagai obat herbal untuk mendukung pencernaan dan mengatur gula darah."
+      - "Antioksidan: Mengandung senyawa alami yang mendukung sistem kekebalan."
+  - id: 49
+    name: "Daun Sirsak"
+    benefits:
+      - "Antioksidan: Kaya akan senyawa antioksidan, mendukung kesehatan sel dan imunitas."
+      - "Tradisional: Sering digunakan dalam ramuan obat tradisional."
+  - id: 50
+    name: "Daun Talas"
+    benefits:
+      - "Nutrisi: Kaya serat dan vitamin, bisa dimasak sebagai sayur pendamping."
+      - "Tradisional: Digunakan dalam beberapa masakan daerah untuk variasi rasa."
+
+# Bagian Sayur (total 50 item)
+sayur:
+  - id: 1
+    name: "Bayam"
+    benefits:
+      - "Zat Besi: Membantu produksi sel darah merah dan mencegah anemia."
+      - "Antioksidan: Melawan radikal bebas serta menjaga kesehatan sel."
+      - "Mata: Mengandung vitamin A dan lutein untuk kesehatan mata."
+      - "Tulang: Kaya vitamin K untuk kekuatan tulang."
+      - "Pencernaan: Serat mendukung kelancaran pencernaan."
+  - id: 2
+    name: "Wortel"
+    benefits:
+      - "Mata: Kaya beta-karoten yang esensial bagi kesehatan mata."
+      - "Kulit: Nutrisi mendukung kesehatan kulit."
+      - "Pencernaan: Serat membantu melancarkan sistem pencernaan."
+  - id: 3
+    name: "Tomat"
+    benefits:
+      - "Antioksidan: Mengandung lycopene untuk melawan radikal bebas."
+      - "Jantung: Mendukung kesehatan jantung dengan vitamin C dan kalium."
+      - "Imunitas: Vitamin C meningkatkan sistem kekebalan."
+      - "Kulit: Nutrisi mendukung regenerasi kulit."
+  - id: 4
+    name: "Brokoli"
+    benefits:
+      - "Imunitas & Tulang: Kaya vitamin C dan K."
+      - "Antioksidan: Senyawa anti-kanker mendukung kesehatan sel."
+      - "Pencernaan: Serat tinggi untuk sistem pencernaan yang sehat."
+      - "Nutrisi: Sumber folat dan zat besi."
+  - id: 5
+    name: "Kubis"
+    benefits:
+      - "Pencernaan: Serat tinggi membantu melancarkan pencernaan."
+      - "Imunitas: Mengandung vitamin C dan antioksidan."
+      - "Jantung: Mendukung kesehatan jantung."
+      - "Kanker: Senyawa bioaktif berpotensi mencegah kanker."
+  - id: 6
+    name: "Kacang Hijau"
+    benefits:
+      - "Protein & Serat: Sumber protein nabati dan serat untuk pencernaan."
+      - "Mata & Imunitas: Mengandung vitamin A dan C."
+      - "Antioksidan: Mendukung kesehatan tubuh secara menyeluruh."
+  - id: 7
+    name: "Buncis (Kacang Panjang)"
+    benefits:
+      - "Pencernaan: Kaya serat untuk melancarkan buang air besar."
+      - "Imunitas: Mengandung vitamin A, C, dan K."
+      - "Tulang: Mendukung kesehatan tulang."
+      - "Gizi: Rendah kalori namun bergizi."
+  - id: 8
+    name: "Timun"
+    benefits:
+      - "Hidrasi: Kandungan air yang tinggi membantu menjaga hidrasi."
+      - "Pencernaan: Serat lembut mendukung sistem pencernaan."
+      - "Kulit: Sifat menyegarkan mendukung kesehatan kulit."
+      - "Vitamin: Sumber vitamin K dan antioksidan."
+  - id: 9
+    name: "Terong"
+    benefits:
+      - "Pencernaan: Serat membantu mengontrol berat badan dan melancarkan pencernaan."
+      - "Antioksidan: Mengandung senyawa pelawan radikal bebas."
+      - "Jantung: Nutrisi seimbang mendukung kesehatan jantung."
+      - "Rendah Kalori: Kaya gizi dengan kalori minim."
+  - id: 10
+    name: "Kangkung"
+    benefits:
+      - "Imunitas & Mata: Kaya vitamin A, C, dan zat besi."
+      - "Pencernaan: Serat mendukung sistem pencernaan."
+      - "Antioksidan: Membantu melawan peradangan."
+  - id: 11
+    name: "Sawi (Sawi Hijau)"
+    benefits:
+      - "Imunitas: Kaya vitamin A dan C."
+      - "Pencernaan: Serat membantu melancarkan pencernaan."
+      - "Tulang: Mengandung kalsium untuk kesehatan tulang."
+      - "Mineral: Mendukung kesehatan secara menyeluruh."
+  - id: 12
+    name: "Labu"
+    benefits:
+      - "Mata & Kulit: Beta-karoten baik untuk mata dan kulit."
+      - "Pencernaan: Serat tinggi mendukung pencernaan."
+      - "Rendah Kalori: Bergizi tanpa beban kalori."
+      - "Imunitas: Kaya vitamin A."
+  - id: 13
+    name: "Paprika (Bell Pepper)"
+    benefits:
+      - "Imunitas: Sangat kaya vitamin C (terutama pada paprika merah)."
+      - "Kulit & Mata: Mengandung vitamin A dan antioksidan."
+      - "Sirkulasi: Mendukung kesehatan pembuluh darah."
+      - "Pencernaan: Serat baik untuk sistem pencernaan."
+  - id: 14
+    name: "Bawang Putih"
+    benefits:
+      - "Anti-inflamasi & Antibakteri: Allicin membantu melawan infeksi."
+      - "Jantung: Menurunkan tekanan darah dan mendukung kesehatan jantung."
+      - "Imunitas: Meningkatkan sistem kekebalan tubuh."
+      - "Detoksifikasi: Membantu membersihkan racun tubuh."
+  - id: 15
+    name: "Kubis Merah"
+    benefits:
+      - "Imunitas: Kaya vitamin C dan antioksidan."
+      - "Pencernaan: Serat mendukung sistem pencernaan."
+      - "Kulit: Mendukung kesehatan kulit dan sirkulasi."
+      - "Jantung: Baik untuk kesehatan jantung."
+  - id: 16
+    name: "Kale"
+    benefits:
+      - "Nutrisi Lengkap: Kaya vitamin A, C, dan K serta mineral seperti kalsium dan zat besi."
+      - "Detoksifikasi: Mendukung pembersihan racun tubuh."
+      - "Antioksidan: Melawan radikal bebas dan peradangan."
+      - "Pencernaan: Serat mendukung sistem pencernaan."
+  - id: 17
+    name: "Asparagus"
+    benefits:
+      - "Folat & Vitamin K: Baik untuk pembekuan darah dan pertumbuhan sel."
+      - "Pencernaan: Serat mendukung pencernaan."
+      - "Antioksidan: Meningkatkan imunitas."
+      - "Detoksifikasi: Mendukung fungsi hati."
+  - id: 18
+    name: "Selada"
+    benefits:
+      - "Hidrasi: Tinggi air untuk menjaga hidrasi."
+      - "Serat: Mendukung pencernaan."
+      - "Rendah Kalori: Cocok untuk diet penurunan berat badan."
+      - "Vitamin: Sumber vitamin A dan K."
+  - id: 19
+    name: "Bawang Bombay"
+    benefits:
+      - "Antioksidan: Quercetin berperan sebagai antioksidan."
+      - "Imunitas: Meningkatkan sistem kekebalan tubuh."
+      - "Pencernaan: Menyediakan prebiotik untuk pencernaan."
+      - "Anti-inflamasi: Mengurangi peradangan."
+  - id: 20
+    name: "Seledri"
+    benefits:
+      - "Hidrasi: Tinggi air dan elektrolit."
+      - "Detoksifikasi: Membantu mengeluarkan racun tubuh."
+      - "Pencernaan: Serat mendukung pencernaan."
+      - "Antioksidan: Melindungi sel dari kerusakan."
+  - id: 21
+    name: "Daun Bawang"
+    benefits:
+      - "Vitamin: Mengandung vitamin A dan C."
+      - "Pencernaan: Mendukung pencernaan dengan serat alami."
+      - "Antioksidan: Menambah sistem kekebalan."
+      - "Rendah Kalori: Menambah rasa tanpa beban kalori."
+  - id: 22
+    name: "Jagung Manis"
+    benefits:
+      - "Energi: Sumber karbohidrat untuk energi."
+      - "Serat: Mendukung pencernaan."
+      - "Vitamin: Mengandung vitamin B kompleks."
+      - "Antioksidan: Lutein mendukung kesehatan mata."
+  - id: 23
+    name: "Ubi Jalar"
+    benefits:
+      - "Pencernaan: Kaya serat untuk sistem pencernaan."
+      - "Vitamin: Sumber vitamin A yang sangat baik."
+      - "Antioksidan: Melawan radikal bebas."
+      - "Energi: Karbohidrat kompleks untuk energi tahan lama."
+  - id: 24
+    name: "Lobak"
+    benefits:
+      - "Pencernaan: Serat membantu melancarkan pencernaan."
+      - "Detoksifikasi: Membantu mengeluarkan racun tubuh."
+      - "Vitamin: Sumber vitamin C dan potassium."
+      - "Kulit: Mendukung kesehatan kulit."
+  - id: 25
+    name: "Bit (Beetroot)"
+    benefits:
+      - "Darah: Meningkatkan sirkulasi dan menurunkan tekanan darah."
+      - "Antioksidan: Kaya antioksidan untuk kesehatan sel."
+      - "Energi: Meningkatkan stamina dan performa olahraga."
+      - "Pencernaan: Serat membantu sistem pencernaan."
+  - id: 26
+    name: "Tauge (Kecambah)"
+    benefits:
+      - "Pencernaan: Mengandung enzim pendukung pencernaan."
+      - "Nutrisi: Sumber vitamin C dan protein nabati."
+      - "Detoksifikasi: Membantu membersihkan tubuh."
+      - "Rendah Kalori: Cocok untuk diet seimbang."
+  - id: 27
+    name: "Cabai"
+    benefits:
+      - "Metabolisme: Capsaicin meningkatkan metabolisme."
+      - "Sirkulasi: Mendukung aliran darah."
+      - "Anti-inflamasi: Sifat anti-inflamasi."
+      - "Rasa: Menambah cita rasa pada masakan."
+  - id: 28
+    name: "Daun Singkong"
+    benefits:
+      - "Vitamin & Mineral: Kaya vitamin, zat besi, dan kalsium."
+      - "Pencernaan: Serat membantu melancarkan pencernaan."
+      - "Tradisional: Biasa dijadikan sayur rebus atau lalapan."
+  - id: 29
+    name: "Daun Pepaya"
+    benefits:
+      - "Antioksidan: Mengandung enzim dan vitamin yang mendukung kekebalan."
+      - "Pencernaan: Membantu mengoptimalkan pencernaan."
+      - "Tradisional: Digunakan dalam masakan tradisional."
+  - id: 30
+    name: "Pare (Bitter Melon)"
+    benefits:
+      - "Gula Darah: Senyawa membantu mengatur kadar gula darah."
+      - "Detoksifikasi: Mendukung pembersihan tubuh."
+      - "Pencernaan: Serat membantu kelancaran pencernaan."
+  - id: 31
+    name: "Daun Katuk"
+    benefits:
+      - "Protein & Vitamin: Kaya protein, vitamin, dan mineral."
+      - "Energi: Mendukung vitalitas tubuh."
+      - "Tradisional: Sering digunakan dalam jamu dan salad."
+  - id: 32
+    name: "Daun Melinjo"
+    benefits:
+      - "Antioksidan: Mengandung antioksidan yang mendukung kesehatan sel."
+      - "Nutrisi: Sumber vitamin dan mineral."
+      - "Tradisional: Populer di beberapa daerah di Indonesia."
+  - id: 33
+    name: "Bawang Merah"
+    benefits:
+      - "Antioksidan: Kaya akan senyawa antioksidan."
+      - "Imunitas: Meningkatkan daya tahan tubuh."
+      - "Jantung: Mendukung kesehatan jantung."
+  - id: 34
+    name: "Cabe Rawit"
+    benefits:
+      - "Metabolisme: Capsaicin meningkatkan metabolisme."
+      - "Sirkulasi: Membantu peredaran darah."
+      - "Rasa: Menambah cita rasa pedas khas masakan Indonesia."
+  - id: 35
+    name: "Daun Pegagan"
+    benefits:
+      - "Otak & Memori: Dikenal untuk meningkatkan fungsi otak dan daya ingat."
+      - "Antioksidan: Mengandung senyawa pendukung peredaran darah."
+      - "Kulit: Mendukung penyembuhan luka serta kesehatan kulit."
+  - id: 36
+    name: "Daun Kemangi"
+    benefits:
+      - "Vitamin: Mengandung vitamin dan mineral penting."
+      - "Antioksidan: Mendukung sistem kekebalan tubuh."
+      - "Aroma & Rasa: Sering dipakai sebagai penyedap dan hiasan dalam masakan tradisional."
+  - id: 37
+    name: "Petai"
+    benefits:
+      - "Antioksidan: Kaya senyawa sulfur yang berperan sebagai antioksidan."
+      - "Pencernaan: Membantu melancarkan pencernaan dan meningkatkan metabolisme."
+      - "Khas: Populer sebagai sayuran pendamping dalam masakan Indonesia."
+  - id: 38
+    name: "Labu Siam"
+    benefits:
+      - "Pencernaan: Kaya serat yang membantu melancarkan pencernaan."
+      - "Rendah Kalori: Baik untuk diet."
+      - "Nutrisi: Mengandung vitamin dan mineral penting."
+  - id: 39
+    name: "Daun Kelor"
+    benefits:
+      - "Nutrisi: Sangat kaya vitamin, mineral, dan antioksidan."
+      - "Imunitas: Mendukung sistem kekebalan tubuh."
+      - "Energi: Meningkatkan vitalitas dan kesehatan secara menyeluruh."
+  - id: 40
+    name: "Daun Kesum"
+    benefits:
+      - "Detoksifikasi: Membantu mengeluarkan racun dari tubuh."
+      - "Antioksidan: Mendukung sistem kekebalan tubuh."
+      - "Tradisional: Digunakan sebagai bumbu dan obat di beberapa daerah."
+  - id: 41
+    name: "Kecipir (Winged Bean)"
+    benefits:
+      - "Protein & Serat: Tinggi protein nabati dan serat yang mendukung kesehatan pencernaan."
+      - "Vitamin: Mengandung vitamin A dan C."
+      - "Kesehatan Tulang: Mineral di dalamnya bermanfaat untuk pertumbuhan tulang."
+  - id: 42
+    name: "Rebung (Bamboo Shoot)"
+    benefits:
+      - "Serat & Nutrisi: Sumber serat yang mendukung kelancaran pencernaan."
+      - "Kalori Rendah: Baik untuk diet penurunan berat badan."
+      - "Mineral: Mengandung potasium dan magnesium."
+  - id: 43
+    name: "Okra (Bendi)"
+    benefits:
+      - "Serat: Membantu pencernaan dan mengatur kadar gula darah."
+      - "Antioksidan: Mengandung vitamin C dan antioksidan."
+      - "Kesehatan Jantung: Mendukung fungsi jantung dengan kandungan serat dan mineral."
+  - id: 44
+    name: "Daun Jeruk"
+    benefits:
+      - "Aroma & Rasa: Digunakan sebagai bumbu untuk memberikan aroma segar pada masakan."
+      - "Antioksidan: Mengandung minyak atsiri dengan sifat anti-inflamasi."
+      - "Detoksifikasi: Membantu mendukung proses pencernaan dan detoksifikasi."
+  - id: 45
+    name: "Daun Salam"
+    benefits:
+      - "Aroma & Rasa: Sering digunakan sebagai penyedap dalam masakan tradisional Indonesia."
+      - "Antioksidan: Mengandung senyawa pendukung sistem kekebalan tubuh."
+      - "Pencernaan: Dipercaya membantu meningkatkan proses pencernaan."
+  - id: 46
+    name: "Talas (Taro)"
+    benefits:
+      - "Pencernaan: Kaya serat dan kalium, baik untuk sistem pencernaan."
+      - "Energi: Sumber karbohidrat kompleks untuk energi tahan lama."
+      - "Tradisional: Sering digunakan dalam masakan lokal sebagai sayur rebus."
+  - id: 47
+    name: "Bengkuang (Jicama)"
+    benefits:
+      - "Hidrasi & Serat: Mengandung banyak air dan serat, mendukung pencernaan."
+      - "Rasa: Memberikan kerenyahan segar pada salad dan hidangan lain."
+      - "Nutrisi: Sumber vitamin dan mineral ringan."
+  - id: 48
+    name: "Daun Jambu"
+    benefits:
+      - "Tradisional: Digunakan sebagai obat herbal untuk mendukung pencernaan dan mengatur gula darah."
+      - "Antioksidan: Mengandung senyawa alami yang mendukung sistem kekebalan."
+  - id: 49
+    name: "Daun Sirsak"
+    benefits:
+      - "Antioksidan: Kaya akan senyawa antioksidan, mendukung kesehatan sel dan imunitas."
+      - "Tradisional: Sering digunakan dalam ramuan obat tradisional."
+  - id: 50
+    name: "Daun Talas"
+    benefits:
+      - "Nutrisi: Kaya serat dan vitamin, bisa dimasak sebagai sayur pendamping."
+      - "Tradisional: Digunakan dalam beberapa masakan daerah untuk variasi rasa."
+
