@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Combined Script - Revised</title>
+  <style>
+    /* === STYLE HP ASLI === */
+    .card {
+      width: 210px;
+      height: 400px;
+      background: black;
+      border-radius: 35px;
+      border: 2px solid rgb(40, 40, 40);
+      padding: 7px;
+      position: relative;
+      box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.486);
+      overflow: hidden;
+    }
+    
+    .card-int {
+      background-image: linear-gradient(
+        to right bottom,
+        #ff0000,
+        #ff0045,
+        #ff0078,
+        #ea00aa,
+        #b81cd7,
+        #8a3ad6,
+        #5746cf,
+        #004ac2,
+        #003d94,
+        #002e66,
+        #001d3a,
+        #020812
+      );
+      background-size: 200% 200%;
+      background-position: 0% 0%;
+      height: 100%;
+      border-radius: 25px;
+      transition: all 0.6s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card:hover .card-int {
+      background-position: 100% 100%;
+    }
+    
+    .top {
+      position: absolute;
+      top: 0;
+      right: 50%;
+      transform: translate(50%, 0);
+      width: 35%;
+      height: 18px;
+      background-color: black;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    
+    .speaker {
+      position: absolute;
+      top: 2px;
+      right: 50%;
+      transform: translate(50%, 0);
+      width: 40%;
+      height: 2px;
+      border-radius: 2px;
+      background-color: rgb(20, 20, 20);
+    }
+    
+    .camera {
+      position: absolute;
+      top: 6px;
+      right: 84%;
+      transform: translate(50%, 0);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.048);
+    }
+    
+    .int {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      top: 50%;
+      right: 50%;
+      transform: translate(50%, -50%);
+      background-color: rgba(0, 0, 255, 0.212);
+    }
+    
+    .btn1,
+    .btn2,
+    .btn3,
+    .btn4 {
+      position: absolute;
+      width: 2px;
+    }
+    
+    .btn1,
+    .btn2,
+    .btn3 {
+      height: 45px;
+      top: 30%;
+      right: -4px;
+      background-image: linear-gradient(
+        to right,
+        #111111,
+        #222222,
+        #333333,
+        #464646,
+        #595959
+      );
+    }
+    
+    .btn2,
+    .btn3 {
+      transform: scale(-1);
+      left: -4px;
+    }
+    
+    .btn2,
+    .btn3 {
+      transform: scale(-1);
+      height: 30px;
+    }
+    
+    .btn2 {
+      top: 26%;
+    }
+    
+    .btn3 {
+      top: 36%;
+    }
+    
+    /* === GRID IKON DI DALAM LAYAR HP === */
+    .screen-icons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 10px;
+      height: 80%;
+      box-sizing: border-box;
+      margin-top: 20px;
+    }
+    
+    .icon {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      /* Membuat ikon berbentuk kotak agar seragam */
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .icon img.icon-img {
+      width: 80%;
+      height: auto;
+      border-radius: 10px;
+    }
+    
+    /* Overlay info disembunyikan secara default */
+    .icon-info {
+      display: none;
+    }
+    
+    /* Ketika di-hover, overlay muncul di tengah layar HP */
+    .icon:hover .icon-info {
+      display: flex;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 25px;
+      padding: 10px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 100;
+      color: white;
+      height: 150px;
+    }
+    
+    .info-top img {
+      width: 50px;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .info-mid {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+    
+    .info-bottom {
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="btn1"></div>
+    <div class="btn2"></div>
+    <div class="btn3"></div>
+    <div class="btn4"></div>
+    <div class="card-int">
+      <!-- Grid ikon di dalam layar HP -->
+      <div class="screen-icons">
+        <!-- 1. Google Drive -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/googledrive-andev404.svg?raw=true" alt="Google Drive" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/googledrive-andev404.svg?raw=true" alt="Google Drive" />
+            </div>
+            <div class="info-mid">Google Drive</div>
+            <div class="info-bottom">Cloud Storage</div>
+          </div>
+        </div>
+        <!-- 2. OneDrive -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/onedrive-andev404.svg?raw=true" alt="OneDrive" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/onedrive-andev404.svg?raw=true" alt="OneDrive" />
+            </div>
+            <div class="info-mid">OneDrive</div>
+            <div class="info-bottom">Cloud Backup</div>
+          </div>
+        </div>
+        <!-- 3. Dropbox -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/dropbox-andev404.svg?raw=true" alt="Dropbox" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/dropbox-andev404.svg?raw=true" alt="Dropbox" />
+            </div>
+            <div class="info-mid">Dropbox</div>
+            <div class="info-bottom">File Synchronization</div>
+          </div>
+        </div>
+        <!-- 4. Microsoft Excel -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftexcel2013-andev404.svg?raw=true" alt="Microsoft Excel" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftexcel2013-andev404.svg?raw=true" alt="Microsoft Excel" />
+            </div>
+            <div class="info-mid">Microsoft Excel</div>
+            <div class="info-bottom">Data Analysis</div>
+          </div>
+        </div>
+        <!-- 5. Microsoft Word -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftword2013-andev404.svg?raw=true" alt="Microsoft Word" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftword2013-andev404.svg?raw=true" alt="Microsoft Word" />
+            </div>
+            <div class="info-mid">Microsoft Word</div>
+            <div class="info-bottom">Document Processing</div>
+          </div>
+        </div>
+        <!-- 6. Microsoft PowerPoint -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftpowerpoint2013-andev404.svg?raw=true" alt="Microsoft PowerPoint" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftpowerpoint2013-andev404.svg?raw=true" alt="Microsoft PowerPoint" />
+            </div>
+            <div class="info-mid">Microsoft PowerPoint</div>
+            <div class="info-bottom">Presentation</div>
+          </div>
+        </div>
+        <!-- 7. Canva -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/canva-andev404.svg?raw=true" alt="Canva" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/canva-andev404.svg?raw=true" alt="Canva" />
+            </div>
+            <div class="info-mid">Canva</div>
+            <div class="info-bottom">Graphic Design</div>
+          </div>
+        </div>
+        <!-- 8. TeamViewer -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/teamviewer-andev404.png?raw=true" alt="TeamViewer" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/teamviewer-andev404.png?raw=true" alt="TeamViewer" />
+            </div>
+            <div class="info-mid">TeamViewer</div>
+            <div class="info-bottom">Remote Access</div>
+          </div>
+        </div>
+        <!-- 9. AnyDesk -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/anydesk-andev404.svg?raw=true" alt="AnyDesk" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/anydesk-andev404.svg?raw=true" alt="AnyDesk" />
+            </div>
+            <div class="info-mid">AnyDesk</div>
+            <div class="info-bottom">Remote Desktop Control</div>
+          </div>
+        </div>
+        <!-- 10. RDP -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftremotedesktop-andev404.png?raw=true" alt="RDP" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftremotedesktop-andev404.png?raw=true" alt="RDP" />
+            </div>
+            <div class="info-mid">RDP</div>
+            <div class="info-bottom">Remote Access</div>
+          </div>
+        </div>
+        <!-- 11. Linux -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/linux-andev404.png?raw=true" alt="Linux" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/linux-andev404.png?raw=true" alt="Linux" />
+            </div>
+            <div class="info-mid">Linux</div>
+            <div class="info-bottom">Operating System</div>
+          </div>
+        </div>
+        <!-- 12. Netdata -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/netdata-andev404.svg?raw=true" alt="Netdata" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/netdata-andev404.svg?raw=true" alt="Netdata" />
+            </div>
+            <div class="info-mid">Netdata</div>
+            <div class="info-bottom">System Monitoring</div>
+          </div>
+        </div>
+        <!-- 13. ngrok -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/ngrok-andev404.svg?raw=true" alt="ngrok" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/ngrok-andev404.svg?raw=true" alt="ngrok" />
+            </div>
+            <div class="info-mid">ngrok</div>
+            <div class="info-bottom">Local Tunneling</div>
+          </div>
+        </div>
+        <!-- 14. Visual Studio Code -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/visualstudiocode-andev404.svg?raw=true" alt="Visual Studio Code" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/visualstudiocode-andev404.svg?raw=true" alt="Visual Studio Code" />
+            </div>
+            <div class="info-mid">Visual Studio Code</div>
+            <div class="info-bottom">Code Editor</div>
+          </div>
+        </div>
+        <!-- 15. XAMPP -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/xampp-andev404.svg?raw=true" alt="XAMPP" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/xampp-andev404.svg?raw=true" alt="XAMPP" />
+            </div>
+            <div class="info-mid">XAMPP</div>
+            <div class="info-bottom">PHP Development</div>
+          </div>
+        </div>
+        <!-- 16. HTML -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/html5-andev404.svg?raw=true" alt="HTML" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/html5-andev404.svg?raw=true" alt="HTML" />
+            </div>
+            <div class="info-mid">HTML</div>
+            <div class="info-bottom">Basic Development</div>
+          </div>
+        </div>
+        <!-- 17. CSS -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/css3-andev404.svg?raw=true" alt="CSS" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/css3-andev404.svg?raw=true" alt="CSS" />
+            </div>
+            <div class="info-mid">CSS</div>
+            <div class="info-bottom">Web Styling</div>
+          </div>
+        </div>
+        <!-- 18. PHP -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/php-andev404.svg?raw=true" alt="PHP" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/php-andev404.svg?raw=true" alt="PHP" />
+            </div>
+            <div class="info-mid">PHP</div>
+            <div class="info-bottom">Back-End Development</div>
+          </div>
+        </div>
+        <!-- 19. Python -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/python-andev404.svg?raw=true" alt="Python" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/python-andev404.svg?raw=true" alt="Python" />
+            </div>
+            <div class="info-mid">Python</div>
+            <div class="info-bottom">Programming & Scripting</div>
+          </div>
+        </div>
+        <!-- 20. GitHub -->
+        <div class="icon">
+          <img class="icon-img" src="https://github.com/belajarit45/WEBSITE/blob/main/assets/github-andev404.svg?raw=true" alt="GitHub" />
+          <div class="icon-info">
+            <div class="info-top">
+              <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/github-andev404.svg?raw=true" alt="GitHub" />
+            </div>
+            <div class="info-mid">GitHub</div>
+            <div class="info-bottom">Version Control</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="top">
+      <div class="camera">
+        <div class="int"></div>
+      </div>
+      <div class="speaker"></div>
+    </div>
+  </div>
+</body>
+</html>
