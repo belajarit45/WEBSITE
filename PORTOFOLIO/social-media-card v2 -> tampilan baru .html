@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Story Card</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+    /* Container untuk kedua card */
+    .card-container {
+      position: relative;
+      width: 500px;
+      height: 350px;
+    }
+    /* Card deskripsi (belakang) */
+    .desc-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      border-radius: 15px;
+      z-index: 1;
+      padding: 20px;
+      transform: translate(150px, 50px) rotate(5deg);
+    }
+    .desc-content {
+      max-width: 250px; /* Lebar konten deskripsi dikurangi */
+      margin-left: auto;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      text-align: right;
+      padding-right: 20px;
+      padding-top: 20px;
+    }
+    .desc-title {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+    .desc-text {
+      font-size: 14px;
+      color: #666;
+      text-align: right;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .desc-view {
+      font-size: 14px;
+      color: #007bff;
+      text-decoration: none;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+    }
+    /* Card utama (depan) */
+    .story-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 500px;
+      height: 350px;
+      background-color: #000;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+      transform: translate(-150px, -50px) rotate(-5deg);
+    }
+    .story-content {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background-color: #1a1a1a;
+    }
+    /* Story progress line */
+    .story-progress {
+      display: flex;
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 100%;
+      padding: 0 8px;
+      z-index: 20;
+      gap: 2px;
+    }
+    .progress-segment {
+      flex-grow: 1;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+      height: 2px;
+    }
+    .progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background-color: white;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      position: absolute;
+      top: 16px;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #555;
+      overflow: hidden;
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .user-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .username {
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .story-time {
+      color: #aaa;
+      font-size: 12px;
+      margin-left: auto;
+    }
+    .header-icons {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    .menu-dots {
+      color: white;
+      margin-right: 12px;
+      font-size: 18px;
+    }
+    .close-btn {
+      color: white;
+      font-size: 18px;
+    }
+    /* Gambar tampilan project */
+    .main-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+    }
+    .portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .story-actions {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+    .input-action {
+      flex-grow: 1;
+      background-color: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      color: #aaa;
+      padding: 8px 16px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+    .action-icons {
+      display: flex;
+      margin-left: 10px;
+    }
+    .action-icon {
+      color: white;
+      margin-left: 12px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card-container">
+    <!-- Card deskripsi -->
+    <div class="desc-card">
+      <div class="desc-content">
+        <div>
+          <h2 class="desc-title"></h2>
+          <p class="desc-text"></p>
+        </div>
+      </div>
+      <a class="desc-view" href="#" target="_blank">View</a>
+    </div>
+    <!-- Card utama -->
+    <div class="story-card">
+      <div class="story-content">
+        <!-- Story progress line -->
+        <div class="story-progress">
+          <div class="progress-segment" data-index="0">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="progress-segment" data-index="1">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="user-info">
+          <div class="user-avatar">
+            <i class="fas fa-user" style="color: white;"></i>
+          </div>
+          <span class="username">Luna</span>
+          <div class="header-icons">
+            <i class="fas fa-ellipsis-h menu-dots"></i>
+            <i class="fas fa-times close-btn"></i>
+          </div>
+        </div>
+        <div class="main-content">
+          <!-- Gambar tampilan project -->
+          <img src="https://github.com/belajarit45/WEBSITE/blob/main/Dashboard%20Monitoring%20Lalu%20Lintas%20Pekanbaru.png?raw=true" alt="Project Thumbnail" class="portrait">
+        </div>
+        <div class="story-actions">
+          <div class="input-action">Send Message</div>
+          <div class="action-icons">
+            <i class="far fa-heart action-icon"></i>
+            <i class="far fa-paper-plane action-icon"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = [
+        'https://github.com/belajarit45/WEBSITE/blob/main/Dashboard%20Monitoring%20Lalu%20Lintas%20Pekanbaru.png?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/Portofolio.png?raw=true'
+      ];
+      const descriptions = [
+        {
+          title: "Dashboard Monitoring Lalu Lintas Pekanbaru",
+          text: "Solusi digital ini mengintegrasikan data lalu lintas dan cuaca real-time ke dalam antarmuka intuitif dan sederhana, lengkap dengan peta interaktif yang memudahkan pemantauan kondisi jalan serta perencanaan perjalanan dengan cepat dan efisien.",
+          url: "https://example.com/dashboard-monitoring"
+        },
+        {
+          title: "Muhammad Andrian - Portofolio",
+          text: "Website portofolio ini menonjolkan desain modern dengan antarmuka bersih, mencerminkan kreativitas dan keahlian teknis dalam pengembangan web serta solusi IT. Dirancang dengan kesederhanaan yang memukau, platform ini menghadirkan keunggulan profesional melalui tampilan elegan yang optimal.",
+          url: "https://example.com/portfolio"
+        }
+      ];
+      const imageElement = document.querySelector('.portrait');
+      const progressFills = document.querySelectorAll('.progress-fill');
+      const descTitle = document.querySelector('.desc-title');
+      const descText = document.querySelector('.desc-text');
+      const descView = document.querySelector('.desc-view');
+      let currentIndex = 0;
+      const duration = 5000; // 5 detik per gambar
+      let timerId = null;
+      let startTime = null;
+      let remainingTime = duration;
+
+      function showImage(index) {
+        if (timerId) {
+          clearTimeout(timerId);
+          timerId = null;
+        }
+        if (index === 0) {
+          progressFills.forEach(fill => {
+            fill.style.transition = 'none';
+            fill.style.width = '0%';
+          });
+          progressFills.forEach(fill => fill.offsetWidth);
+        }
+        // Update konten card deskripsi
+        descTitle.innerText = descriptions[index].title;
+        descText.innerText = descriptions[index].text;
+        descView.href = descriptions[index].url;
+        // Update gambar pada card utama
+        imageElement.src = images[index];
+        // Animasi progress fill untuk gambar aktif
+        const currentFill = progressFills[index];
+        currentFill.style.transition = `width ${duration/1000}s linear`;
+        currentFill.style.width = '100%';
+        startTime = Date.now();
+        remainingTime = duration;
+        timerId = setTimeout(() => {
+          currentIndex = (index + 1) % images.length;
+          showImage(currentIndex);
+        }, duration);
+      }
+
+      // Pause/Resume dengan Page Visibility API
+      document.addEventListener("visibilitychange", function() {
+        if (document.hidden) {
+          if (timerId) {
+            clearTimeout(timerId);
+            timerId = null;
+          }
+          const elapsed = Date.now() - startTime;
+          remainingTime = duration - elapsed;
+          const currentFill = progressFills[currentIndex];
+          currentFill.style.transition = 'none';
+          currentFill.style.width = ((elapsed/duration)*100) + '%';
+        } else {
+          const currentFill = progressFills[currentIndex];
+          currentFill.offsetWidth;
+          currentFill.style.transition = `width ${remainingTime/1000}s linear`;
+          currentFill.style.width = '100%';
+          startTime = Date.now();
+          timerId = setTimeout(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+          }, remainingTime);
+        }
+      });
+
+      showImage(currentIndex);
+    });
+  </script>
+</body>
+</html>
