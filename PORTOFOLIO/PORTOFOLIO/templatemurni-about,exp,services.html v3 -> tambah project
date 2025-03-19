@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Muhammad Andrian</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #001542;
+      font-family: Arial, sans-serif;
+    }
+    .section {
+      width: 100%;
+      height: 100vh;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+    }
+    /* Judul, Subtitle & Deskripsi */
+    .title {
+      font-size: 80px;
+      font-weight: bold;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+    .subtitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #D1CBCB;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 16px;
+      font-weight: normal;
+      color: #888888;
+      line-height: 1.5;
+    }
+    /* Custom classes for split text effect */
+    .normal-part {
+      color: #FFFFFF;
+    }
+    .border-part {
+      color: transparent;
+      -webkit-text-stroke: 1px #FFFFFF;
+      text-stroke: 1px #FFFFFF;
+    }
+    /* ABOUT Section */
+    .about {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    .about-left {
+      width: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 80px;
+      font-weight: bold;
+      color: #FFFFFF;
+      margin-left: 40px;
+      margin-right: 50px;
+      text-align: center;
+      line-height: 0.6;
+    }
+    .about-center {
+      flex: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      padding-right: 20px;
+    }
+    .about-right {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      padding: 20px;
+      color: #FFFFFF;
+      font-size: 18px;
+      text-align: center;
+    }
+    /* EXPERIENCE Section */
+    .experience {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    .experience-left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .experience-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      padding: 20px;
+      width: 80%;
+      transform: rotate(5deg);
+      color: #FFFFFF;
+      font-size: 18px;
+      text-align: center;
+    }
+    .experience-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding-right: 40px;
+      text-align: right;
+    }
+    /* SERVICES Section */
+    .services {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    .services-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      padding-left: 40px;
+      max-width: 500px;
+      margin-right: 40px;
+      position: relative;
+      z-index: 2;
+    }
+    .services-right {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .service-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      color: #FFFFFF;
+      /* Hilangkan rotasi, hanya gunakan translateX */
+      transform: translateX(0);
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      position: relative;
+      z-index: 1;
+      opacity: 0; /* Mulai tersembunyi */
+    }
+    .service-box img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+    }
+    .service-box p {
+      margin: 0;
+      font-size: 14px;
+      color: #FFFFFF;
+    }
+    /* PROJECT Section */
+    .project {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    .project-left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .project-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding-right: 40px;
+      text-align: center;
+    }
+    .title-vertical {
+      font-size: 80px;
+      font-weight: bold;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .about, .experience, .services, .project {
+        flex-direction: column;
+        text-align: center;
+      }
+      .about-left, .experience-right, .services-left, .project-right {
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+      }
+      .experience-right, .project-right {
+        align-items: center;
+      }
+      .services-right {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ABOUT Section -->
+  <section class="section" id="about">
+    <div class="about">
+      <div class="about-left">
+        <span class="normal-part">A</span><br>
+        <span class="normal-part">B</span><br>
+        <span class="border-part">O</span><br>
+        <span class="border-part">U</span><br>
+        <span class="border-part">T</span>
+      </div>
+      <div class="about-center">
+        <p class="description">
+          Hi, Saya Muhammad Andrian dari Pekanbaru, Riau, Indonesia. Saya adalah seorang profesional IT berpengalaman dalam instalasi, konfigurasi, dan troubleshooting jaringan serta perangkat keras. Keahlian saya meliputi perakitan komputer, pengelolaan sistem CCTV, dan penguasaan perangkat lunak, dengan dasar pemrograman HTML, CSS, PHP, dan Python.
+          <br><br>
+          Di luar teknologi, saya tertarik pada olahraga dan traveling. Saya selalu berusaha memperluas wawasan dengan mempelajari perkembangan terbaru dalam bidang teknologi. Bagi saya, tantangan dan pengalaman baru adalah kunci untuk terus berkembang, baik secara pribadi maupun profesional.
+        </p>
+      </div>
+      <div class="about-right">
+        <div class="card">
+          Kartu Profil
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE Section -->
+  <section class="section" id="experience">
+    <div class="experience">
+      <div class="experience-left">
+        <div class="experience-card">
+          Pengalaman Kerja
+        </div>
+      </div>
+      <div class="experience-right">
+        <h1 class="title"><span class="normal-part">EXPER</span><span class="border-part">IENCE</span></h1>
+        <h2 class="subtitle">Kenapa Memilih Saya?</h2>
+        <p class="description">
+          Saya sangat profesional dan memiliki jiwa tanggung jawab yang besar dalam menyelesaikan masalah. Dengan pengalaman yang luas dan keahlian teknis yang mumpuni, saya siap memberikan solusi terbaik untuk setiap tantangan IT. Saya percaya pada pentingnya kualitas dan kecepatan dalam setiap proyek yang saya kerjakan.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES Section -->
+  <section class="section" id="services">
+    <div class="services">
+      <div class="services-left">
+        <h1 class="title"><span class="normal-part">SERV</span><span class="border-part">ICES</span></h1>
+        <h2 class="subtitle">Apa yang Anda cari?</h2>
+        <p class="description">
+          Saya selalu memperioritaskan ketepatan dan kecepatan dalam mengembangkan ide maupun memecahkan masalah. Dengan pengalaman yang luas di berbagai bidang IT, saya siap membantu Anda mencapai tujuan dengan solusi yang efektif dan efisien. Beberapa layanan yang saya kuasai.
+        </p>
+      </div>
+      <div class="services-right">
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/network.png" alt="Jaringan &amp; IT Support">
+          <p>Jaringan &amp; IT Support</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/lock.png" alt="Keamanan &amp; Manajemen IT">
+          <p>Keamanan &amp; Manajemen IT</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/code.png" alt="Web Development">
+          <p>Web Development</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/indoor-camera.png" alt="Instalasi &amp; Manajemen CCTV">
+          <p>Instalasi &amp; Manajemen CCTV</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/flow-chart.png" alt="Desain &amp; Pengembangan Sistem">
+          <p>Desain &amp; Pengembangan Sistem</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/toolbox.png" alt="Perakitan &amp; Diagnostik Perangkat Keras">
+          <p>Perakitan &amp; Diagnostik Perangkat Keras</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/internet-of-things.png" alt="Manajemen Sistem IoT">
+          <p>Manajemen Sistem IoT</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/combo-chart.png" alt="Optimasi Aplikasi Produktivitas">
+          <p>Optimasi Aplikasi Produktivitas</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/plus-math.png" alt="Lainnya">
+          <p>Lainnya</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT Section -->
+  <section class="section" id="project">
+    <div class="project">
+      <div class="project-left">
+        <div class="card">
+          Kartu Proyek
+        </div>
+      </div>
+      <div class="project-right">
+        <h1 class="title-vertical">
+          <span class="normal-part">P</span><br>
+          <span class="normal-part">R</span><br>
+          <span class="normal-part">O</span><br>
+          <span class="normal-part">J</span><br>
+          <span class="border-part">E</span><br>
+          <span class="border-part">C</span><br>
+          <span class="border-part">T</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript untuk efek tampil/geser box SERVICES berdasarkan tampilan section -->
+  <script>
+    // Fungsi untuk mendapatkan jumlah kolom pada .services-right
+    function getColumnCount() {
+      const servicesRight = document.querySelector('.services-right');
+      const style = window.getComputedStyle(servicesRight);
+      const gridTemplateColumns = style.getPropertyValue('grid-template-columns');
+      return gridTemplateColumns.split(' ').length || 3;
+    }
+
+    const servicesSection = document.querySelector('#services');
+    const boxes = document.querySelectorAll('.service-box');
+    const maxOffset = 50; // Nilai offset maksimum (px)
+
+    // Menggunakan IntersectionObserver untuk mendeteksi tampilan SERVICES
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        let progress = entry.intersectionRatio;
+        progress = Math.max(0, Math.min(1, progress));
+        boxes.forEach((box, index) => {
+          const columns = getColumnCount();
+          const row = Math.floor(index / columns);
+          let translation = (row % 2 === 0) 
+            ? -maxOffset * (1 - progress)
+            : maxOffset * (1 - progress);
+          box.style.transform = `translateX(${translation}px)`;
+          box.style.opacity = progress;
+        });
+      });
+    }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+    observer.observe(servicesSection);
+  </script>
+</body>
+</html>
