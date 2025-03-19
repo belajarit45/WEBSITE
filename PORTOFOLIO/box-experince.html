@@ -281,7 +281,8 @@
           activeOverlay.style.left = relLeft + "px";
           activeOverlay.style.top = relTop + "px";
         } else if (layout === "right-layout") {
-          activeOverlay.style.left = (boxRect.right - gridRect.left - 120) + "px";
+          // Perbaikan: overlay memanjang ke kiri dengan mengatur posisi left dan menggeser lebih ke kiri (offset tambahan 20px)
+          activeOverlay.style.left = (boxRect.right - gridRect.left - 140 - 5) + "px";
           activeOverlay.style.top = relTop + "px";
         } else if (layout === "top-layout" || layout === "bottom-layout") {
           activeOverlay.style.left = (relLeft + boxRect.width/2 - 100/2) + "px";
