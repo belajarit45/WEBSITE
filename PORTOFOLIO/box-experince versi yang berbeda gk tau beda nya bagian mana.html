@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Box Hover dengan Layout Rapi</title>
+  <style>
+    /* Basic styling */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    /* Grid dengan lebar kolom tetap (60px) */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 60px);
+      gap: 20px;
+      padding: 20px;
+    }
+    /* Box awal 60x60 dengan background hitam transparan */
+    .box {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    /* Ukuran ikon tetap */
+    .box img {
+      width: 48px;
+      height: 48px;
+      transition: none;
+    }
+    /* Container teks */
+    .text-container {
+      color: #fff;
+      font-size: 10px;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+    .text-container .title {
+      margin: 0;
+      font-weight: bold;
+    }
+    .text-container .desc {
+      margin: 0;
+    }
+    /* Efek blur untuk box yang tidak dihover */
+    .box.blur {
+      filter: blur(4px);
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <!-- Contoh 20 box -->
+    <div class="box" data-title="Google Drive" data-description="Cloud Storage">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/googledrive-andev404.svg?raw=true" alt="Google Drive">
+    </div>
+    <div class="box" data-title="OneDrive" data-description="Cloud Backup">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/onedrive-andev404.svg?raw=true" alt="OneDrive">
+    </div>
+    <div class="box" data-title="Dropbox" data-description="File Synchronization">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/dropbox-andev404.svg?raw=true" alt="Dropbox">
+    </div>
+    <div class="box" data-title="Microsoft Excel" data-description="Data Analysis">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftexcel2013-andev404.svg?raw=true" alt="Microsoft Excel">
+    </div>
+    <div class="box" data-title="Microsoft Word" data-description="Document Processing">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftword2013-andev404.svg?raw=true" alt="Microsoft Word">
+    </div>
+    <div class="box" data-title="Microsoft PowerPoint" data-description="Presentation">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftpowerpoint2013-andev404.svg?raw=true" alt="Microsoft PowerPoint">
+    </div>
+    <div class="box" data-title="Canva" data-description="Graphic Design">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/canva-andev404.svg?raw=true" alt="Canva">
+    </div>
+    <div class="box" data-title="TeamViewer" data-description="Remote Access">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/teamviewer-andev404.png?raw=true" alt="TeamViewer">
+    </div>
+    <div class="box" data-title="AnyDesk" data-description="Remote Desktop Control">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/anydesk-andev404.svg?raw=true" alt="AnyDesk">
+    </div>
+    <div class="box" data-title="RDP" data-description="Remote Access">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftremotedesktop-andev404.png?raw=true" alt="RDP">
+    </div>
+    <div class="box" data-title="Linux" data-description="Operating System">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/linux-andev404.png?raw=true" alt="Linux">
+    </div>
+    <div class="box" data-title="Netdata" data-description="System Monitoring">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/netdata-andev404.svg?raw=true" alt="Netdata">
+    </div>
+    <div class="box" data-title="ngrok" data-description="Local Tunneling">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/ngrok-andev404.svg?raw=true" alt="ngrok">
+    </div>
+    <div class="box" data-title="Visual Studio Code" data-description="Code Editor">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/visualstudiocode-andev404.svg?raw=true" alt="Visual Studio Code">
+    </div>
+    <div class="box" data-title="XAMPP" data-description="PHP Development">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/xampp-andev404.svg?raw=true" alt="XAMPP">
+    </div>
+    <div class="box" data-title="HTML" data-description="Basic Development">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/html5-andev404.svg?raw=true" alt="HTML">
+    </div>
+    <div class="box" data-title="CSS" data-description="Web Styling">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/css3-andev404.svg?raw=true" alt="CSS">
+    </div>
+    <div class="box" data-title="PHP" data-description="Back-End Development">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/php-andev404.svg?raw=true" alt="PHP">
+    </div>
+    <div class="box" data-title="Python" data-description="Programming & Scripting">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/python-andev404.svg?raw=true" alt="Python">
+    </div>
+    <div class="box" data-title="GitHub" data-description="Version Control">
+      <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/github-andev404.svg?raw=true" alt="GitHub">
+    </div>
+  </div>
+
+  <script>
+    const boxes = document.querySelectorAll('.box');
+    
+    boxes.forEach((box, index) => {
+      // Simpan markup asli (ikon) jika belum tersimpan
+      if (!box.dataset.original) {
+        box.dataset.original = box.innerHTML;
+      }
+      
+      box.addEventListener('mouseenter', function() {
+        const col = index % 5; // Kolom: 0 & 1: kiri, 2: tengah, 3 & 4: kanan
+        
+        // Perpanjang box dan atur margin sesuai kolom
+        if (col === 0 || col === 1) {
+          this.style.width = "140px";
+          this.style.marginLeft = "0px";
+        } else if (col === 2) {
+          this.style.width = "220px";
+          this.style.marginLeft = "-80px";
+        } else if (col === 3 || col === 4) {
+          this.style.width = "140px";
+          this.style.marginLeft = "-80px";
+        }
+        this.style.zIndex = "2";
+        
+        // Ambil data judul dan deskripsi
+        const title = this.getAttribute('data-title');
+        const desc = this.getAttribute('data-description');
+        // Ambil markup ikon asli
+        const iconHTML = box.dataset.original;
+        let newContent = "";
+        
+        if (col === 0 || col === 1) {
+          // Layout kolom kiri: ikon di kiri, teks di kanan, dengan jarak konsisten (gap 8px)
+          newContent = `<div class="content-wrapper" style="display: flex; align-items: center; gap:8px;">
+                          <div class="icon-container">${iconHTML}</div>
+                          <div class="text-container">
+                            <div class="title">${title}</div>
+                            <div class="desc">${desc}</div>
+                          </div>
+                        </div>`;
+        } else if (col === 3 || col === 4) {
+          // Layout kolom kanan: teks di kiri, ikon di kanan, dengan gap 8px
+          newContent = `<div class="content-wrapper" style="display: flex; align-items: center; gap:8px;">
+                          <div class="text-container">
+                            <div class="title">${title}</div>
+                            <div class="desc">${desc}</div>
+                          </div>
+                          <div class="icon-container">${iconHTML}</div>
+                        </div>`;
+        } else if (col === 2) {
+          // Layout kolom tengah:
+          // Ikon tetap di tengah (tanpa pergeseran)
+          // Teks judul (di kiri) dan deskripsi (di kanan) muncul secara absolut dengan jarak 8px dari tepi
+          newContent = `<div class="content-wrapper" style="position: relative; width:100%; height:100%;">
+                          <div class="center-icon" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                            ${iconHTML}
+                          </div>
+                          <div class="text-container left" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); text-align: left;">
+                            <div class="title">${title}</div>
+                          </div>
+                          <div class="text-container right" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); text-align: right;">
+                            <div class="desc">${desc}</div>
+                          </div>
+                        </div>`;
+        }
+        this.innerHTML = newContent;
+        
+        // Tambahkan efek blur ke box lain
+        boxes.forEach(b => {
+          if (b !== box) {
+            b.classList.add('blur');
+          }
+        });
+      });
+      
+      box.addEventListener('mouseleave', function() {
+        // Kembalikan ukuran, margin, z-index, dan markup asli
+        this.style.width = "60px";
+        this.style.marginLeft = "0px";
+        this.style.zIndex = "1";
+        this.innerHTML = box.dataset.original;
+        boxes.forEach(b => b.classList.remove('blur'));
+      });
+    });
+  </script>
+</body>
+</html>
