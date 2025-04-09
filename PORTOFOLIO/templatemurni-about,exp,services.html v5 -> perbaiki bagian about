@@ -48,6 +48,9 @@
       font-weight: normal;
       color: #888888;
       line-height: 1.5;
+      left: -140px; /* 🔥 Ditambahkan */
+      position: relative;
+      
     }
     /* Custom classes untuk split text effect */
     .normal-part {
@@ -86,22 +89,23 @@
       text-align: left;
       color: rgba(255, 255, 255, 0.5);
       font-size: 100px;
-
+      left: -140px; /* 🔥 Ditambahkan */
+      position: relative;
     }
     .about-heading .about-text {
       text-align: left;
       color: #FFFFFF;
-      font-size: 250px;
+      font-size: 280px;
       margin: 0;
       position: relative;
-      left: -40px; /* Geser ke kiri */
+      left: -80px; /* Geser ke kiri */
     }
     .about-heading .me {
       text-align: right;
       color: rgba(255, 255, 255, 0.5);
       font-size: 100px;
       margin: 0;
-      right: -82px; /* 🔥 Ditambahkan */
+      right: -140px; /* 🔥 Ditambahkan */
       position: relative;
     }
     /* Deskripsi About */
