@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Muhammad Andrian</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #001542;
+      font-family: Arial, sans-serif;
+    }
+    /* Setiap section diberi jarak yang sama antar bagian */
+    .section {
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 40px; /* Jarak antar section */
+    }
+    .section:last-child {
+      margin-bottom: 0;
+    }
+    /* Judul, Subtitle & Deskripsi */
+    .title {
+      font-size: 80px;
+      font-weight: bold;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+    .subtitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #D1CBCB;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 16px;
+      font-weight: normal;
+      color: #888888;
+      line-height: 1.5;
+    }
+    /* Custom classes untuk split text effect */
+    .normal-part {
+      color: #FFFFFF;
+    }
+    .border-part {
+      color: transparent;
+      -webkit-text-stroke: 1px #FFFFFF;
+      text-stroke: 1px #FFFFFF;
+    }
+    /* ABOUT Section - dimodifikasi */
+    #about .about {
+      width: 100%;
+      min-height: 100%;
+      position: relative;
+      padding-top: 40px;
+    }
+    /* Heading About dengan pengaturan jarak nol dan penggeseran "ABOUT" ke kiri */
+    .about-heading {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto 20px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 0.7;
+    }
+    .about-heading span {
+      display: block;
+      width: 100%;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin: 0;
+    }
+    .about-heading .what {
+      text-align: left;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 100px;
+      left: -140px; /* 🔥 Ditambahkan */
+      position: relative;
+    }
+    .about-heading .about-text {
+      text-align: left;
+      color: #FFFFFF;
+      font-size: 280px;
+      margin: 0;
+      position: relative;
+      left: -80px; /* Geser ke kiri */
+    }
+    .about-heading .me {
+      text-align: right;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 100px;
+      margin: 0;
+      right: -140px; /* 🔥 Ditambahkan */
+      position: relative;
+    }
+    /* Container untuk Card Cyber dan Deskripsi di bagian ABOUT */
+    .about-details {
+      max-width: 1020px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-left: 100px;
+    }
+    .card-wrapper {
+      /* Sesuaikan lebar sesuai kebutuhan */
+      flex: 0 0 auto;
+    }
+    .description-wrapper {
+      flex: 1;
+      text-align: right;
+      /* Menggeser teks lebih ke kanan */
+      padding-left: 190px;
+    }
+    /* EXPERIENCE Section */
+    .experience {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    .experience-left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .experience-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      padding: 20px;
+      width: 80%;
+      transform: rotate(5deg);
+      color: #FFFFFF;
+      font-size: 18px;
+      text-align: center;
+    }
+    .experience-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding-right: 40px;
+      text-align: right;
+    }
+    /* SERVICES Section */
+    .services {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    .services-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      padding-left: 40px;
+      max-width: 500px;
+      margin-right: 40px;
+      position: relative;
+      z-index: 2;
+    }
+    .services-right {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .service-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      color: #FFFFFF;
+      transform: translateX(0);
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+    }
+    .service-box img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+    }
+    .service-box p {
+      margin: 0;
+      font-size: 14px;
+      color: #FFFFFF;
+    }
+    /* PROJECT Section */
+    .project {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    .project-left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .project-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding-right: 40px;
+      text-align: center;
+    }
+    .title-vertical {
+      font-size: 80px;
+      font-weight: bold;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+    /* CONTACT Section */
+    #contact {
+      background-color: #001542;
+      width: 100%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .contact-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+    }
+    .contact-left, .contact-right {
+      flex: 1;
+      min-width: 300px;
+      padding: 20px;
+    }
+    .contact-left {
+      text-align: left;
+    }
+    /* Judul dan subjudul dengan ukuran sama */
+    .contact-left h1,
+    .contact-left h2 {
+      font-size: 36px;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+    .contact-left p {
+      font-size: 16px;
+      color: #888888;
+    }
+    /* Paragraf tambahan */
+    .contact-left .extra-desc {
+      font-size: 16px;
+      color: #888888;
+      margin-bottom: 10px;
+    }
+    /* Spasi tambahan antara extra-desc dan logo */
+    .contact-icons {
+      display: flex;
+      gap: 20px;
+      margin-top: 50px; /* menjatuhkan logo agar sejajar dengan teks di sebelah kanan */
+    }
+    .contact-icons img {
+      width: 36px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .contact-icons img:hover {
+      transform: scale(1.1);
+    }
+    .contact-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: normal;
+      color: #FFFFFF;
+    }
+    .contact-right a {
+      text-decoration: none;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+    .contact-bottom {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .contact-bottom p {
+      font-size: 14px;
+      color: #FFFFFF;
+      margin-left: 20px; /* menyelaraskan dengan teks di .contact-left */
+    }
+    .contact-bottom .big-text {
+      font-size: 260px;
+      font-weight: bold;
+      color: #FFFFFF;
+      display: inline-block; /* Agar lebar dan tinggi mengikuti isi teks */
+      padding: 0;
+      margin: 0;
+      line-height: 1;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .about, .experience, .services, .project {
+        flex-direction: column;
+        text-align: center;
+      }
+      .services-left, .project-right {
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+      }
+      .experience-right, .project-right {
+        align-items: center;
+      }
+      .services-right {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .contact-top {
+        flex-direction: column;
+        align-items: center;
+      }
+      .contact-left, .contact-right {
+        text-align: center;
+      }
+      .contact-right {
+        align-items: center;
+      }
+      .contact-bottom .big-text {
+        font-size: 160px;
+        margin-left: 0;
+      }
+      .contact-bottom p {
+        margin-left: 0;
+      }
+      .about-details {
+        flex-direction: column;
+      }
+      .description-wrapper {
+        text-align: center;
+        padding: 0;
+        margin-top: 20px;
+      }
+    }
+    
+    /* --- CSS tambahan untuk Card Cyber (tetap sama) --- */
+    .container {
+      position: relative;
+      width: 190px;
+      height: 254px;
+      transition: 200ms;
+    }
+    .container:active {
+      width: 180px;
+      height: 245px;
+    }
+    #card {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      transition: 700ms;
+      background: linear-gradient(45deg, #1a1a1a, #262626);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    .card-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    /* Background selalu tampil seperti saat hover */
+    #card::before {
+      content: "";
+      background: radial-gradient(
+        circle at center,
+        rgba(0, 255, 170, 0.1) 0%,
+        rgba(0, 162, 255, 0.05) 50%,
+        transparent 100%
+      );
+      filter: blur(20px);
+      opacity: 0.8;
+      width: 150%;
+      height: 150%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
+    .tracker:hover ~ #card {
+      transition: 300ms;
+      filter: brightness(1.1);
+    }
+    /* --- BAGIAN FOTO (#prompt) --- */
+    #prompt {
+      bottom: 70px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      z-index: 20;
+      transition: 300ms ease-in-out;
+      position: absolute;
+      text-align: center;
+    }
+    #prompt img {
+      width: 100px;
+      height: auto;
+      border-radius: 20px;
+    }
+    /* --- BAGIAN TITLE --- */
+    .title-cyber {
+      opacity: 0;
+      transition: 300ms ease-in-out;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      padding-top: 20px;
+    }
+    .title-cyber .hover-img {
+      display: inline-block;
+      width: 100px;
+      height: auto;
+      border-radius: 20px;
+      transform: translateY(20px);
+    }
+    .tracker:hover ~ #card .title-cyber {
+      opacity: 1;
+      transform: translateY(-10px);
+    }
+    /* --- BAGIAN SUBTITLE --- */
+    .subtitle-cyber {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 2px;
+      transform: translateY(10px);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .subtitle-cyber span {
+      display: block;
+    }
+    .glowing-elements {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .glow-1,
+    .glow-2,
+    .glow-3 {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at center,
+        rgba(0, 255, 170, 0.3) 0%,
+        rgba(0, 255, 170, 0) 70%
+      );
+      filter: blur(15px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .glow-1 {
+      top: -20px;
+      left: -20px;
+    }
+    .glow-2 {
+      top: 50%;
+      right: -30px;
+      transform: translateY(-50%);
+    }
+    .glow-3 {
+      bottom: -20px;
+      left: 30%;
+    }
+    .card-particles span {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #00ffaa;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .tracker:hover ~ #card .glowing-elements div {
+      opacity: 1;
+    }
+    .tracker:hover ~ #card .card-particles span {
+      animation: particleFloat 2s infinite;
+    }
+    @keyframes particleFloat {
+      0% {
+        transform: translate(0, 0);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(calc(var(--x, 0) * 30px), calc(var(--y, 0) * 30px));
+        opacity: 0;
+      }
+    }
+    .card-particles span:nth-child(1) {
+      --x: 1;
+      --y: -1;
+      top: 40%;
+      left: 20%;
+    }
+    .card-particles span:nth-child(2) {
+      --x: -1;
+      --y: -1;
+      top: 60%;
+      right: 20%;
+    }
+    .card-particles span:nth-child(3) {
+      --x: 0.5;
+      --y: 1;
+      top: 20%;
+      left: 40%;
+    }
+    .card-particles span:nth-child(4) {
+      --x: -0.5;
+      --y: 1;
+      top: 80%;
+      right: 40%;
+    }
+    .card-particles span:nth-child(5) {
+      --x: 1;
+      --y: 0.5;
+      top: 30%;
+      left: 60%;
+    }
+    .card-particles span:nth-child(6) {
+      --x: -1;
+      --y: 0.5;
+      top: 70%;
+      right: 60%;
+    }
+    .tracker {
+      position: absolute;
+      z-index: 200;
+      width: 100%;
+      height: 100%;
+    }
+    .tracker:hover {
+      cursor: pointer;
+    }
+    .tracker:hover ~ #card #prompt {
+      opacity: 0;
+    }
+    .canvas {
+      perspective: 800px;
+      inset: 0;
+      z-index: 200;
+      position: absolute;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+      gap: 0px 0px;
+      grid-template-areas:
+        "tr-1 tr-2 tr-3 tr-4 tr-5"
+        "tr-6 tr-7 tr-8 tr-9 tr-10"
+        "tr-11 tr-12 tr-13 tr-14 tr-15"
+        "tr-16 tr-17 tr-18 tr-19 tr-20"
+        "tr-21 tr-22 tr-23 tr-24 tr-25";
+    }
+    .tr-1 { grid-area: tr-1; }
+    .tr-2 { grid-area: tr-2; }
+    .tr-3 { grid-area: tr-3; }
+    .tr-4 { grid-area: tr-4; }
+    .tr-5 { grid-area: tr-5; }
+    .tr-6 { grid-area: tr-6; }
+    .tr-7 { grid-area: tr-7; }
+    .tr-8 { grid-area: tr-8; }
+    .tr-9 { grid-area: tr-9; }
+    .tr-10 { grid-area: tr-10; }
+    .tr-11 { grid-area: tr-11; }
+    .tr-12 { grid-area: tr-12; }
+    .tr-13 { grid-area: tr-13; }
+    .tr-14 { grid-area: tr-14; }
+    .tr-15 { grid-area: tr-15; }
+    .tr-16 { grid-area: tr-16; }
+    .tr-17 { grid-area: tr-17; }
+    .tr-18 { grid-area: tr-18; }
+    .tr-19 { grid-area: tr-19; }
+    .tr-20 { grid-area: tr-20; }
+    .tr-21 { grid-area: tr-21; }
+    .tr-22 { grid-area: tr-22; }
+    .tr-23 { grid-area: tr-23; }
+    .tr-24 { grid-area: tr-24; }
+    .tr-25 { grid-area: tr-25; }
+    .tr-1:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(20deg) rotateY(-10deg) rotateZ(0deg);
+    }
+    .tr-2:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(20deg) rotateY(-5deg) rotateZ(0deg);
+    }
+    .tr-3:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(20deg) rotateY(0deg) rotateZ(0deg);
+    }
+    .tr-4:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(20deg) rotateY(5deg) rotateZ(0deg);
+    }
+    .tr-5:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(20deg) rotateY(10deg) rotateZ(0deg);
+    }
+    .tr-6:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(10deg) rotateY(-10deg) rotateZ(0deg);
+    }
+    .tr-7:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(10deg) rotateY(-5deg) rotateZ(0deg);
+    }
+    .tr-8:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+    }
+    .tr-9:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(10deg) rotateY(5deg) rotateZ(0deg);
+    }
+    .tr-10:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(10deg) rotateY(10deg) rotateZ(0deg);
+    }
+    .tr-11:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(0deg) rotateY(-10deg) rotateZ(0deg);
+    }
+    .tr-12:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(0deg) rotateY(-5deg) rotateZ(0deg);
+    }
+    .tr-13:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    .tr-14:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(0deg) rotateY(5deg) rotateZ(0deg);
+    }
+    .tr-15:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(0deg) rotateY(10deg) rotateZ(0deg);
+    }
+    .tr-16:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-10deg) rotateY(-10deg) rotateZ(0deg);
+    }
+    .tr-17:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-10deg) rotateY(-5deg) rotateZ(0deg);
+    }
+    .tr-18:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-10deg) rotateY(0deg) rotateZ(0deg);
+    }
+    .tr-19:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-10deg) rotateY(5deg) rotateZ(0deg);
+    }
+    .tr-20:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-10deg) rotateY(10deg) rotateZ(0deg);
+    }
+    .tr-21:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-20deg) rotateY(-10deg) rotateZ(0deg);
+    }
+    .tr-22:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-20deg) rotateY(-5deg) rotateZ(0deg);
+    }
+    .tr-23:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg);
+    }
+    .tr-24:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-20deg) rotateY(5deg) rotateZ(0deg);
+    }
+    .tr-25:hover ~ #card {
+      transition: 125ms ease-in-out;
+      transform: rotateX(-20deg) rotateY(10deg) rotateZ(0deg);
+    }
+    .noselect {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- ABOUT Section - dimodifikasi -->
+  <section class="section" id="about">
+    <div class="about">
+      <div class="about-content">
+        <div class="about-heading">
+          <span class="what">WHAT</span>
+          <span class="about-text">ABOUT</span>
+          <span class="me">ME</span>
+        </div>
+        <!-- Mengelompokkan Card Cyber dan Deskripsi menjadi dua kolom -->
+        <div class="about-details">
+          <div class="card-wrapper">
+            <!-- Card Cyber -->
+            <div class="container noselect">
+              <div class="canvas">
+                <div class="tracker tr-1"></div>
+                <div class="tracker tr-2"></div>
+                <div class="tracker tr-3"></div>
+                <div class="tracker tr-4"></div>
+                <div class="tracker tr-5"></div>
+                <div class="tracker tr-6"></div>
+                <div class="tracker tr-7"></div>
+                <div class="tracker tr-8"></div>
+                <div class="tracker tr-9"></div>
+                <div id="card">
+                  <div class="card-content">
+                    <div class="card-glare"></div>
+                    <div class="cyber-lines">
+                      <span></span><span></span><span></span><span></span>
+                    </div>
+                    <!-- Foto di #prompt -->
+                    <p id="prompt">
+                      <img src="https://raw.githubusercontent.com/belajarit45/WEBSITE/main/photoProfile.png" alt="Profile Photo">
+                    </p>
+                    <!-- Title hanya berisi foto, tanpa teks -->
+                    <div class="title-cyber">
+                      <img class="hover-img" src="https://raw.githubusercontent.com/belajarit45/WEBSITE/main/photoProfile.png" alt="Profile Photo">
+                    </div>
+                    <div class="glowing-elements">
+                      <div class="glow-1"></div>
+                      <div class="glow-2"></div>
+                      <div class="glow-3"></div>
+                    </div>
+                    <!-- Subtitle yang dimodifikasi -->
+                    <div class="subtitle-cyber">
+                      <span>MUHAMMAD ANDRIAN</span>
+                      <span>Pekanbaru, Riau,<br>Indonesia</span>
+                    </div>
+                    <div class="card-particles">
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="scan-line"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="description-wrapper">
+            <p class="description">
+              <strong>Hi, Saya Muhammad Andrian dari Pekanbaru, Riau, Indonesia.</strong> Saya adalah seorang profesional IT berpengalaman dalam instalasi, konfigurasi, dan troubleshooting jaringan serta perangkat keras. Keahlian saya meliputi perakitan komputer, pengelolaan sistem CCTV, dan penguasaan perangkat lunak, dengan dasar pemrograman HTML, CSS, PHP, dan Python.
+              <br>
+              <strong>Di luar teknologi,</strong> saya tertarik pada olahraga dan traveling. Saya selalu berusaha memperluas wawasan dengan mempelajari perkembangan terbaru dalam bidang teknologi. Bagi saya, tantangan dan pengalaman baru adalah kunci untuk terus berkembang, baik secara pribadi maupun profesional.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE Section -->
+  <section class="section" id="experience">
+    <div class="experience">
+      <div class="experience-left">
+        <div class="experience-card">
+          Pengalaman Kerja
+        </div>
+      </div>
+      <div class="experience-right">
+        <h1 class="title"><span class="normal-part">EXPER</span><span class="border-part">IENCE</span></h1>
+        <h2 class="subtitle">Kenapa Memilih Saya?</h2>
+        <p class="description">
+          Saya sangat profesional dan memiliki jiwa tanggung jawab yang besar dalam menyelesaikan masalah. Dengan pengalaman yang luas dan keahlian teknis yang mumpuni, saya siap memberikan solusi terbaik untuk setiap tantangan IT. Saya percaya pada pentingnya kualitas dan kecepatan dalam setiap proyek yang saya kerjakan.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES Section -->
+  <section class="section" id="services">
+    <div class="services">
+      <div class="services-left">
+        <h1 class="title"><span class="normal-part">SERV</span><span class="border-part">ICES</span></h1>
+        <h2 class="subtitle">Apa yang Anda cari?</h2>
+        <p class="description">
+          Saya selalu memperioritaskan ketepatan dan kecepatan dalam mengembangkan ide maupun memecahkan masalah. Dengan pengalaman yang luas di berbagai bidang IT, saya siap membantu Anda mencapai tujuan dengan solusi yang efektif dan efisien. Beberapa layanan yang saya kuasai.
+        </p>
+      </div>
+      <div class="services-right">
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/network.png" alt="Jaringan &amp; IT Support">
+          <p>Jaringan &amp; IT Support</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/lock.png" alt="Keamanan &amp; Manajemen IT">
+          <p>Keamanan &amp; Manajemen IT</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/code.png" alt="Web Development">
+          <p>Web Development</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/indoor-camera.png" alt="Instalasi &amp; Manajemen CCTV">
+          <p>Instalasi &amp; Manajemen CCTV</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/flow-chart.png" alt="Desain &amp; Pengembangan Sistem">
+          <p>Desain &amp; Pengembangan Sistem</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/toolbox.png" alt="Perakitan &amp; Diagnostik Perangkat Keras">
+          <p>Perakitan &amp; Diagnostik Perangkat Keras</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/internet-of-things.png" alt="Manajemen Sistem IoT">
+          <p>Manajemen Sistem IoT</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/combo-chart.png" alt="Optimasi Aplikasi Produktivitas">
+          <p>Optimasi Aplikasi Produktivitas</p>
+        </div>
+        <div class="service-box">
+          <img src="https://img.icons8.com/ios/96/ffffff/plus-math.png" alt="Lainnya">
+          <p>Lainnya</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT Section -->
+  <section class="section" id="project">
+    <div class="project">
+      <div class="project-left">
+        <div class="card">
+          Kartu Proyek
+        </div>
+      </div>
+      <div class="project-right">
+        <h1 class="title-vertical">
+          <span class="normal-part">P</span><br>
+          <span class="normal-part">R</span><br>
+          <span class="normal-part">O</span><br>
+          <span class="normal-part">J</span><br>
+          <span class="border-part">E</span><br>
+          <span class="border-part">C</span><br>
+          <span class="border-part">T</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT Section -->
+  <section class="section" id="contact">
+    <!-- Bagian Atas Contact -->
+    <div class="contact-top">
+      <!-- Bagian Kiri -->
+      <div class="contact-left">
+        <h1>Tertarik Bekerja Sama?</h1>
+        <h2>Hubungi Saya!</h2>
+        <p>Saya siap menjalin kerja sama yang produktif.</p>
+        <p class="extra-desc">Hubungi saya untuk memulai kolaborasi.</p>
+        <div class="contact-icons">
+          <img src="https://img.icons8.com/ios/96/ffffff/whatsapp.png" alt="WhatsApp">
+          <img src="https://img.icons8.com/ios/96/ffffff/new-post.png" alt="Email">
+          <img src="https://img.icons8.com/ios/96/ffffff/github.png" alt="GitHub">
+        </div>
+      </div>
+      <!-- Bagian Kanan -->
+      <div class="contact-right">
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#services">SERVICES</a>
+        <a href="#project">PROJECT</a>
+        <a href="#contact">CONTACT</a>
+      </div>
+    </div>
+    <!-- Bagian Bawah Contact (penataan ulang: CONTACT besar di atas, © di bawah) -->
+    <div class="contact-bottom">
+      <div class="big-text">CONTACT</div>
+      <p>© 2025 ANDEV404 | MUHAMMAD ANDRIAN | PORTOFOLIO</p>
+    </div>
+  </section>
+
+  <!-- JavaScript untuk efek tampil/geser box SERVICES berdasarkan tampilan section -->
+  <script>
+    // Fungsi untuk mendapatkan jumlah kolom pada .services-right
+    function getColumnCount() {
+      const servicesRight = document.querySelector('.services-right');
+      const style = window.getComputedStyle(servicesRight);
+      const gridTemplateColumns = style.getPropertyValue('grid-template-columns');
+      return gridTemplateColumns.split(' ').length || 3;
+    }
+
+    const servicesSection = document.querySelector('#services');
+    const boxes = document.querySelectorAll('.service-box');
+    const maxOffset = 50; // Nilai offset maksimum (px)
+
+    // Menggunakan IntersectionObserver untuk mendeteksi tampilan SERVICES
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        let progress = entry.intersectionRatio;
+        progress = Math.max(0, Math.min(1, progress));
+        boxes.forEach((box, index) => {
+          const columns = getColumnCount();
+          const row = Math.floor(index / columns);
+          let translation = (row % 2 === 0) 
+            ? -maxOffset * (1 - progress)
+            : maxOffset * (1 - progress);
+          box.style.transform = `translateX(${translation}px)`;
+          box.style.opacity = progress;
+        });
+      });
+    }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+    observer.observe(servicesSection);
+  </script>
+</body>
+</html>
