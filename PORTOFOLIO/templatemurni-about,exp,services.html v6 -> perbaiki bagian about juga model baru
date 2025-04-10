@@ -814,10 +814,16 @@
       <!-- Bagian kiri -->
       <div class="experience-left">
         <div class="experience-left-top">
-          <h2 style="font-weight: bold; font-size:40px; color: #ffffff;">Mengapa Saya</h2>
-          <h2 class="gray" style="font-weight: bold; font-size:40px; color: #808080;">Menjadi Pilihan Tepat Anda</h2>
-          <h2 style="font-weight: bold; font-size:40px; color: #ffffff">Untuk Berkembang ?</h2>
-        </div>
+          <h2 style="font-weight: bold; font-size:40px; color: #ffffff;">
+            Mengapa <span style="color: #808080;">Saya</span>
+          </h2>
+          <h2 class="gray" style="font-weight: bold; font-size:40px; color: #808080;">
+            Menjadi Pilihan Tepat Anda
+          </h2>
+          <h2 style="font-weight: bold; font-size:40px; color: #ffffff">
+            Untuk Berkembang ?
+          </h2>
+        </div>        
         <div class="experience-left-bottom">
           <div class="experience-card">
             pengalaman kerja
