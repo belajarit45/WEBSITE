@@ -63,7 +63,6 @@
       width: 100%;
       min-height: 100%;
       position: relative;
-
     }
     /* Heading About dengan pengaturan jarak nol dan penggeseran "ABOUT" ke kiri */
     .about-heading {
@@ -130,31 +129,42 @@
       width: 100%;
       height: 100%;
     }
-    .experience-left {
+    .experience-left, .experience-right {
       flex: 1;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
+      padding: 20px;
+    }
+    /* Bagian kiri EXPERIENCE */
+    .experience-left-top h2 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+    .experience-left-top h2.gray {
+      color: #5a5050;
+    }
+    .experience-left-bottom {
+      margin-top: 20px;
     }
     .experience-card {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(5px);
       border-radius: 15px;
       padding: 20px;
-      width: 80%;
-      transform: rotate(5deg);
+      text-align: center;
       color: #FFFFFF;
       font-size: 18px;
-      text-align: center;
     }
-    .experience-right {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-end;
-      padding-right: 40px;
+    /* Bagian kanan EXPERIENCE */
+    .experience-right-top {
       text-align: right;
+    }
+    .experience-right-bottom {
+      text-align: right;
+      margin-top: 20px;
     }
     /* SERVICES Section */
     .services {
@@ -257,7 +267,6 @@
     .contact-left {
       text-align: left;
     }
-    /* Judul dan subjudul dengan ukuran sama */
     .contact-left h1,
     .contact-left h2 {
       font-size: 36px;
@@ -268,17 +277,15 @@
       font-size: 16px;
       color: #888888;
     }
-    /* Paragraf tambahan */
     .contact-left .extra-desc {
       font-size: 16px;
       color: #888888;
       margin-bottom: 10px;
     }
-    /* Spasi tambahan antara extra-desc dan logo */
     .contact-icons {
       display: flex;
       gap: 20px;
-      margin-top: 50px; /* menjatuhkan logo agar sejajar dengan teks di sebelah kanan */
+      margin-top: 50px;
     }
     .contact-icons img {
       width: 36px;
@@ -312,13 +319,13 @@
     .contact-bottom p {
       font-size: 14px;
       color: #FFFFFF;
-      margin-left: 20px; /* menyelaraskan dengan teks di .contact-left */
+      margin-left: 20px;
     }
     .contact-bottom .big-text {
       font-size: 260px;
       font-weight: bold;
       color: #FFFFFF;
-      display: inline-block; /* Agar lebar dan tinggi mengikuti isi teks */
+      display: inline-block;
       padding: 0;
       margin: 0;
       line-height: 1;
@@ -801,20 +808,32 @@
     </div>
   </section>
 
-  <!-- EXPERIENCE Section -->
+  <!-- EXPERIENCE Section - dimodifikasi -->
   <section class="section" id="experience">
     <div class="experience">
+      <!-- Bagian kiri -->
       <div class="experience-left">
-        <div class="experience-card">
-          Pengalaman Kerja
+        <div class="experience-left-top">
+          <h2 style="font-weight: bold; font-size:40px; color: #ffffff;">Mengapa Saya</h2>
+          <h2 class="gray" style="font-weight: bold; font-size:40px; color: #808080;">Menjadi Pilihan Tepat Anda</h2>
+          <h2 style="font-weight: bold; font-size:40px; color: #ffffff">Untuk Berkembang ?</h2>
+        </div>
+        <div class="experience-left-bottom">
+          <div class="experience-card">
+            pengalaman kerja
+          </div>
         </div>
       </div>
+      <!-- Bagian kanan -->
       <div class="experience-right">
-        <h1 class="title"><span class="normal-part">EXPER</span><span class="border-part">IENCE</span></h1>
-        <h2 class="subtitle">Kenapa Memilih Saya?</h2>
-        <p class="description">
-          Saya sangat profesional dan memiliki jiwa tanggung jawab yang besar dalam menyelesaikan masalah. Dengan pengalaman yang luas dan keahlian teknis yang mumpuni, saya siap memberikan solusi terbaik untuk setiap tantangan IT. Saya percaya pada pentingnya kualitas dan kecepatan dalam setiap proyek yang saya kerjakan.
-        </p>
+        <div class="experience-right-top">
+          <p class="description">
+            Saya sangat profesional dan memiliki jiwa tanggung jawab yang besar dalam menyelesaikan masalah. Dengan pengalaman yang luas dan keahlian teknis yang mumpuni, saya siap memberikan solusi terbaik untuk setiap tantangan IT. Saya percaya pada pentingnya kualitas dan kecepatan dalam setiap proyek yang saya kerjakan.
+          </p>
+        </div>
+        <div class="experience-right-bottom">
+          <strong style="font-size: 80px; color: #ffffff">EXPERIENCE</strong>
+        </div>
       </div>
     </div>
   </section>
@@ -918,7 +937,7 @@
         <a href="#contact">CONTACT</a>
       </div>
     </div>
-    <!-- Bagian Bawah Contact (penataan ulang: CONTACT besar di atas, © di bawah) -->
+    <!-- Bagian Bawah Contact -->
     <div class="contact-bottom">
       <div class="big-text">CONTACT</div>
       <p>© 2025 ANDEV404 | MUHAMMAD ANDRIAN | PORTOFOLIO</p>
