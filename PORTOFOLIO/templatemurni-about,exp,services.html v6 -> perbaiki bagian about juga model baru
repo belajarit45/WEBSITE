@@ -63,7 +63,7 @@
       width: 100%;
       min-height: 100%;
       position: relative;
-      padding-top: 40px;
+
     }
     /* Heading About dengan pengaturan jarak nol dan penggeseran "ABOUT" ke kiri */
     .about-heading {
@@ -85,34 +85,34 @@
     .about-heading .what {
       text-align: left;
       color: rgba(255, 255, 255, 0.5);
-      font-size: 100px;
-      left: -140px; /* 🔥 Ditambahkan */
+      font-size: 80px;
+      left: -100px; /* 🔥 Ditambahkan */
       position: relative;
     }
     .about-heading .about-text {
       text-align: left;
       color: #FFFFFF;
-      font-size: 280px;
+      font-size: 240px;
       margin: 0;
       position: relative;
-      left: -80px; /* Geser ke kiri */
+      left: -20px; /* Geser ke kiri */
     }
     .about-heading .me {
       text-align: right;
       color: rgba(255, 255, 255, 0.5);
-      font-size: 100px;
+      font-size: 80px;
       margin: 0;
-      right: -140px; /* 🔥 Ditambahkan */
+      right: -100px; /* 🔥 Ditambahkan */
       position: relative;
     }
     /* Container untuk Card Cyber dan Deskripsi di bagian ABOUT */
     .about-details {
-      max-width: 1020px;
+      max-width: 1010px;
       width: 100%;
       display: flex;
       justify-content: space-between;
       margin-top: 20px;
-      padding-left: 100px;
+      padding-left: 120px;
     }
     .card-wrapper {
       /* Sesuaikan lebar sesuai kebutuhan */
@@ -122,7 +122,7 @@
       flex: 1;
       text-align: right;
       /* Menggeser teks lebih ke kanan */
-      padding-left: 190px;
+      padding-left: 160px;
     }
     /* EXPERIENCE Section */
     .experience {
