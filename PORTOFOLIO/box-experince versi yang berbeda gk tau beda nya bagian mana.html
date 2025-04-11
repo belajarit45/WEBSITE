@@ -118,7 +118,7 @@
     <div class="box" data-title="CSS" data-description="Web Styling">
       <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/css3-andev404.svg?raw=true" alt="CSS">
     </div>
-    <div class="box" data-title="PHP" data-description="Back-End Development">
+    <div class="box" data-title="PHP" data-description="Back‑End Development">
       <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/php-andev404.svg?raw=true" alt="PHP">
     </div>
     <div class="box" data-title="Python" data-description="Programming & Scripting">
@@ -153,8 +153,107 @@
       box.addEventListener('mouseenter', function() {
         resetAll();
         const col = index % 5;
+        const title = this.dataset.title;
+        let descText = this.dataset.description;
 
-        // Atur ukuran & margin
+        // Override khusus untuk beberapa box
+        if (title === 'Dropbox') {
+          descText = 'File<br>Synchronization';
+        } else if (title === 'PHP') {
+          descText = 'Back‑End<br>Development';
+        } else if (title === 'AnyDesk') {
+          // Non-breaking space untuk menjaga agar "Remote Desktop" tetap satu baris
+          descText = 'Remote&nbsp;Desktop<br>Control';
+        }
+
+        let newContent = '';
+
+        // Jika box adalah TeamViewer, pisahkan penanganan sehingga hanya judul yang bergeser ke kiri
+        if (title === 'TeamViewer') {
+          if (col === 0 || col === 1) {
+            newContent = `
+              <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;padding:8px;">
+                <div class="icon-container">${this.dataset.original}</div>
+                <div class="text-container">
+                  <div class="title" style="transform: translateX(-5px);">${title}</div>
+                  <div class="desc">${descText}</div>
+                </div>
+              </div>`;
+          } else if (col === 3 || col === 4) {
+            newContent = `
+              <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;padding:8px;">
+                <div class="text-container" style="text-align: right;">
+                  <div class="title" style="transform: translateX(-5px);">${title}</div>
+                  <div class="desc">${descText}</div>
+                </div>
+                <div class="icon-container">${this.dataset.original}</div>
+              </div>`;
+          } else { // untuk kolom 2
+            newContent = `
+              <div class="content-wrapper" style="position:relative;width:100%;height:100%;">
+                <div class="center-icon" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);">
+                  ${this.dataset.original}
+                </div>
+                <div class="text-container left" style="position:absolute;left:16px;top:50%;transform: translate(-5px, -50%);text-align:center;">
+                  <div class="title">${title}</div>
+                </div>
+                <div class="text-container right" style="position:absolute;right:16px;top:50%;transform: translateY(-50%);text-align:center;">
+                  <div class="desc">${descText}</div>
+                </div>
+              </div>`;
+          }
+        }
+        // Untuk box yang bukan TeamViewer, gunakan mekanisme pergeseran secara menyeluruh
+        else {
+          let shiftAmount = "";
+          // Untuk Dropbox, RDP, dan ngrok geser teks ke kanan 10px; box PHP atau lainnya tidak digeser
+          if (title === 'Dropbox' || title === 'RDP' || title === 'ngrok') {
+            shiftAmount = "10px";
+          }
+          
+          if (col === 0 || col === 1) {
+            newContent = `
+              <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;padding:8px;">
+                <div class="icon-container">${this.dataset.original}</div>
+                <div class="text-container" ${shiftAmount ? 'style="transform: translateX(' + shiftAmount + ');"' : ''}>
+                  <div class="title">${title}</div>
+                  <div class="desc">${descText}</div>
+                </div>
+              </div>`;
+          } else if (col === 3 || col === 4) {
+            newContent = `
+              <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;padding:8px;">
+                <div class="text-container" style="text-align: right;${shiftAmount ? ' transform: translateX(' + shiftAmount + ');' : ''}">
+                  <div class="title">${title}</div>
+                  <div class="desc">${descText}</div>
+                </div>
+                <div class="icon-container">${this.dataset.original}</div>
+              </div>`;
+          } else { // untuk kolom 2
+            const leftStyle = shiftAmount 
+              ? `position:absolute;left:16px;top:50%;transform: translate(${shiftAmount}, -50%);text-align:center;`
+              : "position:absolute;left:16px;top:50%;transform: translateY(-50%);text-align:center;";
+            const rightStyle = shiftAmount 
+              ? `position:absolute;right:16px;top:50%;transform: translate(${shiftAmount}, -50%);text-align:center;`
+              : "position:absolute;right:16px;top:50%;transform: translateY(-50%);text-align:center;";
+    
+            newContent = `
+              <div class="content-wrapper" style="position:relative;width:100%;height:100%;">
+                <div class="center-icon" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);">
+                  ${this.dataset.original}
+                </div>
+                <div class="text-container left" style="${leftStyle}">
+                  <div class="title">${title}</div>
+                </div>
+                <div class="text-container right" style="${rightStyle}">
+                  <div class="desc">${descText}</div>
+                </div>
+              </div>`;
+          }
+        }
+      
+        // Sesuaikan ukuran & margin berdasarkan kolom
+        this.style.zIndex = '2';
         if (col === 0 || col === 1) {
           this.style.width = '140px';
           this.style.marginLeft = '0px';
@@ -165,56 +264,11 @@
           this.style.width = '140px';
           this.style.marginLeft = '-80px';
         }
-        this.style.zIndex = '2';
-
-        // Ambil data judul & deskripsi, override untuk Dropbox/PHP
-        const title = this.dataset.title;
-        let descText = this.dataset.description;
-        if (title === 'Dropbox') {
-          descText = 'File<br>Synchronization';
-        } else if (title === 'PHP') {
-          descText = 'Back‑End<br>Development';
-        }
-
-        // Bangun konten sesuai kolom
-        let newContent = '';
-        if (col === 0 || col === 1) {
-          newContent = `
-            <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;padding:8px;">
-              <div class="icon-container">${this.dataset.original}</div>
-              <div class="text-container">
-                <div class="title">${title}</div>
-                <div class="desc">${descText}</div>
-              </div>
-            </div>`;
-        } else if (col === 3 || col === 4) {
-          newContent = `
-            <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;padding:8px;">
-              <div class="text-container">
-                <div class="title">${title}</div>
-                <div class="desc">${descText}</div>
-              </div>
-              <div class="icon-container">${this.dataset.original}</div>
-            </div>`;
-        } else {
-          newContent = `
-            <div class="content-wrapper" style="position:relative;width:100%;height:100%;">
-              <div class="center-icon" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);">
-                ${this.dataset.original}
-              </div>
-              <div class="text-container left" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);text-align:center;">
-                <div class="title">${title}</div>
-              </div>
-              <div class="text-container right" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);text-align:center;">
-                <div class="desc">${descText}</div>
-              </div>
-            </div>`;
-        }
-
+      
         this.innerHTML = newContent;
         boxes.forEach(b => { if (b !== this) b.classList.add('blur'); });
       });
-
+      
       box.addEventListener('mouseleave', function() {
         this.style.width = '60px';
         this.style.marginLeft = '0px';
@@ -223,7 +277,7 @@
         boxes.forEach(b => b.classList.remove('blur'));
       });
     });
-
+      
     // Reset semua saat kursor keluar grid
     grid.addEventListener('mouseleave', resetAll);
   </script>
