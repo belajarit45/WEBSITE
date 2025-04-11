@@ -56,6 +56,7 @@
     }
     .text-container .desc {
       margin: 0;
+      line-height: 1.2;
     }
     /* Efek blur untuk box yang tidak dihover */
     .box.blur {
@@ -65,6 +66,7 @@
 </head>
 <body>
   <div class="grid">
+    <!-- 20 box -->
     <div class="box" data-title="Google Drive" data-description="Cloud Storage">
       <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/googledrive-andev404.svg?raw=true" alt="Google Drive">
     </div>
@@ -131,14 +133,12 @@
     const grid = document.querySelector('.grid');
     const boxes = Array.from(grid.querySelectorAll('.box'));
 
-    // Simpan markup asli di data-original
+    // Simpan markup asli
     boxes.forEach(box => {
-      if (!box.dataset.original) {
-        box.dataset.original = box.innerHTML;
-      }
+      if (!box.dataset.original) box.dataset.original = box.innerHTML;
     });
 
-    // Fungsi untuk mereset semua box
+    // Fungsi reset semua box
     function resetAll() {
       boxes.forEach(b => {
         b.style.width = '60px';
@@ -149,15 +149,12 @@
       });
     }
 
-    // Tambahkan event pada tiap box
     boxes.forEach((box, index) => {
       box.addEventListener('mouseenter', function() {
-        // Reset semua sebelum expand yang baru
         resetAll();
+        const col = index % 5;
 
-        const col = index % 5; // kolom 0–4
-
-        // Atur lebar & margin sesuai kolom
+        // Atur ukuran & margin
         if (col === 0 || col === 1) {
           this.style.width = '140px';
           this.style.marginLeft = '0px';
@@ -170,56 +167,55 @@
         }
         this.style.zIndex = '2';
 
-        // Ambil data judul & deskripsi
-        const title = this.getAttribute('data-title');
-        const desc  = this.getAttribute('data-description');
-        const iconHTML = this.dataset.original;
-        let newContent = '';
+        // Ambil data judul & deskripsi, override untuk Dropbox/PHP
+        const title = this.dataset.title;
+        let descText = this.dataset.description;
+        if (title === 'Dropbox') {
+          descText = 'File<br>Synchronization';
+        } else if (title === 'PHP') {
+          descText = 'Back‑End<br>Development';
+        }
 
-        // Buat layout sesuai posisi kolom
+        // Bangun konten sesuai kolom
+        let newContent = '';
         if (col === 0 || col === 1) {
           newContent = `
-            <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;">
-              <div class="icon-container">${iconHTML}</div>
+            <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;padding:8px;">
+              <div class="icon-container">${this.dataset.original}</div>
               <div class="text-container">
                 <div class="title">${title}</div>
-                <div class="desc">${desc}</div>
+                <div class="desc">${descText}</div>
               </div>
             </div>`;
         } else if (col === 3 || col === 4) {
           newContent = `
-            <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;">
+            <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;padding:8px;">
               <div class="text-container">
                 <div class="title">${title}</div>
-                <div class="desc">${desc}</div>
+                <div class="desc">${descText}</div>
               </div>
-              <div class="icon-container">${iconHTML}</div>
+              <div class="icon-container">${this.dataset.original}</div>
             </div>`;
         } else {
           newContent = `
             <div class="content-wrapper" style="position:relative;width:100%;height:100%;">
               <div class="center-icon" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);">
-                ${iconHTML}
+                ${this.dataset.original}
               </div>
-              <div class="text-container left" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);text-align:left;">
+              <div class="text-container left" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);text-align:left;">
                 <div class="title">${title}</div>
               </div>
-              <div class="text-container right" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);text-align:right;">
-                <div class="desc">${desc}</div>
+              <div class="text-container right" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);text-align:center;">
+                <div class="desc">${descText}</div>
               </div>
             </div>`;
         }
 
         this.innerHTML = newContent;
-
-        // Blur box lain
-        boxes.forEach(b => {
-          if (b !== this) b.classList.add('blur');
-        });
+        boxes.forEach(b => { if (b !== this) b.classList.add('blur'); });
       });
 
       box.addEventListener('mouseleave', function() {
-        // Kembalikan kondisi box ini
         this.style.width = '60px';
         this.style.marginLeft = '0px';
         this.style.zIndex = '1';
@@ -228,7 +224,7 @@
       });
     });
 
-    // Jika mouse keluar seluruh grid, reset semua
+    // Reset semua saat kursor keluar grid
     grid.addEventListener('mouseleave', resetAll);
   </script>
 </body>
