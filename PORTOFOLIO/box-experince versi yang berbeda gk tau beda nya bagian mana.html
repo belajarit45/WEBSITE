@@ -65,7 +65,6 @@
 </head>
 <body>
   <div class="grid">
-    <!-- Contoh 20 box -->
     <div class="box" data-title="Google Drive" data-description="Cloud Storage">
       <img src="https://github.com/belajarit45/WEBSITE/blob/main/assets/googledrive-andev404.svg?raw=true" alt="Google Drive">
     </div>
@@ -129,90 +128,108 @@
   </div>
 
   <script>
-    const boxes = document.querySelectorAll('.box');
-    
-    boxes.forEach((box, index) => {
-      // Simpan markup asli (ikon) jika belum tersimpan
+    const grid = document.querySelector('.grid');
+    const boxes = Array.from(grid.querySelectorAll('.box'));
+
+    // Simpan markup asli di data-original
+    boxes.forEach(box => {
       if (!box.dataset.original) {
         box.dataset.original = box.innerHTML;
       }
-      
+    });
+
+    // Fungsi untuk mereset semua box
+    function resetAll() {
+      boxes.forEach(b => {
+        b.style.width = '60px';
+        b.style.marginLeft = '0px';
+        b.style.zIndex = '1';
+        b.innerHTML = b.dataset.original;
+        b.classList.remove('blur');
+      });
+    }
+
+    // Tambahkan event pada tiap box
+    boxes.forEach((box, index) => {
       box.addEventListener('mouseenter', function() {
-        const col = index % 5; // Kolom: 0 & 1: kiri, 2: tengah, 3 & 4: kanan
-        
-        // Perpanjang box dan atur margin sesuai kolom
+        // Reset semua sebelum expand yang baru
+        resetAll();
+
+        const col = index % 5; // kolom 0–4
+
+        // Atur lebar & margin sesuai kolom
         if (col === 0 || col === 1) {
-          this.style.width = "140px";
-          this.style.marginLeft = "0px";
+          this.style.width = '140px';
+          this.style.marginLeft = '0px';
         } else if (col === 2) {
-          this.style.width = "220px";
-          this.style.marginLeft = "-80px";
-        } else if (col === 3 || col === 4) {
-          this.style.width = "140px";
-          this.style.marginLeft = "-80px";
+          this.style.width = '220px';
+          this.style.marginLeft = '-80px';
+        } else {
+          this.style.width = '140px';
+          this.style.marginLeft = '-80px';
         }
-        this.style.zIndex = "2";
-        
-        // Ambil data judul dan deskripsi
+        this.style.zIndex = '2';
+
+        // Ambil data judul & deskripsi
         const title = this.getAttribute('data-title');
-        const desc = this.getAttribute('data-description');
-        // Ambil markup ikon asli
-        const iconHTML = box.dataset.original;
-        let newContent = "";
-        
+        const desc  = this.getAttribute('data-description');
+        const iconHTML = this.dataset.original;
+        let newContent = '';
+
+        // Buat layout sesuai posisi kolom
         if (col === 0 || col === 1) {
-          // Layout kolom kiri: ikon di kiri, teks di kanan, dengan jarak konsisten (gap 8px)
-          newContent = `<div class="content-wrapper" style="display: flex; align-items: center; gap:8px;">
-                          <div class="icon-container">${iconHTML}</div>
-                          <div class="text-container">
-                            <div class="title">${title}</div>
-                            <div class="desc">${desc}</div>
-                          </div>
-                        </div>`;
+          newContent = `
+            <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;">
+              <div class="icon-container">${iconHTML}</div>
+              <div class="text-container">
+                <div class="title">${title}</div>
+                <div class="desc">${desc}</div>
+              </div>
+            </div>`;
         } else if (col === 3 || col === 4) {
-          // Layout kolom kanan: teks di kiri, ikon di kanan, dengan gap 8px
-          newContent = `<div class="content-wrapper" style="display: flex; align-items: center; gap:8px;">
-                          <div class="text-container">
-                            <div class="title">${title}</div>
-                            <div class="desc">${desc}</div>
-                          </div>
-                          <div class="icon-container">${iconHTML}</div>
-                        </div>`;
-        } else if (col === 2) {
-          // Layout kolom tengah:
-          // Ikon tetap di tengah (tanpa pergeseran)
-          // Teks judul (di kiri) dan deskripsi (di kanan) muncul secara absolut dengan jarak 8px dari tepi
-          newContent = `<div class="content-wrapper" style="position: relative; width:100%; height:100%;">
-                          <div class="center-icon" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
-                            ${iconHTML}
-                          </div>
-                          <div class="text-container left" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); text-align: left;">
-                            <div class="title">${title}</div>
-                          </div>
-                          <div class="text-container right" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); text-align: right;">
-                            <div class="desc">${desc}</div>
-                          </div>
-                        </div>`;
+          newContent = `
+            <div class="content-wrapper" style="display:flex;align-items:center;gap:8px;">
+              <div class="text-container">
+                <div class="title">${title}</div>
+                <div class="desc">${desc}</div>
+              </div>
+              <div class="icon-container">${iconHTML}</div>
+            </div>`;
+        } else {
+          newContent = `
+            <div class="content-wrapper" style="position:relative;width:100%;height:100%;">
+              <div class="center-icon" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);">
+                ${iconHTML}
+              </div>
+              <div class="text-container left" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);text-align:left;">
+                <div class="title">${title}</div>
+              </div>
+              <div class="text-container right" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);text-align:right;">
+                <div class="desc">${desc}</div>
+              </div>
+            </div>`;
         }
+
         this.innerHTML = newContent;
-        
-        // Tambahkan efek blur ke box lain
+
+        // Blur box lain
         boxes.forEach(b => {
-          if (b !== box) {
-            b.classList.add('blur');
-          }
+          if (b !== this) b.classList.add('blur');
         });
       });
-      
+
       box.addEventListener('mouseleave', function() {
-        // Kembalikan ukuran, margin, z-index, dan markup asli
-        this.style.width = "60px";
-        this.style.marginLeft = "0px";
-        this.style.zIndex = "1";
-        this.innerHTML = box.dataset.original;
+        // Kembalikan kondisi box ini
+        this.style.width = '60px';
+        this.style.marginLeft = '0px';
+        this.style.zIndex = '1';
+        this.innerHTML = this.dataset.original;
         boxes.forEach(b => b.classList.remove('blur'));
       });
     });
+
+    // Jika mouse keluar seluruh grid, reset semua
+    grid.addEventListener('mouseleave', resetAll);
   </script>
 </body>
 </html>
