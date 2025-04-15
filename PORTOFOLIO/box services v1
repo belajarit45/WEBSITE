@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Animasi 3D Cube Bergiliran - 4 Box (180px) - Glass Effect</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+    }
+
+    .scene {
+      perspective: 1000px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .cube {
+      width: 180px;
+      height: 180px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform-origin: 50% 100%;
+    }
+
+    .face {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      /* Efek glass: background transparan dengan sedikit warna serta blur */
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(1px);
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+      color: #fff;
+      backface-visibility: visible;
+    }
+
+    .face img {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 10px;
+    }
+
+    .front  { transform: translateZ(90px); }
+    .back   { transform: rotateY(180deg) translateZ(90px); }
+    .right  { transform: rotateY(90deg) translateZ(90px); }
+    .left   { transform: rotateY(-90deg) translateZ(90px); }
+    .top    { transform: rotateX(90deg) translateZ(90px); }
+    .bottom { transform: rotateX(-90deg) translateZ(90px); }
+
+    /* --- Animasi Box 1 --- */
+    @keyframes rotateBox1 {
+      0%     { transform: rotateX(0deg); }
+      5%     { transform: rotateX(0deg); }
+      17.5%  { transform: rotateX(-90deg); }
+      87.5%  { transform: rotateX(-90deg); }
+      100%   { transform: rotateX(0deg); }
+    }
+
+    /* --- Animasi Box 2 --- */
+    @keyframes rotateBox2 {
+      0%, 17.5% { transform: rotateX(0deg); }
+      20%       { transform: rotateX(0deg); }
+      32.5%     { transform: rotateX(-90deg); }
+      75%       { transform: rotateX(-90deg); }
+      87.5%, 100% { transform: rotateX(0deg); }
+    }
+
+    /* --- Animasi Box 3 --- */
+    @keyframes rotateBox3 {
+      0%, 32.5% { transform: rotateX(0deg); }
+      35%       { transform: rotateX(0deg); }
+      47.5%     { transform: rotateX(-90deg); }
+      62.5%     { transform: rotateX(-90deg); }
+      75%, 100% { transform: rotateX(0deg); }
+    }
+
+    /* --- Animasi Box 4 --- */
+    @keyframes rotateBox4 {
+      0%, 47.5% { transform: rotateX(0deg); }
+      55%       { transform: rotateX(-90deg); }
+      67.5%     { transform: rotateX(-90deg); }
+      80%, 100% { transform: rotateX(0deg); }
+    }
+
+    /* Terapkan animasi */
+    .cube.box1 { animation: rotateBox1 8s linear infinite; }
+    .cube.box2 { animation: rotateBox2 8s linear infinite; }
+    .cube.box3 { animation: rotateBox3 8s linear infinite; }
+    .cube.box4 { animation: rotateBox4 8s linear infinite; }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <!-- Box 1 -->
+    <div class="cube box1">
+      <div class="face front">
+        <img src="https://img.icons8.com/ios/96/ffffff/network.png">
+        <p>Jaringan &amp; IT Support</p>
+      </div>
+      <div class="face back"></div>
+      <div class="face right"></div>
+      <div class="face left"></div>
+      <div class="face top">
+        <img src="https://img.icons8.com/ios/96/ffffff/lock.png">
+        <p>Keamanan &amp; Manajemen IT</p>
+      </div>
+      <div class="face bottom"></div>
+    </div>
+
+    <!-- Box 2 -->
+    <div class="cube box2">
+      <div class="face front">
+        <img src="https://img.icons8.com/ios/96/ffffff/code.png">
+        <p>Web Development</p>
+      </div>
+      <div class="face back"></div>
+      <div class="face right"></div>
+      <div class="face left"></div>
+      <div class="face top">
+        <img src="https://img.icons8.com/ios/96/ffffff/indoor-camera.png">
+        <p>Instalasi &amp; Manajemen CCTV</p>
+      </div>
+      <div class="face bottom"></div>
+    </div>
+
+    <!-- Box 3 -->
+    <div class="cube box3">
+      <div class="face front">
+        <img src="https://img.icons8.com/ios/96/ffffff/flow-chart.png">
+        <p>Desain &amp; Pengembangan Sistem</p>
+      </div>
+      <div class="face back"></div>
+      <div class="face right"></div>
+      <div class="face left"></div>
+      <div class="face top">
+        <img src="https://img.icons8.com/ios/96/ffffff/toolbox.png">
+        <p>Perakitan &amp; Diagnostik Perangkat Keras</p>
+      </div>
+      <div class="face bottom"></div>
+    </div>
+
+    <!-- Box 4 -->
+    <div class="cube box4">
+      <div class="face front">
+        <img src="https://img.icons8.com/ios/96/ffffff/internet-of-things.png">
+        <p>Manajemen Sistem IoT</p>
+      </div>
+      <div class="face back"></div>
+      <div class="face right"></div>
+      <div class="face left"></div>
+      <div class="face top">
+        <img src="https://img.icons8.com/ios/96/ffffff/combo-chart.png">
+        <p>Optimasi Aplikasi Produktivitas</p>
+      </div>
+      <div class="face bottom"></div>
+    </div>
+  </div>
+</body>
+</html>
