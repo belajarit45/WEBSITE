@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Natural Falling Boxes with Icons</title>
+  <style>
+    /* Container utama */
+    .container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      margin: 50px auto;
+      border: 2px solid #333;
+      background-color: #f0f0f0;
+      overflow: hidden;
+    }
+
+    /* Kotak kecil */
+    .box {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: rgba(0,0,0,0.5);
+      top: -50px;
+      transform-origin: center;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation-iteration-count: infinite;
+    }
+
+    /* Animasi vertikal: gravitasi dengan ease-in */
+    @keyframes fall {
+      0% {
+        top: -50px;
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        top: 100%;
+        opacity: 0;
+      }
+    }
+
+    /* Animasi horizontal: goyangan ringan */
+    @keyframes sway {
+      0%, 100% {
+        transform: rotate(var(--angle)) translateX(0);
+      }
+      50% {
+        transform: rotate(var(--angle)) translateX(var(--drift));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector('.container');
+      const boxSize = 50;
+      const icons = [
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/googledrive-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/onedrive-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/dropbox-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftexcel2013-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftword2013-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftpowerpoint2013-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/canva-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/teamviewer-andev404.png?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/anydesk-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftremotedesktop-andev404.png?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/linux-andev404.png?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/netdata-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/ngrok-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/visualstudiocode-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/xampp-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/html5-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/css3-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/php-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/python-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/github-andev404.svg?raw=true'
+      ];
+      const boxCount = icons.length;
+
+      for (let i = 0; i < boxCount; i++) {
+        const box = document.createElement('div');
+        box.classList.add('box');
+
+        // Posisi horizontal random
+        const maxLeft = container.clientWidth - boxSize;
+        box.style.left = Math.random() * maxLeft + 'px';
+
+        // Rotasi acak antara -30° hingga +30°
+        const angle = Math.random() * 60 - 30;
+        box.style.setProperty('--angle', angle + 'deg');
+
+        // Drift horizontal acak antara -20px hingga +20px
+        const drift = Math.random() * 40 - 20;
+        box.style.setProperty('--drift', drift + 'px');
+
+        // **Perpanjang delay jatuh hingga 0–30 detik** agar lebih jarang
+        const fallDelay = Math.random() * 30;         // 0–30 detik
+        const fallDuration = 2 + Math.random() * 3;   // 2–5 detik
+        const swayDuration = 1 + Math.random() * 2;   // 1–3 detik
+
+        box.style.animation =
+          `fall ${fallDuration}s ease-in ${fallDelay}s infinite, ` +
+          `sway ${swayDuration}s ease-in-out ${fallDelay}s infinite alternate`;
+
+        // Masukkan icon (60% dari ukuran kotak)
+        const img = document.createElement('img');
+        img.src = icons[i];
+        img.style.width = '60%';
+        img.style.height = '60%';
+        img.style.objectFit = 'contain';
+        box.appendChild(img);
+
+        container.appendChild(box);
+      }
+    });
+  </script>
+</body>
+</html>
