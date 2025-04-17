@@ -132,6 +132,8 @@
       height: 100%;
       border-radius: 8px;
       background-color: rgba(0,0,0,0.5);
+      position: relative;
+      bottom: 38px;
     }
     .experience-left, .experience-right {
       flex: 1;
@@ -245,6 +247,8 @@
       width: 100%;
       display: flex;
       margin-bottom: 20px;
+      position: relative;
+      top: 50px;
     }
     /* Bagian atas PROJECT */
     .project-top-left, .project-top-right {
