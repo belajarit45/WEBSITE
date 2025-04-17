@@ -1348,6 +1348,7 @@
       const descTitle = document.querySelector('.desc-title');
       const descText = document.querySelector('.desc-text');
       const descView = document.querySelector('.desc-view');
+      const boxes = document.querySelectorAll('.project-top-right .box');
       let currentIndex = 0;
       const duration = 5000; // 5 detik per gambar
       let timerId = null;
@@ -1372,6 +1373,20 @@
         descView.href = descriptions[index].url;
         // Update gambar pada card utama
         imageElement.src = images[index];
+
+        // —––––– ADDED: ubah isi Box 1–4 sesuai story card aktif ––––––
+        if (index === 0) {
+          boxes[0].innerText = '#f5f7fa';
+          boxes[1].innerText = '#2c3e50';
+          boxes[2].innerText = '#ffffff';
+          boxes[3].innerText = '#3498db';
+        } else {
+          boxes[0].innerText = '#001542';
+          boxes[1].innerText = '#FFFFFF';
+          boxes[2].innerText = '#D1CBCB';
+          boxes[3].innerText = '#888888';
+        }
+        
         // Animasi progress fill untuk gambar aktif
         const currentFill = progressFills[index];
         currentFill.style.transition = `width ${duration/1000}s linear`;
