@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>White Blurred Blobs</title>
+  <style>
+    /* Reset dasar */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+    }
+
+    /* Section Hero sebagai wrapper relatif */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #0f172a; /* latar gelap agar putih kontras */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Blob umum */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;             /* transparansi blob */
+      background: #ffffff;      /* warna putih */
+      animation: blob 8s infinite;
+    }
+
+    /* Posisi & ukuran tiap blob */
+    .blob1 {
+      width: 300px;
+      height: 300px;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      animation-delay: 2s;
+    }
+    .blob2 {
+      width: 350px;
+      height: 350px;
+      top: 10%;
+      right: -15%;
+      /* no delay */
+    }
+    .blob3 {
+      width: 280px;
+      height: 280px;
+      bottom: -15%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    /* Animasi keyframes */
+    @keyframes blob {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(30px, -50px) scale(1.1); }
+      66%  { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+
+    /* Konten di atas blobs */
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      font-family: sans-serif;
+      color: #f8fafc; /* teks terang */
+    }
+    .content h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    .content p {
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <!-- Blobs putih -->
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+
+    <!-- Konten utama -->
+    <div class="content">
+      <h1>Hello, I’m Your Name</h1>
+      <p>Fullstack Web Developer from Indonesia</p>
+    </div>
+  </section>
+
+</body>
+</html>
