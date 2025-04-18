@@ -32,8 +32,8 @@
       position: absolute;
       border-radius: 50%;
       filter: blur(100px);
-      opacity: 0.6;             /* transparansi blob */
-      background: #ffffff;      /* warna putih */
+      opacity: 0.6;
+      background: #ffffff;
       animation: blob 8s infinite;
     }
 
@@ -42,8 +42,8 @@
       width: 300px;
       height: 300px;
       top: -10%;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 40%;
+      margin-left: -150px;      /* center tanpa override transform */
       animation-delay: 2s;
     }
     .blob2 {
@@ -56,9 +56,16 @@
     .blob3 {
       width: 280px;
       height: 280px;
-      bottom: -15%;
-      left: 20%;
+      bottom: -30%;
+      left: 50%;
       animation-delay: 4s;
+    }
+    .blob4 {
+      width: 320px;
+      height: 320px;
+      top: 50%;
+      left: -5%;
+      animation-delay: 6s;
     }
 
     /* Animasi keyframes */
@@ -75,7 +82,7 @@
       z-index: 10;
       text-align: center;
       font-family: sans-serif;
-      color: #f8fafc; /* teks terang */
+      color: #f8fafc;
     }
     .content h1 {
       font-size: 3rem;
@@ -93,6 +100,7 @@
     <div class="blob blob1"></div>
     <div class="blob blob2"></div>
     <div class="blob blob3"></div>
+    <div class="blob blob4"></div>
 
     <!-- Konten utama -->
     <div class="content">
