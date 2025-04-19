@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NASA Futuristic Minimalist Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      font-family: 'Roboto', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .center-svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      overflow: visible;
+      z-index: 1;
+    }
+
+    svg {
+      overflow: visible;
+    }
+
+    .curved-text {
+      font-size: 16px;
+      font-weight: 700;
+      dominant-baseline: middle;
+      text-anchor: middle;
+    }
+
+    .dot {
+      fill: #000;
+    }
+
+    .label {
+      font-size: 10px;
+      fill: #000;
+    }
+
+    .rotating-text-outer,
+    .rotating-text-inner,
+    .rotate-dot-ai,
+    .rotate-dot-it,
+    .rotate-dot-small,
+    .label-group {
+      will-change: transform;
+    }
+
+    .rotating-text-outer {
+      transform-origin: 200px 200px;
+      animation: rotate-text-outer 30s linear infinite;
+    }
+    .rotating-text-inner {
+      transform-origin: 200px 200px;
+      animation: rotate-text-inner 30s linear infinite;
+    }
+
+    @keyframes rotate-text-outer { to { transform: rotate(360deg); } }
+    @keyframes rotate-text-inner { to { transform: rotate(360deg); } }
+
+    .rotate-dot-ai {
+      transform-origin: 200px 200px;
+      animation: rotate-dot-ai 20s linear infinite;
+    }
+    @keyframes rotate-dot-ai { to { transform: rotate(360deg); } }
+
+    .rotate-dot-it {
+      transform-origin: 200px 200px;
+      animation: rotate-dot-it 25s linear infinite;
+    }
+    @keyframes rotate-dot-it { to { transform: rotate(360deg); } }
+
+    .rotate-dot-small {
+      transform-origin: 200px 200px;
+      animation: rotate-dot-small 15s linear infinite;
+    }
+    @keyframes rotate-dot-small { to { transform: rotate(360deg); } }
+
+    .label-group {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation-direction: reverse;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    .label-ai {
+      animation-name: rotate-label-ai;
+      animation-duration: 20s;
+    }
+    @keyframes rotate-label-ai { to { transform: rotate(360deg); } }
+
+    .label-it {
+      animation-name: rotate-label-it;
+      animation-duration: 25s;
+    }
+    @keyframes rotate-label-it { to { transform: rotate(360deg); } }
+
+    .label-small {
+      animation-name: rotate-label-small;
+      animation-duration: 15s;
+    }
+    @keyframes rotate-label-small { to { transform: rotate(360deg); } }
+
+    model-viewer {
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1200px;
+      height: 1200px;
+      pointer-events: none;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <!-- 3D Model -->
+  <model-viewer
+    src="https://raw.githubusercontent.com/belajarit45/WEBSITE/main/stormtrooper_-_first_order.glb"
+    alt="Stormtrooper First Order"
+    auto-rotate
+    exposure="1">
+  </model-viewer>
+
+  <!-- SVG + Animasi -->
+  <div class="center-svg">
+    <svg width="1200" height="1200" viewBox="0 0 400 400">
+      <defs>
+        <path id="outerPath" d="M20,200 a180,180 0 1,1 360,0 a180,180 0 1,1 -360,0" />
+        <path id="innerPath" d="M100,200 a100,100 0 1,1 200,0 a100,100 0 1,1 -200,0" />
+      </defs>
+
+      <g class="rotating-text-outer">
+        <text class="curved-text">
+          <textPath href="#outerPath" startOffset="10%" method="align" spacing="auto">
+            MUHAMMAD ANDRIAN
+          </textPath>
+        </text>
+      </g>
+
+      <g class="rotating-text-inner">
+        <text class="curved-text">
+          <textPath href="#innerPath" startOffset="50%" method="align" spacing="auto">
+            ANDEV404
+          </textPath>
+        </text>
+      </g>
+
+      <g class="rotate-dot-ai">
+        <circle class="dot" cx="44" cy="290" r="6" />
+        <g class="label-group label-ai">
+          <text x="20" y="310" class="label">Pekanbaru,Riau</text>
+        </g>
+      </g>
+
+      <g class="rotate-dot-it">
+        <circle class="dot" cx="347" cy="303" r="3" />
+        <g class="label-group label-it">
+          <text x="350" y="323" class="label">IT Support</text>
+        </g>
+      </g>
+
+      <g class="rotate-dot-small">
+        <circle class="dot" cx="121" cy="139" r="3" />
+        <g class="label-group label-small">
+          <text x="80" y="160" class="label">Codex888</text>
+        </g>
+      </g>
+
+      <circle cx="200" cy="200" r="180" stroke="#000" stroke-width="0.5" fill="none" />
+      <circle cx="200" cy="200" r="100" stroke="#000" stroke-width="0.3" fill="none" />
+    </svg>
+  </div>
+</body>
+</html>
