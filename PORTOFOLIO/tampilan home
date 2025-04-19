@@ -156,7 +156,7 @@
       <g class="rotate-dot-small">
         <circle class="dot" cx="121" cy="139" r="3" />
         <g class="label-group label-small">
-          <text x="80" y="139" class="label">Codex888</text>
+          <text x="80" y="160" class="label">Codex888</text>
         </g>
       </g>
 
