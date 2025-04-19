@@ -43,6 +43,63 @@
       font-size: 10px;
       fill: #000;
     }
+
+    /* Curved text animations */
+    .rotating-text-outer {
+      transform-origin: 200px 200px;
+      animation: rotate-text-outer 30s linear infinite;
+    }
+    .rotating-text-inner {
+      transform-origin: 200px 200px;
+      animation: rotate-text-inner 30s linear infinite;
+    }
+    @keyframes rotate-text-outer { to { transform: rotate(360deg); } }
+    @keyframes rotate-text-inner { to { transform: rotate(360deg); } }
+
+    /* Dot and label animations */
+    .rotate-dot-ai {
+      transform-origin: 200px 200px;
+      animation: rotate-dot-ai 20s linear infinite;
+    }
+    @keyframes rotate-dot-ai { to { transform: rotate(360deg); } }
+
+    .rotate-dot-it {
+      transform-origin: 200px 200px;
+      animation: rotate-dot-it 25s linear infinite;
+    }
+    @keyframes rotate-dot-it { to { transform: rotate(360deg); } }
+
+    .rotate-dot-small {
+      transform-origin: 200px 200px;
+      animation: rotate-dot-small 15s linear infinite;
+    }
+    @keyframes rotate-dot-small { to { transform: rotate(360deg); } }
+
+    /* Label counter-rotation to stay horizontal */
+    .label-group {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation-direction: reverse;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+    .label-ai {
+      animation-name: rotate-label-ai;
+      animation-duration: 20s;
+    }
+    @keyframes rotate-label-ai { to { transform: rotate(360deg); } }
+
+    .label-it {
+      animation-name: rotate-label-it;
+      animation-duration: 25s;
+    }
+    @keyframes rotate-label-it { to { transform: rotate(360deg); } }
+
+    .label-small {
+      animation-name: rotate-label-small;
+      animation-duration: 15s;
+    }
+    @keyframes rotate-label-small { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -54,29 +111,48 @@
         <path id="innerPath" d="M100,200 a100,100 0 1,1 200,0 a100,100 0 1,1 -200,0" />
       </defs>
 
-      <!-- Concentric circles -->
+      <!-- Outer curved text -->
+      <g class="rotating-text-outer">
+        <text class="curved-text">
+          <textPath href="#outerPath" startOffset="10%" method="align" spacing="auto">MUHAMMAD ANDRIAN</textPath>
+        </text>
+      </g>
+
+      <!-- Inner curved text -->
+      <g class="rotating-text-inner">
+        <text class="curved-text">
+          <textPath href="#innerPath" startOffset="50%" method="align" spacing="auto">ANDEV404</textPath>
+        </text>
+      </g>
+
+      <!-- Dot and label: AI. Yadin -->
+      <g class="rotate-dot-ai">
+        <circle class="dot" cx="70" cy="275" r="6" />
+        <g class="label-group label-ai">
+          <text x="50" y="295" class="label">Pekanbaru,Riau</text>
+        </g>
+      </g>
+
+      <!-- Dot and label: IT Support (jarak dikurangi lebih lagi) -->
+      <g class="rotate-dot-it">
+        <circle class="dot" cx="317" cy="294" r="3" />
+        <g class="label-group label-it">
+          <!-- Adjusted X from 325 to 320 -->
+          <text x="320" y="294" class="label">IT Support</text>
+        </g>
+      </g>
+
+      <!-- Dot and label: Pekanbaru,Riau -->
+      <g class="rotate-dot-small">
+        <circle class="dot" cx="121" cy="139" r="3" />
+        <g class="label-group label-small">
+          <text x="80" y="139" class="label">Codex888</text>
+        </g>
+      </g>
+
+      <!-- Concentric circles (static) -->
       <circle cx="200" cy="200" r="150" stroke="#000" stroke-width="2" fill="none" />
       <circle cx="200" cy="200" r="100" stroke="#000" stroke-width="2" fill="none" />
-
-      <!-- Curved text on outer circle -->
-      <text class="curved-text">
-        <textPath href="#outerPath" startOffset="10%" method="align" spacing="auto">COLLABORATION</textPath>
-      </text>
-
-      <!-- Curved text on inner circle -->
-      <text class="curved-text">
-        <textPath href="#innerPath" startOffset="50%" method="align" spacing="auto">NASA</textPath>
-      </text>
-
-      <!-- Dot dan label on outer circle (moved further from curved text) -->
-      <circle class="dot" cx="70" cy="275" r="3" />
-      <text x="50" y="295" class="label">AI. Yadin</text>
-
-      <!-- Additional dot on outer circle -->
-      <circle class="dot" cx="317" cy="294" r="3" />
-
-      <!-- Dot on inner circle -->
-      <circle class="dot" cx="121" cy="139" r="3" />
     </svg>
   </div>
 </body>
