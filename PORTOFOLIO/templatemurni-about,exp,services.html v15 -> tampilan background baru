@@ -306,18 +306,12 @@
       bottom: 50px;
     }
     .project-bottom-right .project-box {
-      width: 150px;
-      height: 100px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      font-size: 18px;
+      font-size: 80px;
+      font-weight: bold;
+      color: #FFFFFF;
       position: relative;
-      right: 50px;
+      right: 80px;
+      top: 25px;
     }
     /* CONTACT Section */
     #contact {
@@ -1302,7 +1296,7 @@
         <h1 class="project-title">PROJECT</h1>
       </div>
       <div class="project-bottom-right">
-        <div class="project-box">Box</div>
+        <div class="project-box">/01</div>
       </div>
     </div>
   </section>
@@ -1397,6 +1391,7 @@
       const descText = document.querySelector('.desc-text');
       const descView = document.querySelector('.desc-view');
       const boxes = document.querySelectorAll('.project-top-right .box');
+      const storyIndex = document.querySelector('.project-bottom-right .project-box');
       let currentIndex = 0;
       const duration = 5000; // 5 detik per gambar
       let timerId = null;
@@ -1434,7 +1429,10 @@
           boxes[2].innerText = '#D1CBCB';
           boxes[3].innerText = '#888888';
         }
-        
+
+        // update angka di bawah sesuai index (story aktif)
+        storyIndex.innerText = index === 0 ? '/01' : '/02';
+
         // Animasi progress fill untuk gambar aktif
         const currentFill = progressFills[index];
         currentFill.style.transition = `width ${duration/1000}s linear`;
