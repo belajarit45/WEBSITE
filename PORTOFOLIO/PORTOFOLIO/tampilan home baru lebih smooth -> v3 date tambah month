@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ANDEV404 Portfolio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+    body { background:#0f0f0f; color:#fff; overflow-x:hidden; min-height:100vh; }
+
+    /* Initial loader */
+    .initial-loader {
+      position:fixed; top:0; left:0; width:100%; height:100vh;
+      display:flex; flex-direction:column; justify-content:space-between; align-items:center;
+      padding:15vh 0; z-index:1000;
+    }
+    .greeting {
+      font-size:1.5rem; font-weight:300;
+      opacity:0; transform:translateY(50px);
+      animation:fadeInUp 1s ease forwards, fadeOutUp 1s ease forwards 5s;
+    }
+    .date-display {
+      font-size:10rem; font-weight:700;
+      opacity:0; transform:translateY(50px);
+      animation:fadeInUp 1s ease 0.3s forwards, fadeOutUp 1s ease forwards 5s;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
+    .month-label {
+      font-size: 2.5rem;
+      font-weight: 500;
+      margin-left: 0.5rem;
+      opacity: 0.8;
+    }
+    .brand {
+      font-size:1.5rem; font-weight:300;
+      opacity:0;
+      animation:textAppear 2s ease 0.6s forwards, fadeOutUp 1s ease forwards 5s;
+    }
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(50px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeOutUp {
+      from { opacity:1; transform:translateY(0); }
+      to   { opacity:0; transform:translateY(-50px); }
+    }
+    @keyframes textAppear { from{opacity:0;} to{opacity:1;} }
+    .char { opacity:0; animation:charAppear 0.2s ease forwards; }
+    @keyframes charAppear { from{opacity:0;} to{opacity:1;} }
+
+    /* Navbar */
+    .navbar {
+      position:fixed; top:0; left:0; width:100%;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:1rem 5%; z-index:100;
+      opacity:0; transform:translateY(-50px);
+      animation:navAppear 1s ease forwards 7s;
+    }
+    @keyframes navAppear {
+      from{opacity:0;transform:translateY(-50px);} to{opacity:1;transform:translateY(0);}
+    }
+    .navbar-brand { font-size:1.5rem; font-weight:600; color:#fff; text-decoration:none; }
+    .nav-links {
+      display:flex; align-items:center;
+      background:rgba(255,255,255,0.1); backdrop-filter:blur(10px);
+      padding:.5rem 1rem; border-radius:50px;
+    }
+    .nav-links a {
+      color:#fff; text-decoration:none; margin:0 1rem;
+      font-size:.9rem; font-weight:500; transition:all .3s;
+      cursor:pointer;
+    }
+    .nav-links a:hover { color:#f0f0f0; }
+
+    /* Main content */
+    .content {
+      min-height:100vh;
+      display:flex; flex-direction:column;
+      justify-content:center; align-items:center;
+      padding:0 5%;
+      position: relative;
+    }
+
+    /* Time display: hidden until after loader */
+    .time-display {
+      font-size:2rem;
+      opacity:0; transform:translateY(50px);
+      animation:
+        fadeInUp 1s ease forwards 6s,
+        timeGrow 2s ease forwards 6.2s;
+    }
+    @keyframes timeGrow {
+      from { font-size:2rem; } to { font-size:5rem; }
+    }
+    .time-separator { animation:blink 1s infinite; }
+    @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0;} }
+
+    /* Date-info appears last */
+    @keyframes infoAppear {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .date-info {
+      opacity: 0;
+      display: flex; align-items: center;
+      margin-top: 2rem; justify-content: center; flex-wrap: wrap;
+      animation: infoAppear 1s ease forwards 8s;
+    }
+    .date-info-item { margin:0 .5rem; text-align:center; }
+    .date-info-primary { font-size:2rem; font-weight:600; }
+    .date-info-secondary { font-size:1rem; font-weight:300; }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 9s;
+    }
+    
+    .scroll-text {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+    
+    .scroll-icon {
+      width: 24px;
+      height: 40px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .scroll-dot {
+      width: 4px;
+      height: 4px;
+      background-color: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 8px;
+      animation: scrollAnimation 1.5s infinite ease-in-out;
+    }
+    
+    @keyframes scrollAnimation {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(15px);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width:768px) {
+      .nav-links { display:none; }
+      .mobile-menu { display:block; cursor:pointer; }
+      .time-display {
+        font-size:1.5rem;
+        animation:fadeInUp 1s ease forwards 6s, timeGrow 2s ease forwards 6.2s;
+      }
+      @keyframes timeGrow { from{font-size:1.5rem;} to{font-size:3.5rem;} }
+      .date-info { flex-direction:column; }
+      .date-info-primary { font-size:1.5rem; }
+      .date-info-secondary { font-size:.8rem; }
+      .month-label { font-size: 1.8rem; }
+    }
+    @media (max-width:480px) {
+      .time-display {
+        font-size:1.2rem;
+        animation:fadeInUp 1s ease forwards 6s, timeGrow 2s ease forwards 6.2s;
+      }
+      @keyframes timeGrow { from{font-size:1.2rem;} to{font-size:3rem;} }
+      .date-info-primary { font-size:1.2rem; }
+      .scroll-indicator {
+        bottom: 20px;
+      }
+      .month-label { font-size: 1.5rem; }
+    }
+    .mobile-menu { display:none; }
+    @media (max-width:768px) {
+      .nav-links {
+        position:fixed; top:70px; right:5%;
+        background:rgba(255,255,255,0.1); backdrop-filter:blur(10px);
+        border-radius:10px; padding:1rem;
+        flex-direction:column; align-items:flex-start;
+        opacity:0; pointer-events:none; transition:all .3s;
+      }
+      .nav-links.active { opacity:1; pointer-events:all; }
+      .nav-links a { margin:.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- loader -->
+  <div class="initial-loader">
+    <div class="greeting" id="greeting">GOOD MORNING</div>
+    <div class="date-display" id="dateDisplay">
+      <span id="dateNum">00</span>
+      <span class="month-label" id="monthLabel"></span>
+    </div>
+    <div class="brand" id="brandText"></div>
+  </div>
+
+  <!-- navbar -->
+  <nav class="navbar">
+    <a href="#" class="navbar-brand">ANDEV404</a>
+    <div class="nav-links">
+      <a href="#home">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="#experience">EXPERIENCE</a>
+      <a href="#services">SERVICES</a>
+      <a href="#project">PROJECT</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12H21" stroke="white" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 6H21" stroke="white" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 18H21" stroke="white" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </nav>
+
+  <!-- main -->
+  <section class="content" id="home">
+    <div class="time-display" id="timeDisplay">
+      10<span class="time-separator">:</span>30
+    </div>
+    <div class="date-info">
+      <div class="date-info-item">
+        <div class="date-info-secondary" id="dayName">MONDAY</div>
+      </div>
+      <div class="date-info-item">
+        <div class="date-info-primary" id="dateFormat">08.09</div>
+      </div>
+      <div class="date-info-item">
+        <div class="date-info-secondary" id="monthName">SEPTEMBER</div>
+      </div>
+      <div class="date-info-item">
+        <div class="date-info-primary" id="yearNum">2025</div>
+      </div>
+      <div class="date-info-item">
+        <div class="date-info-secondary" id="location">Pekanbaru, Indonesia</div>
+      </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator">
+      <div class="scroll-text">SCROLL DOWN</div>
+      <div class="scroll-icon">
+        <div class="scroll-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Function to animate text character by character
+    function animateText(elementId, text, delay = 100) {
+      const element = document.getElementById(elementId);
+      element.innerHTML = '';
+      for (let i = 0; i < text.length; i++) {
+        const char = document.createElement('span');
+        char.className = 'char';
+        char.textContent = text[i];
+        char.style.animationDelay = `${0.6 + (i * 0.1)}s`;
+        element.appendChild(char);
+      }
+    }
+
+    // Function to get greeting based on time of day
+    function getGreeting() {
+      const hour = new Date().getHours();
+      if (hour >= 5 && hour < 12) {
+        return "GOOD MORNING";
+      } else if (hour >= 12 && hour < 18) {
+        return "GOOD AFTERNOON";
+      } else {
+        return "GOOD EVENING";
+      }
+    }
+
+    // Get short month name
+    function getShortMonthName(monthIndex) {
+      const shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+      return shortMonths[monthIndex];
+    }
+
+    // Animate loader date counter 00 → tanggal hari ini with smooth easing
+    function animateInitialDate() {
+      const el = document.getElementById('dateNum');
+      const monthLabel = document.getElementById('monthLabel');
+      const now = new Date();
+      const target = now.getDate();
+      const duration = 3000; // total animation time in ms
+      const start = performance.now();
+
+      el.textContent = '00';
+      
+      // Set the month label
+      monthLabel.textContent = getShortMonthName(now.getMonth());
+
+      function easeOutQuad(t) {
+        return t * (2 - t);
+      }
+
+      function tick(nowTime) {
+        const elapsed = nowTime - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const current = Math.floor(easeOutQuad(progress) * target);
+        el.textContent = String(current).padStart(2, '0');
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = String(target).padStart(2, '0');
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    // Update time and date
+    function updateDateTime() {
+      const now = new Date();
+      // Time display (HH:MM)
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      document.getElementById('timeDisplay').innerHTML = `${hours}<span class="time-separator">:</span>${minutes}`;
+
+      // Day name, date format, month name, year
+      const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+      const months = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+      document.getElementById('dayName').textContent = days[now.getDay()];
+      const dd = now.getDate().toString().padStart(2, '0');
+      const mo = (now.getMonth()+1).toString().padStart(2, '0');
+      document.getElementById('dateFormat').textContent = `${dd}.${mo}`;
+      document.getElementById('monthName').textContent = months[now.getMonth()];
+      document.getElementById('yearNum').textContent = now.getFullYear();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Greeting & brand animation
+      document.getElementById('greeting').textContent = getGreeting();
+      animateText('brandText', 'ANDEV404');
+
+      // 2. Animate loader date counter smoothly
+      animateInitialDate();
+
+      // 3. Remove loader setelah animasi selesai (6 detik)
+      setTimeout(() => {
+        document.querySelector('.initial-loader').remove();
+      }, 6000);
+
+      // 4. Inisialisasi dan jalankan updateDateTime()
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+
+      // 5. Mobile menu toggle
+      const mobileMenu = document.getElementById('mobileMenu');
+      const navLinks   = document.querySelector('.nav-links');
+      mobileMenu.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+      
+      // 6. Smooth scroll functionality for scroll indicator
+      document.getElementById('scrollIndicator').addEventListener('click', () => {
+        window.scrollTo({
+          top: window.innerHeight,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
