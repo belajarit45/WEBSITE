@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ANDEV404 Portfolio</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;700&display=swap"/>
+
+  <style>
+    /* ======================= RESET GLOBAL ======================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      font-family: 'Satoshi', sans-serif;       /* default font */
+      background-color: #0f0f0f;             /* default bg */
+      color: #fff;
+    }
+
+    /* Initial loader */
+    .initial-loader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+      padding: 15vh 0; z-index: 1000;
+    }
+    .greeting {
+      font-size: 1.5rem; font-weight: 300;
+      opacity: 0; transform: translateY(50px);
+      animation: fadeInUp 1s ease forwards, fadeOutUp 1s ease forwards 5s;
+    }
+    .date-display {
+      font-size: 10rem; font-weight: 700;
+      opacity: 0; transform: translateY(50px);
+      display: flex; align-items: baseline; justify-content: center;
+      animation: fadeInUp 1s ease 0.3s forwards, fadeOutUp 1s ease forwards 5s;
+    }
+    .month-label {
+      font-size: 2.5rem; font-weight: 500; margin-left: 0.5rem; opacity: 0.8;
+    }
+    .brand {
+      font-size: 1.5rem; font-weight: 300;
+      opacity: 0;
+      animation: textAppear 2s ease 0.6s forwards, fadeOutUp 1s ease forwards 5s;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeOutUp {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-50px); }
+    }
+    @keyframes textAppear { from { opacity: 0; } to { opacity: 1; } }
+    .char { opacity: 0; animation: charAppear 0.2s ease forwards; }
+    @keyframes charAppear { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Navbar */
+    .navbar {
+      position: fixed; top: 0; left: 0; width: 100%;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 5%; z-index: 100;
+      opacity: 0; transform: translateY(-50px);
+      animation: navAppear 1s ease forwards 7s;
+    }
+    @keyframes navAppear {
+      from { opacity: 0; transform: translateY(-50px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .navbar-brand { font-size: 1.5rem; font-weight: 600; color: #fff; text-decoration: none; }
+    .nav-links {
+      display: flex; align-items: center;
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+      padding: .5rem 1rem; border-radius: 50px;
+    }
+    .nav-links a {
+      color: #fff; text-decoration: none; margin: 0 1rem;
+      font-size: .9rem; font-weight: 500; transition: all .3s; cursor: pointer;
+    }
+    .nav-links a:hover { color: #f0f0f0; }
+    .mobile-menu { display: none; cursor: pointer; }
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed; top: 70px; right: 5%;
+        background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+        border-radius: 10px; padding: 1rem;
+        flex-direction: column; align-items: flex-start;
+        opacity: 0; pointer-events: none; transition: all .3s;
+      }
+      .nav-links.active { opacity: 1; pointer-events: all; }
+      .nav-links a { margin: .5rem 0; }
+      .mobile-menu { display: block; }
+    }
+
+    /* Main Home Content */
+    .content {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 0 5%;
+      position: relative;
+    }
+    .time-display {
+      font-size: 2rem;
+      opacity: 0; transform: translateY(50px);
+      animation: fadeInUp 1s ease forwards 6s, timeGrow 2s ease forwards 6.2s;
+    }
+    @keyframes timeGrow {
+      from { font-size: 2rem; } to { font-size: 5rem; }
+    }
+    .time-separator { animation: blink 1s infinite; }
+    @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0;} }
+
+    .date-info {
+      opacity: 0;
+      display: flex; align-items: center; flex-wrap: wrap;
+      margin-top: 2rem; justify-content: center;
+      animation: infoAppear 1s ease forwards 8s;
+    }
+    @keyframes infoAppear {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .date-info-item { margin: 0 .5rem; text-align: center; }
+    .date-info-primary { font-size: 2rem; font-weight: 600; }
+    .date-info-secondary { font-size: 1rem; font-weight: 300; }
+
+    .scroll-indicator {
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+      opacity: 0; animation: fadeIn 1s ease forwards 9s;
+    }
+    .scroll-text {
+      font-size: .8rem; font-weight: 300; letter-spacing: 2px;
+      margin-bottom: 10px; opacity: .8;
+    }
+    .scroll-icon {
+      width: 24px; height: 40px;
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 12px; position: relative;
+      display: flex; justify-content: center;
+    }
+    .scroll-dot {
+      width: 4px; height: 4px; background: #fff; border-radius: 50%;
+      position: absolute; top: 8px;
+      animation: scrollAnimation 1.5s infinite ease-in-out;
+    }
+    @keyframes scrollAnimation {
+      0%   { transform: translateY(0); opacity:1; }
+      50%  { transform: translateY(15px); opacity:.5; }
+      100% { transform: translateY(0); opacity:1; }
+    }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+    @media (max-width:768px) {
+      .time-display {
+        font-size:1.5rem;
+        animation:fadeInUp 1s ease forwards 6s, timeGrow 2s ease forwards 6.2s;
+      }
+      @keyframes timeGrow { from{font-size:1.5rem;} to{font-size:3.5rem;} }
+      .date-info { flex-direction: column; }
+      .date-info-primary { font-size:1.5rem; }
+      .date-info-secondary { font-size:.8rem; }
+      .month-label { font-size: 1.8rem; }
+    }
+    @media (max-width:480px) {
+      .time-display {
+        font-size:1.2rem;
+        animation:fadeInUp 1s ease forwards 6s, timeGrow 2s ease forwards 6.2s;
+      }
+      @keyframes timeGrow { from{font-size:1.2rem;} to{font-size:3rem;} }
+      .date-info-primary { font-size:1.2rem; }
+      .scroll-indicator { bottom:20px; }
+      .month-label { font-size: 1.5rem; }
+    }
+
+    /* ======================= PORTFOLIO CSS ASLI ======================= */
+    /* Setiap section diberi jarak yang sama antar bagian */
+    .section {
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 40px; /* Jarak antar section */
+      position: relative;
+      z-index: 1;
+    }
+    .section:last-child {
+      margin-bottom: 0;
+    }
+    /* Judul, Subtitle & Deskripsi */
+    .title {
+      font-size: 80px;
+      font-weight: bold;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+    .subtitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #D1CBCB;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 16px;
+      font-weight: normal;
+      color: #888888;
+      line-height: 1.5;
+    }
+    /* Custom classes untuk split text effect */
+    .normal-part {
+      color: #FFFFFF;
+    }
+    .border-part {
+      color: transparent;
+      -webkit-text-stroke: 1px #FFFFFF;
+      text-stroke: 1px #FFFFFF;
+    }
+    /* ABOUT Section - dimodifikasi */
+    #about .about {
+      width: 100%;
+      min-height: 100%;
+      position: relative;
+    }
+    /* Heading About dengan pengaturan jarak nol dan penggeseran "ABOUT" ke kiri */
+    .about-heading {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto 20px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 0.7;
+    }
+    .about-heading span {
+      display: block;
+      width: 100%;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin: 0;
+    }
+    .about-heading .what {
+      text-align: left;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 80px;
+      left: -100px; /* 🔥 Ditambahkan */
+      position: relative;
+    }
+    .about-heading .about-text {
+      text-align: left;
+      color: #FFFFFF;
+      font-size: 240px;
+      margin: 0;
+      position: relative;
+      left: -20px; /* Geser ke kiri */
+    }
+    .about-heading .me {
+      text-align: right;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 80px;
+      margin: 0;
+      right: -100px; /* 🔥 Ditambahkan */
+      position: relative;
+    }
+    /* Container untuk Card Cyber dan Deskripsi di bagian ABOUT */
+    .about-details {
+      max-width: 1010px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-left: 120px;
+    }
+    .card-wrapper {
+      /* Sesuaikan lebar sesuai kebutuhan */
+      flex: 0 0 auto;
+    }
+    .description-wrapper {
+      flex: 1;
+      text-align: right;
+      /* Menggeser teks lebih ke kanan */
+      padding-left: 160px;
+    }
+    /* EXPERIENCE Section */
+    .experience {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      background-color: rgba(0,0,0,0.5);
+      position: relative;
+      bottom: 38px;
+    }
+    .experience-left, .experience-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 600px;
+      padding: 20px;
+    }
+    /* Bagian kiri EXPERIENCE */
+    .experience-left-top h2 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 1.2;
+      position: relative;
+      z-index: 2;
+    }
+    .experience-left-top h2.gray {
+      color: #5a5050;
+    }
+    .experience-left-bottom {
+      margin-top: 20px;
+      /* Lebar dan penyesuaian styling dapat diatur sesuai kebutuhan */
+    }
+    /* Styling default untuk box pengalaman kerja (sebelumnya) telah dihapus */
+    /* Bagian kanan EXPERIENCE - telah dimodifikasi */
+    .experience-right {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    .experience-right-text {
+      flex: 1;
+    }
+    .experience-right-text .description {
+      text-align: right;
+      padding-top: 210px;
+      font-size: 20px;
+      width: 250px;
+      position: relative;
+      left: 60px;
+      bottom: 10px;
+    }
+    .experience-right-rotated {
+      flex: 0 0 auto;
+      font-size: 80px;
+      color: #FFFFFF;
+      transform: rotate(90deg);
+      /* Jika perlu, atur margin agar posisinya pas */
+      margin-left: 20px;
+      max-width: 400px;
+      right: 120px;
+      position: relative;
+      bottom: 30px;
+    }
+    /* SERVICES Section - diubah sesuai permintaan */
+    .services {
+      width: 100%;
+      height: auto;
+    }
+    .services-top {
+      position: relative;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .services-heading {
+      font-size: 120px;
+      font-weight: bold;
+      color: #FFFFFF;
+    }
+    /* Perubahan: Card di bagian services menjadi box 3D */
+    .services-card {
+      position: relative;
+      margin-top: 20px;
+    }
+    /* Style untuk bagian bawah SERVICES (kembalikan seperti aslinya) */
+    .services-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 100px;
+    }
+    .services-bottom-left {
+      text-align: left;
+    }
+    .services-bottom-left h2 {
+      font-weight: bold;
+      color: #FFFFFF;
+      font-size: 55px;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .services-bottom-right p {
+      color: #888888;
+      font-size: 20px;
+      text-align: right;
+      width: 600px;
+      margin: 0;
+    }
+    /* PROJECT Section - Modifikasi sesuai instruksi sebelumnya */
+    .project {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .project-top, .project-bottom {
+      width: 100%;
+      display: flex;
+      margin-bottom: 20px;
+      position: relative;
+      top: 50px;
+    }
+    /* Bagian atas PROJECT */
+    .project-top-left, .project-top-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Mengatur agar box-box di sebelah kanan menempel ke sisi kanan */
+    .project-top-right {
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    /* Bagian bawah PROJECT */
+    .project-bottom {
+      align-items: center;
+      justify-content: space-between;
+    }
+    .project-bottom-left {
+      flex: 1;
+      padding-left: 40px;
+    }
+    /* Meningkatkan ukuran tulisan "PROJECT" */
+    .project-bottom-left .project-title {
+      font-size: 80px;
+      font-weight: bold;
+      color: #FFFFFF;
+      position: relative;
+      top: 25px;
+    }
+    /* Mengatur agar box di sebelah tulisan PROJECT menempel ke sisi kanan */
+    .project-bottom-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .project-top-right .box {
+      width: 250px;
+      height: 50px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 16px;
+      margin-bottom: 5px;
+      position: relative;
+      left: 50px;
+      bottom: 50px;
+    }
+    .project-bottom-right .project-box {
+      font-size: 80px;
+      font-weight: bold;
+      color: #FFFFFF;
+      position: relative;
+      right: 80px;
+      top: 25px;
+    }
+    /* CONTACT Section */
+    #contact {
+      background-color: #000000;
+      width: 100%;
+      height: 100%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .contact-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+    }
+    .contact-left, .contact-right {
+      flex: 1;
+      min-width: 300px;
+      padding: 20px;
+    }
+    .contact-left {
+      text-align: left;
+    }
+    .contact-left h1,
+    .contact-left h2 {
+      font-size: 36px;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+    .contact-left p {
+      font-size: 16px;
+      color: #888888;
+    }
+    .contact-left .extra-desc {
+      font-size: 16px;
+      color: #888888;
+      margin-bottom: 10px;
+    }
+    .contact-icons {
+      display: flex;
+      gap: 20px;
+      margin-top: 50px;
+    }
+    .contact-icons img {
+      width: 36px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .contact-icons img:hover {
+      transform: scale(1.1);
+    }
+    .contact-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: normal;
+      color: #FFFFFF;
+    }
+    .contact-right a {
+      text-decoration: none;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+    .contact-bottom {
+      width: 108%;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      background-color: #000000;
+      padding: 10px 0px;
+    }
+    .contact-bottom p {
+      font-size: 14px;
+      color: #FFFFFF;
+      margin-left: 60px;
+    }
+    .contact-bottom .big-text {
+      font-size: 260px;
+      font-weight: bold;
+      color: #FFFFFF;
+      display: inline-block;
+      text-align: center;
+      line-height: 1;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .about, .experience, .services, .project {
+        flex-direction: column;
+        text-align: center;
+      }
+      .services-bottom {
+        flex-direction: column;
+        gap: 20px;
+      }
+      .services-bottom-left, .services-bottom-right {
+        text-align: center;
+      }
+      .project-top, .project-bottom {
+        flex-direction: column;
+      }
+      .project-bottom {
+        align-items: center;
+      }
+      .project-bottom-left, .project-bottom-right {
+        padding: 0;
+      }
+      .contact-top {
+        flex-direction: column;
+        align-items: center;
+      }
+      .contact-left, .contact-right {
+        text-align: center;
+      }
+      .contact-right {
+        align-items: center;
+      }
+      .contact-bottom .big-text {
+        font-size: 160px;
+        margin-left: 0;
+      }
+      .contact-bottom p {
+        margin-left: 0;
+      }
+      .about-details {
+        flex-direction: column;
+      }
+      .description-wrapper {
+        text-align: center;
+        padding: 0;
+        margin-top: 20px;
+      }
+    }
+    
+    /* =====================================================================
+       CSS tambahan untuk Card Cyber (tetap sama)
+    ====================================================================== */
+    .container {
+      position: relative;
+      width: 190px;
+      height: 254px;
+      transition: 200ms;
+    }
+    .container:active {
+      width: 180px;
+      height: 245px;
+    }
+    #card {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      transition: 700ms;
+      background: linear-gradient(45deg, #1a1a1a, #262626);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    .card-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    /* Background selalu tampil seperti saat hover */
+    #card::before {
+      content: "";
+      background: radial-gradient(
+        circle at center,
+        rgba(0, 255, 170, 0.1) 0%,
+        rgba(0, 162, 255, 0.05) 50%,
+        transparent 100%
+      );
+      filter: blur(20px);
+      opacity: 0.8;
+      width: 150%;
+      height: 150%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
+    .tracker:hover ~ #card {
+      transition: 300ms;
+      filter: brightness(1.1);
+    }
+    /* --- BAGIAN FOTO (#prompt) --- */
+    #prompt {
+      bottom: 70px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      z-index: 20;
+      transition: 300ms ease-in-out;
+      position: absolute;
+      text-align: center;
+    }
+    #prompt img {
+      width: 100px;
+      height: auto;
+      border-radius: 20px;
+    }
+    /* --- BAGIAN TITLE --- */
+    .title-cyber {
+      opacity: 0;
+      transition: 300ms ease-in-out;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      padding-top: 20px;
+    }
+    .title-cyber .hover-img {
+      display: inline-block;
+      width: 100px;
+      height: auto;
+      border-radius: 20px;
+      transform: translateY(20px);
+    }
+    .tracker:hover ~ #card .title-cyber {
+      opacity: 1;
+      transform: translateY(-10px);
+    }
+    /* --- BAGIAN SUBTITLE --- */
+    .subtitle-cyber {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 2px;
+      transform: translateY(10px);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .subtitle-cyber span {
+      display: block;
+    }
+    .glowing-elements {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .glow-1,
+    .glow-2,
+    .glow-3 {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at center,
+        rgba(0, 255, 170, 0.3) 0%,
+        rgba(0, 255, 170, 0) 70%
+      );
+      filter: blur(15px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .glow-1 {
+      top: -20px;
+      left: -20px;
+    }
+    .glow-2 {
+      top: 50%;
+      right: -30px;
+      transform: translateY(-50%);
+    }
+    .glow-3 {
+      bottom: -20px;
+      left: 30%;
+    }
+    .card-particles span {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #00ffaa;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .tracker:hover ~ #card .glowing-elements div {
+      opacity: 1;
+    }
+    .tracker:hover ~ #card .card-particles span {
+      animation: particleFloat 2s infinite;
+    }
+    @keyframes particleFloat {
+      0% {
+        transform: translate(0, 0);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(calc(var(--x, 0) * 30px), calc(var(--y, 0) * 30px));
+        opacity: 0;
+      }
+    }
+    .card-particles span:nth-child(1) {
+      --x: 1;
+      --y: -1;
+      top: 40%;
+      left: 20%;
+    }
+    .card-particles span:nth-child(2) {
+      --x: -1;
+      --y: -1;
+      top: 60%;
+      right: 20%;
+    }
+    .card-particles span:nth-child(3) {
+      --x: 0.5;
+      --y: 1;
+      top: 20%;
+      left: 40%;
+    }
+    .card-particles span:nth-child(4) {
+      --x: -0.5;
+      --y: 1;
+      top: 80%;
+      right: 40%;
+    }
+    .card-particles span:nth-child(5) {
+      --x: 1;
+      --y: 0.5;
+      top: 30%;
+      left: 60%;
+    }
+    .card-particles span:nth-child(6) {
+      --x: -1;
+      --y: 0.5;
+      top: 70%;
+      right: 60%;
+    }
+    .tracker {
+      position: absolute;
+      z-index: 200;
+      width: 100%;
+      height: 100%;
+    }
+    .tracker:hover {
+      cursor: pointer;
+    }
+    .tracker:hover ~ #card #prompt {
+      opacity: 0;
+    }
+    
+    /* =====================================================================
+       CSS untuk Box 3D (Services Card) - tidak mengubah bagian lain
+    ====================================================================== */
+    .scene {
+      perspective: 1000px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+    .cube {
+      width: 180px;
+      height: 180px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform-origin: 50% 100%;
+    }
+    .face {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(1px);
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+      color: #fff;
+      backface-visibility: visible;
+    }
+    .face img {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 10px;
+    }
+    .front  { transform: translateZ(90px); }
+    .back   { transform: rotateY(180deg) translateZ(90px); }
+    .right  { transform: rotateY(90deg) translateZ(90px); }
+    .left   { transform: rotateY(-90deg) translateZ(90px); }
+    .top    { transform: rotateX(90deg) translateZ(90px); }
+    .bottom { transform: rotateX(-90deg) translateZ(90px); }
+    
+    /* Animasi masing-masing cube */
+    @keyframes rotateBox1 {
+      0%     { transform: rotateX(0deg); }
+      5%     { transform: rotateX(0deg); }
+      17.5%  { transform: rotateX(-90deg); }
+      87.5%  { transform: rotateX(-90deg); }
+      100%   { transform: rotateX(0deg); }
+    }
+    @keyframes rotateBox2 {
+      0%, 17.5% { transform: rotateX(0deg); }
+      20%       { transform: rotateX(0deg); }
+      32.5%     { transform: rotateX(-90deg); }
+      75%       { transform: rotateX(-90deg); }
+      87.5%, 100% { transform: rotateX(0deg); }
+    }
+    @keyframes rotateBox3 {
+      0%, 32.5% { transform: rotateX(0deg); }
+      35%       { transform: rotateX(0deg); }
+      47.5%     { transform: rotateX(-90deg); }
+      62.5%     { transform: rotateX(-90deg); }
+      75%, 100% { transform: rotateX(0deg); }
+    }
+    @keyframes rotateBox4 {
+      0%, 47.5% { transform: rotateX(0deg); }
+      55%       { transform: rotateX(-90deg); }
+      67.5%     { transform: rotateX(-90deg); }
+      80%, 100% { transform: rotateX(0deg); }
+    }
+    .cube.box1 { animation: rotateBox1 8s linear infinite; }
+    .cube.box2 { animation: rotateBox2 8s linear infinite; }
+    .cube.box3 { animation: rotateBox3 8s linear infinite; }
+    .cube.box4 { animation: rotateBox4 8s linear infinite; }
+    
+    /* ===============================
+       CSS khusus untuk Project Story Card
+       (diambil dari script yang Anda kirim, dengan beberapa penyesuaian)
+    =============================== */
+    .card-container {
+      position: relative;
+      width: 500px;
+      height: 350px;
+    }
+    .desc-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      border-radius: 15px;
+      z-index: 1;
+      padding: 20px;
+      transform: translate(300px, 50px) rotate(5deg);
+    }
+    .desc-content {
+      max-width: 250px;
+      margin-left: auto;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      text-align: right;
+      padding-right: 20px;
+      padding-top: 20px;
+    }
+    .desc-title {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+    .desc-text {
+      font-size: 14px;
+      color: #666;
+      text-align: right;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .desc-view {
+      font-size: 14px;
+      color: #007bff;
+      text-decoration: none;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+    }
+    .story-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 500px;
+      height: 350px;
+      background-color: #000;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+      transform: translate(0px, -50px) rotate(-5deg);
+    }
+    .story-content {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background-color: #1a1a1a;
+    }
+    .story-progress {
+      display: flex;
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 100%;
+      padding: 0 8px;
+      z-index: 20;
+      gap: 2px;
+    }
+    .progress-segment {
+      flex-grow: 1;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+      height: 2px;
+    }
+    .progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background-color: white;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      position: absolute;
+      top: 16px;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #555;
+      overflow: hidden;
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .user-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .username {
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .story-time {
+      color: #aaa;
+      font-size: 12px;
+      margin-left: auto;
+    }
+    .header-icons {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    .menu-dots {
+      color: white;
+      margin-right: 12px;
+      font-size: 18px;
+    }
+    .close-btn {
+      color: white;
+      font-size: 18px;
+    }
+    .main-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+    }
+    .portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .story-actions {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+    .input-action {
+      flex-grow: 1;
+      background-color: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      color: #aaa;
+      padding: 8px 16px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+    .action-icons {
+      display: flex;
+      margin-left: 10px;
+    }
+    .action-icon {
+      color: white;
+      margin-left: 12px;
+      font-size: 18px;
+    }
+    
+    /* =====================================================================
+       CSS tambahan untuk Falling Boxes di bagian EXPERIENCE
+       (telah dilakukan perubahan nama class untuk menghindari konflik)
+    ====================================================================== */
+    .falling-container {
+      position: relative;
+      width: 800px;
+      height: 600px;
+      margin: 50px auto;
+      overflow: hidden;
+      position: relative;
+      bottom: 234px;
+    }
+    .falling-box {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: rgba(255, 255, 255, 0.1);
+      top: -50px;
+      transform-origin: center;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation-iteration-count: infinite;
+    }
+    @keyframes fall {
+      0% {
+        top: -50px;
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        top: 100%;
+        opacity: 0;
+      }
+    }
+    @keyframes sway {
+      0%, 100% {
+        transform: rotate(var(--angle)) translateX(0);
+      }
+      50% {
+        transform: rotate(var(--angle)) translateX(var(--drift));
+      }
+    }
+    /* BLOBS BACKGROUND FIXED */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;
+      background: #ffffff;
+      animation: blob 8s infinite;
+      z-index: 0;            /* di belakang semua konten */
+    }
+    .blob1 {
+      width: 300px; height: 300px;
+      top: -10%; left: 40%;
+      margin-left: -150px;
+      animation-delay: 2s;
+    }
+    .blob2 {
+      width: 350px; height: 350px;
+      top: 10%; right: -15%;
+    }
+    .blob3 {
+      width: 280px; height: 280px;
+      bottom: -30%; left: 50%;
+      animation-delay: 4s;
+    }
+    .blob4 {
+      width: 320px; height: 320px;
+      top: 50%; left: -5%;
+      animation-delay: 6s;
+    }
+
+    /* keyframes (ditambahkan unik untuk .blob) */
+    @keyframes blob {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(30px, -50px) scale(1.1); }
+      66%  { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- HOME Loader & Navbar -->
+  <div class="initial-loader">
+    <div class="greeting" id="greeting">GOOD MORNING</div>
+    <div class="date-display" id="dateDisplay">
+      <span id="dateNum">00</span>
+      <span class="month-label" id="monthLabel"></span>
+    </div>
+    <div class="brand" id="brandText"></div>
+  </div>
+  <nav class="navbar">
+    <a href="#" class="navbar-brand">ANDEV404</a>
+    <div class="nav-links">
+      <a href="#home">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="#experience">EXPERIENCE</a>
+      <a href="#services">SERVICES</a>
+      <a href="#project">PROJECT</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 6H21"  stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 18H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </nav>
+
+  <!-- HOME Section -->
+  <section class="content" id="home">
+    <div class="time-display" id="timeDisplay">10<span class="time-separator">:</span>30</div>
+    <div class="date-info">
+      <div class="date-info-item"><div class="date-info-secondary" id="dayName">MONDAY</div></div>
+      <div class="date-info-item"><div class="date-info-primary" id="dateFormat">08.09</div></div>
+      <div class="date-info-item"><div class="date-info-secondary" id="monthName">SEPTEMBER</div></div>
+      <div class="date-info-item"><div class="date-info-primary" id="yearNum">2025</div></div>
+      <div class="date-info-item"><div class="date-info-secondary" id="location">Pekanbaru, Indonesia</div></div>
+    </div>
+    <div class="scroll-indicator" id="scrollIndicator">
+      <div class="scroll-text">SCROLL DOWN</div>
+      <div class="scroll-icon"><div class="scroll-dot"></div></div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO Sections -->
+  <!-- BLOBS BACKGROUND FIXED -->
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+  <div class="blob blob4"></div>
+
+  <!-- ABOUT Section - dimodifikasi -->
+  <section class="section" id="about">
+    <div class="about">
+      <div class="about-content">
+        <div class="about-heading">
+          <span class="what">WHAT</span>
+          <span class="about-text">ABOUT</span>
+          <span class="me">ME</span>
+        </div>
+        <!-- Mengelompokkan Card Cyber dan Deskripsi menjadi dua kolom -->
+        <div class="about-details">
+          <div class="card-wrapper">
+            <!-- Card Cyber -->
+            <div class="container noselect">
+              <div class="canvas">
+                <div class="tracker tr-1"></div>
+                <div class="tracker tr-2"></div>
+                <div class="tracker tr-3"></div>
+                <div class="tracker tr-4"></div>
+                <div class="tracker tr-5"></div>
+                <div class="tracker tr-6"></div>
+                <div class="tracker tr-7"></div>
+                <div class="tracker tr-8"></div>
+                <div class="tracker tr-9"></div>
+                <div id="card">
+                  <div class="card-content">
+                    <div class="card-glare"></div>
+                    <div class="cyber-lines">
+                      <span></span><span></span><span></span><span></span>
+                    </div>
+                    <!-- Foto di #prompt -->
+                    <p id="prompt">
+                      <img src="https://raw.githubusercontent.com/belajarit45/WEBSITE/main/photoProfile.png" alt="Profile Photo">
+                    </p>
+                    <!-- Title hanya berisi foto, tanpa teks -->
+                    <div class="title-cyber">
+                      <img class="hover-img" src="https://raw.githubusercontent.com/belajarit45/WEBSITE/main/photoProfile.png" alt="Profile Photo">
+                    </div>
+                    <div class="glowing-elements">
+                      <div class="glow-1"></div>
+                      <div class="glow-2"></div>
+                      <div class="glow-3"></div>
+                    </div>
+                    <!-- Subtitle yang dimodifikasi -->
+                    <div class="subtitle-cyber">
+                      <span>MUHAMMAD ANDRIAN</span>
+                      <span>Pekanbaru, Riau,<br>Indonesia</span>
+                    </div>
+                    <div class="card-particles">
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="scan-line"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="description-wrapper">
+            <p class="description">
+              <strong>Hi, Saya Muhammad Andrian dari Pekanbaru, Riau, Indonesia.</strong> Saya adalah seorang profesional IT berpengalaman dalam instalasi, konfigurasi, dan troubleshooting jaringan serta perangkat keras. Keahlian saya meliputi perakitan komputer, pengelolaan sistem CCTV, dan penguasaan perangkat lunak, dengan dasar pemrograman HTML, CSS, PHP, dan Python.
+              <br>
+              <strong>Di luar teknologi,</strong> saya tertarik pada olahraga dan traveling. Saya selalu berusaha memperluas wawasan dengan mempelajari perkembangan terbaru dalam bidang teknologi. Bagi saya, tantangan dan pengalaman baru adalah kunci untuk terus berkembang, baik secara pribadi maupun profesional.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE Section - dimodifikasi -->
+  <section class="section" id="experience">
+    <div class="experience">
+      <!-- Bagian kiri -->
+      <div class="experience-left">
+        <div class="experience-left-top">
+          <h2 style="font-weight: bold; font-size:40px; color: #ffffff;">
+            Mengapa <span style="color: #808080;">Saya</span>
+          </h2>
+          <h2 class="gray" style="font-weight: bold; font-size:40px; color: #808080;">
+            Menjadi Pilihan Tepat Anda
+          </h2>
+          <h2 style="font-weight: bold; font-size:40px; color: #ffffff">
+            Untuk Berkembang ?
+          </h2>
+        </div>        
+        <div class="experience-left-bottom">
+          <!-- Mengganti box 'pengalaman kerja' dengan falling boxes baru -->
+          <div class="falling-container"></div>
+        </div>
+      </div>
+      <!-- Bagian kanan - telah dimodifikasi menjadi dua kolom -->
+      <div class="experience-right">
+        <div class="experience-right-text">
+          <p class="description">
+            Saya sangat profesional dan memiliki jiwa tanggung jawab yang besar dalam menyelesaikan masalah. Dengan pengalaman yang luas dan keahlian teknis yang mumpuni, saya siap memberikan solusi terbaik untuk setiap tantangan IT. Saya percaya pada pentingnya kualitas dan kecepatan dalam setiap proyek yang saya kerjakan.
+          </p>
+        </div>
+        <div class="experience-right-rotated">
+          <strong>EXPERIENCE</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES Section - hanya bagian card diubah menjadi box 3D -->
+  <section class="section" id="services">
+    <div class="services">
+      <!-- Bagian Atas -->
+      <div class="services-top">
+        <h1 class="services-heading">SERVICES</h1>
+        <div class="services-card">
+          <!-- Mengganti CARD dengan box 3D -->
+          <div class="scene">
+            <!-- Box 1 -->
+            <div class="cube box1">
+              <div class="face front">
+                <img src="https://img.icons8.com/ios/96/ffffff/network.png" alt="Network">
+                <p>Jaringan &amp; IT Support</p>
+              </div>
+              <div class="face back"></div>
+              <div class="face right"></div>
+              <div class="face left"></div>
+              <div class="face top">
+                <img src="https://img.icons8.com/ios/96/ffffff/lock.png" alt="Lock">
+                <p>Keamanan &amp; Manajemen IT</p>
+              </div>
+              <div class="face bottom"></div>
+            </div>
+            <!-- Box 2 -->
+            <div class="cube box2">
+              <div class="face front">
+                <img src="https://img.icons8.com/ios/96/ffffff/code.png" alt="Code">
+                <p>Web Development</p>
+              </div>
+              <div class="face back"></div>
+              <div class="face right"></div>
+              <div class="face left"></div>
+              <div class="face top">
+                <img src="https://img.icons8.com/ios/96/ffffff/indoor-camera.png" alt="Camera">
+                <p>Instalasi &amp; Manajemen CCTV</p>
+              </div>
+              <div class="face bottom"></div>
+            </div>
+            <!-- Box 3 -->
+            <div class="cube box3">
+              <div class="face front">
+                <img src="https://img.icons8.com/ios/96/ffffff/flow-chart.png" alt="Flow Chart">
+                <p>Desain &amp; Pengembangan Sistem</p>
+              </div>
+              <div class="face back"></div>
+              <div class="face right"></div>
+              <div class="face left"></div>
+              <div class="face top">
+                <img src="https://img.icons8.com/ios/96/ffffff/toolbox.png" alt="Toolbox">
+                <p>Perakitan &amp; Diagnostik Perangkat Keras</p>
+              </div>
+              <div class="face bottom"></div>
+            </div>
+            <!-- Box 4 -->
+            <div class="cube box4">
+              <div class="face front">
+                <img src="https://img.icons8.com/ios/96/ffffff/internet-of-things.png" alt="IoT">
+                <p>Manajemen Sistem IoT</p>
+              </div>
+              <div class="face back"></div>
+              <div class="face right"></div>
+              <div class="face left"></div>
+              <div class="face top">
+                <img src="https://img.icons8.com/ios/96/ffffff/combo-chart.png" alt="Combo Chart">
+                <p>Optimasi Aplikasi Produktivitas</p>
+              </div>
+              <div class="face bottom"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Bagian Bawah -->
+      <div class="services-bottom">
+        <div class="services-bottom-left">
+          <h2>Apa yang sedang</h2>
+          <h2>anda cari?</h2>
+        </div>
+        <div class="services-bottom-right">
+          <p>
+            Saya selalu memperioritaskan ketepatan dan kecepatan dalam mengembangkan ide maupun memecahkan masalah. Dengan pengalaman yang luas di berbagai bidang IT, saya siap membantu Anda mencapai tujuan dengan solusi yang efektif dan efisien. Beberapa layanan yang saya kuasai.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT Section - Perbaikan: mengganti card "Kartu Proyek" dengan Project Story Card -->
+  <section class="section" id="project">
+    <!-- Bagian Atas: kiri = Project Story Card, kanan = 4 box yang disusun kolom -->
+    <div class="project-top">
+      <div class="project-top-left">
+        <!-- Project Story Card dari script yang Anda kirim -->
+        <div class="card-container">
+          <!-- Card deskripsi -->
+          <div class="desc-card">
+            <div class="desc-content">
+              <div>
+                <h2 class="desc-title"></h2>
+                <p class="desc-text"></p>
+              </div>
+            </div>
+            <a class="desc-view" href="#" target="_blank">VIEW</a>
+          </div>
+          <!-- Card utama -->
+          <div class="story-card">
+            <div class="story-content">
+              <!-- Story progress line -->
+              <div class="story-progress">
+                <div class="progress-segment" data-index="0">
+                  <div class="progress-fill"></div>
+                </div>
+                <div class="progress-segment" data-index="1">
+                  <div class="progress-fill"></div>
+                </div>
+              </div>
+              <div class="user-info">
+                <div class="user-avatar">
+                  <i class="fas fa-user" style="color: white;"></i>
+                </div>
+                <span class="username">ANDEV404</span>
+                <div class="header-icons">
+                  <i class="fas fa-ellipsis-h menu-dots"></i>
+                  <i class="fas fa-times close-btn"></i>
+                </div>
+              </div>
+              <div class="main-content">
+                <!-- Gambar tampilan project -->
+                <img src="https://github.com/belajarit45/WEBSITE/blob/main/Dashboard%20Monitoring%20Lalu%20Lintas%20Pekanbaru.png?raw=true" alt="Project Thumbnail" class="portrait">
+              </div>
+              <div class="story-actions">
+                <div class="input-action">Send Message</div>
+                <div class="action-icons">
+                  <i class="far fa-heart action-icon"></i>
+                  <i class="far fa-paper-plane action-icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-top-right">
+        <div class="box">Box 1</div>
+        <div class="box">Box 2</div>
+        <div class="box">Box 3</div>
+        <div class="box">Box 4</div>
+      </div>
+    </div>
+    <!-- Bagian Bawah: kiri = tulisan "PROJECT" bold & besar, kanan = sebuah box -->
+    <div class="project-bottom">
+      <div class="project-bottom-left">
+        <h1 class="project-title">PROJECT</h1>
+      </div>
+      <div class="project-bottom-right">
+        <div class="project-box">/01</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT Section -->
+  <section class="section" id="contact">
+    <!-- Bagian Atas Contact -->
+    <div class="contact-top">
+      <!-- Bagian Kiri -->
+      <div class="contact-left">
+        <h1>Tertarik Bekerja Sama?</h1>
+        <h2>Hubungi Saya!</h2>
+        <p>Saya siap menjalin kerja sama yang produktif.</p>
+        <p class="extra-desc">Hubungi saya untuk memulai kolaborasi.</p>
+        <div class="contact-icons">
+          <img src="https://img.icons8.com/ios/96/ffffff/whatsapp.png" alt="WhatsApp">
+          <img src="https://img.icons8.com/ios/96/ffffff/new-post.png" alt="Email">
+          <img src="https://img.icons8.com/ios/96/ffffff/github.png" alt="GitHub">
+        </div>
+      </div>
+      <!-- Bagian Kanan -->
+      <div class="contact-right">
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#services">SERVICES</a>
+        <a href="#project">PROJECT</a>
+        <a href="#contact">CONTACT</a>
+      </div>
+    </div>
+    <!-- Bagian Bawah Contact -->
+    <div class="contact-bottom">
+      <div class="big-text">CONTACT</div>
+      <p>© 2025 ANDEV404 | MUHAMMAD ANDRIAN | PORTOFOLIO</p>
+    </div>
+  </section>
+
+  <!-- HOME Script -->
+  <script>
+    function animateText(id, text) {
+      const el = document.getElementById(id);
+      el.innerHTML = '';
+      for (let i = 0; i < text.length; i++) {
+        const ch = document.createElement('span');
+        ch.className = 'char';
+        ch.textContent = text[i];
+        ch.style.animationDelay = `${0.6 + i*0.1}s`;
+        el.appendChild(ch);
+      }
+    }
+    function getGreeting() {
+      const h = new Date().getHours();
+      return h < 12 ? 'GOOD MORNING' : h < 18 ? 'GOOD AFTERNOON' : 'GOOD EVENING';
+    }
+    function getShortMonthName(idx) {
+      return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'][idx];
+    }
+    function animateInitialDate() {
+      const el = document.getElementById('dateNum');
+      const ml = document.getElementById('monthLabel');
+      const now = new Date(), target = now.getDate(), dur = 3000, start = performance.now();
+      ml.textContent = getShortMonthName(now.getMonth());
+      function ease(t){return t*(2-t);}
+      function tick(ts){
+        const prog = Math.min((ts-start)/dur,1);
+        el.textContent = String(Math.floor(ease(prog)*target)).padStart(2,'0');
+        if(prog<1) requestAnimationFrame(tick);
+        else el.textContent = String(target).padStart(2,'0');
+      }
+      requestAnimationFrame(tick);
+    }
+    function updateDateTime(){
+      const now = new Date();
+      const hh = now.getHours().toString().padStart(2,'0');
+      const mm = now.getMinutes().toString().padStart(2,'0');
+      document.getElementById('timeDisplay').innerHTML = `${hh}<span class="time-separator">:</span>${mm}`;
+      const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+      const months = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+      document.getElementById('dayName').textContent = days[now.getDay()];
+      document.getElementById('dateFormat').textContent = `${now.getDate().toString().padStart(2,'0')}.${(now.getMonth()+1).toString().padStart(2,'0')}`;
+      document.getElementById('monthName').textContent = months[now.getMonth()];
+      document.getElementById('yearNum').textContent = now.getFullYear();
+    }
+    window.addEventListener('DOMContentLoaded',()=>{
+      document.getElementById('greeting').textContent = getGreeting();
+      animateText('brandText','ANDEV404');
+      animateInitialDate();
+      setTimeout(()=>document.querySelector('.initial-loader').remove(),6000);
+      updateDateTime();
+      setInterval(updateDateTime,1000);
+      document.getElementById('mobileMenu').addEventListener('click',()=>{
+        document.querySelector('.nav-links').classList.toggle('active');
+      });
+      document.getElementById('scrollIndicator').addEventListener('click',()=>{
+        window.scrollTo({top:window.innerHeight,behavior:'smooth'});
+      });
+    });
+  </script>
+
+  <!-- JavaScript untuk efek tampil/geser box SERVICES berdasarkan tampilan section & Project Story Card -->
+  <script>
+    // Fungsi untuk mendapatkan jumlah kolom pada .services-right
+    function getColumnCount() {
+      const servicesRight = document.querySelector('.services-right');
+      const style = window.getComputedStyle(servicesRight);
+      const gridTemplateColumns = style.getPropertyValue('grid-template-columns');
+      return gridTemplateColumns.split(' ').length || 3;
+    }
+
+    const servicesSection = document.querySelector('#services');
+    const boxes = document.querySelectorAll('.service-box');
+    const maxOffset = 50; // Nilai offset maksimum (px)
+
+    // Menggunakan IntersectionObserver untuk mendeteksi tampilan SERVICES
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        let progress = entry.intersectionRatio;
+        progress = Math.max(0, Math.min(1, progress));
+        boxes.forEach((box, index) => {
+          const columns = getColumnCount();
+          const row = Math.floor(index / columns);
+          let translation = (row % 2 === 0) 
+            ? -maxOffset * (1 - progress)
+            : maxOffset * (1 - progress);
+          box.style.transform = `translateX(${translation}px)`;
+          box.style.opacity = progress;
+        });
+      });
+    }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+    observer.observe(servicesSection);
+
+    // Script untuk Project Story Card
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = [
+        'https://github.com/belajarit45/WEBSITE/blob/main/Dashboard%20Monitoring%20Lalu%20Lintas%20Pekanbaru.png?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/Portofolio.png?raw=true'
+      ];
+      const descriptions = [
+        {
+          title: "Dashboard Monitoring Lalu Lintas Pekanbaru",
+          text: "Solusi digital ini mengintegrasikan data lalu lintas dan cuaca real-time ke dalam antarmuka intuitif dan sederhana, lengkap dengan peta interaktif yang memudahkan pemantauan kondisi jalan serta perencanaan perjalanan dengan cepat dan efisien.",
+          url: "https://example.com/dashboard-monitoring"
+        },
+        {
+          title: "Muhammad Andrian - Portofolio",
+          text: "Website portofolio ini menonjolkan desain modern dengan antarmuka bersih, mencerminkan kreativitas dan keahlian teknis dalam pengembangan web serta solusi IT. Dirancang dengan kesederhanaan yang memukau, platform ini menghadirkan keunggulan profesional melalui tampilan elegan yang optimal.",
+          url: "https://example.com/portfolio"
+        }
+      ];
+      const imageElement = document.querySelector('.portrait');
+      const progressFills = document.querySelectorAll('.progress-fill');
+      const descTitle = document.querySelector('.desc-title');
+      const descText = document.querySelector('.desc-text');
+      const descView = document.querySelector('.desc-view');
+      const boxes = document.querySelectorAll('.project-top-right .box');
+      const storyIndex = document.querySelector('.project-bottom-right .project-box');
+      let currentIndex = 0;
+      const duration = 5000; // 5 detik per gambar
+      let timerId = null;
+      let startTime = null;
+      let remainingTime = duration;
+
+      function showImage(index) {
+        if (timerId) {
+          clearTimeout(timerId);
+          timerId = null;
+        }
+        if (index === 0) {
+          progressFills.forEach(fill => {
+            fill.style.transition = 'none';
+            fill.style.width = '0%';
+          });
+          progressFills.forEach(fill => fill.offsetWidth);
+        }
+        // Update konten card deskripsi
+        descTitle.innerText = descriptions[index].title;
+        descText.innerText = descriptions[index].text;
+        descView.href = descriptions[index].url;
+        // Update gambar pada card utama
+        imageElement.src = images[index];
+
+        // —––––– ADDED: ubah isi Box 1–4 sesuai story card aktif ––––––
+        if (index === 0) {
+          boxes[0].innerText = '#f5f7fa';
+          boxes[1].innerText = '#2c3e50';
+          boxes[2].innerText = '#ffffff';
+          boxes[3].innerText = '#3498db';
+        } else {
+          boxes[0].innerText = '#001542';
+          boxes[1].innerText = '#FFFFFF';
+          boxes[2].innerText = '#D1CBCB';
+          boxes[3].innerText = '#888888';
+        }
+
+        // update angka di bawah sesuai index (story aktif)
+        storyIndex.innerText = index === 0 ? '/01' : '/02';
+
+        // Animasi progress fill untuk gambar aktif
+        const currentFill = progressFills[index];
+        currentFill.style.transition = `width ${duration/1000}s linear`;
+        currentFill.style.width = '100%';
+        startTime = Date.now();
+        remainingTime = duration;
+        timerId = setTimeout(() => {
+          currentIndex = (index + 1) % images.length;
+          showImage(currentIndex);
+        }, duration);
+      }
+
+      // Pause/Resume dengan Page Visibility API
+      document.addEventListener("visibilitychange", function() {
+        if (document.hidden) {
+          if (timerId) {
+            clearTimeout(timerId);
+            timerId = null;
+          }
+          const elapsed = Date.now() - startTime;
+          remainingTime = duration - elapsed;
+          const currentFill = progressFills[currentIndex];
+          currentFill.style.transition = 'none';
+          currentFill.style.width = ((elapsed/duration)*100) + '%';
+        } else {
+          const currentFill = progressFills[currentIndex];
+          currentFill.offsetWidth;
+          currentFill.style.transition = `width ${remainingTime/1000}s linear`;
+          currentFill.style.width = '100%';
+          startTime = Date.now();
+          timerId = setTimeout(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+          }, remainingTime);
+        }
+      });
+
+      showImage(currentIndex);
+    });
+  </script>
+  
+  <!-- Script untuk Falling Boxes di bagian EXPERIENCE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const containerFB = document.querySelector('.falling-container');
+      const boxSize = 50;
+      const icons = [
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/googledrive-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/onedrive-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/dropbox-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftexcel2013-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftword2013-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftpowerpoint2013-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/canva-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/teamviewer-andev404.png?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/anydesk-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/microsoftremotedesktop-andev404.png?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/linux-andev404.png?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/netdata-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/ngrok-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/visualstudiocode-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/xampp-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/html5-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/css3-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/php-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/python-andev404.svg?raw=true',
+        'https://github.com/belajarit45/WEBSITE/blob/main/assets/github-andev404.svg?raw=true'
+      ];
+      const boxCount = icons.length;
+
+      for (let i = 0; i < boxCount; i++) {
+        const box = document.createElement('div');
+        box.classList.add('falling-box');
+
+        // Posisi horizontal random
+        const maxLeft = containerFB.clientWidth - boxSize;
+        box.style.left = Math.random() * maxLeft + 'px';
+
+        // Rotasi acak antara -30° hingga +30°
+        const angle = Math.random() * 60 - 30;
+        box.style.setProperty('--angle', angle + 'deg');
+
+        // Drift horizontal acak antara -20px hingga +20px
+        const drift = Math.random() * 40 - 20;
+        box.style.setProperty('--drift', drift + 'px');
+
+        // Perpanjang delay jatuh hingga 0–30 detik agar lebih jarang
+        const fallDelay = Math.random() * 30;         // 0–30 detik
+        const fallDuration = 2 + Math.random() * 3;   // 2–5 detik
+        const swayDuration = 1 + Math.random() * 2;   // 1–3 detik
+
+        box.style.animation =
+          `fall ${fallDuration}s ease-in ${fallDelay}s infinite, ` +
+          `sway ${swayDuration}s ease-in-out ${fallDelay}s infinite alternate`;
+
+        // Masukkan icon (60% dari ukuran kotak)
+        const img = document.createElement('img');
+        img.src = icons[i];
+        img.style.width = '60%';
+        img.style.height = '60%';
+        img.style.objectFit = 'contain';
+        box.appendChild(img);
+
+        containerFB.appendChild(box);
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // ambil semua link navbar yang merujuk ke bagian halaman
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();                            // cegah loncat instant
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' }); // scroll halus
+          }
+        });
+      });
+    });
+  </script>  
+</body>
+</html>
