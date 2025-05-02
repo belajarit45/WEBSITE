@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Health Knowledge Quiz</title>
+    <style>
+        :root {
+            --primary: #1eb8a0;
+            --primary-dark: #0e8a76;
+            --secondary: #2a3f54;
+            --accent: #ffc043;
+            --light: #f9fafb;
+            --dark: #111827;
+            --gray: #6b7280;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+            --shadow-sm: 0 4px 20px rgba(0,0,0,0.06);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+        }
+
+        .quiz-container {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* styling untuk Home button */
+        .home-btn {
+            margin-right: 1rem;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header h1 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .quiz-header p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .start-screen, .end-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 400px;
+        }
+
+        .end-screen {
+            display: none;
+        }
+
+        .quiz-content {
+            display: none;
+        }
+
+        .difficulty-indicator {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .difficulty-text {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .difficulty-bars {
+            display: flex;
+            gap: 5px;
+        }
+
+        .difficulty-bar {
+            width: 30px;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .question-number {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 1rem;
+            background-color: var(--light);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background-color: #f0f9f7;
+            border-color: var(--primary);
+        }
+
+        .option.correct {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+
+        .option.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+
+        .option.disabled {
+            pointer-events: none;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            background-color: var(--primary);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn:disabled {
+            background-color: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #e5a93c;
+        }
+
+        .progress-container {
+            height: 8px;
+            width: 100%;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .end-screen h2 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .score-details {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: var(--light);
+            border-radius: var(--radius-sm);
+            min-width: 250px;
+        }
+
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .score-label {
+            color: var(--gray);
+        }
+
+        .score-value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .score-value.correct {
+            color: #10b981;
+        }
+
+        .score-value.incorrect {
+            color: #ef4444;
+        }
+
+        .final-score {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-container { padding: 1.5rem; }
+            .question-text { font-size: 1.2rem; }
+            .difficulty-bar { width: 25px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 1rem; margin: 1rem auto; }
+            .quiz-container { padding: 1.25rem; }
+            .quiz-header h1 { font-size: 1.5rem; }
+            .question-text { font-size: 1.1rem; }
+            .difficulty-bar { width: 20px; }
+            .option { padding: 0.75rem; }
+            .controls { flex-direction: column; gap: 1rem; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quiz-container">
+            <!-- START SCREEN -->
+            <div class="start-screen" id="start-screen">
+                <h1>Quiz Pengetahuan Kesehatan</h1>
+                <p>Uji pengetahuan Anda tentang kesehatan, buah, dan sayuran dengan 10 pertanyaan!</p>
+                <p style="margin: 2rem 0;">Pertanyaan akan semakin sulit seiring progres Anda.</p>
+                <div class="controls">
+                    <button class="btn home-btn" id="home-btn-start">Home</button>
+                    <button class="btn" id="start-btn">Mulai Quiz</button>
+                </div>
+            </div>
+
+            <!-- QUIZ CONTENT -->
+            <div class="quiz-content" id="quiz-content">
+                <div class="quiz-header">
+                    <h1>Quiz Pengetahuan Kesehatan</h1>
+                </div>
+
+                <div class="difficulty-indicator">
+                    <div class="difficulty-text">Tingkat Kesulitan:</div>
+                    <div class="difficulty-bars">
+                        <div class="difficulty-bar"></div>
+                        <div class="difficulty-bar"></div>
+                        <div class="difficulty-bar"></div>
+                    </div>
+                </div>
+
+                <div class="question-number" id="question-number">Pertanyaan 1 dari 10</div>
+                <div class="question-text" id="question-text">Loading pertanyaan...</div>
+
+                <div class="options-container" id="options-container"></div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn home-btn" id="home-btn-quiz">Home</button>
+                    <button class="btn" id="next-btn" disabled>Selanjutnya</button>
+                </div>
+            </div>
+
+            <!-- END SCREEN -->
+            <div class="end-screen" id="end-screen">
+                <h2>Quiz Selesai!</h2>
+                <div class="score-details">
+                    <div class="score-row">
+                        <span class="score-label">Jawaban Benar:</span>
+                        <span class="score-value correct" id="correct-answers">0</span>
+                    </div>
+                    <div class="score-row">
+                        <span class="score-label">Jawaban Salah:</span>
+                        <span class="score-value incorrect" id="incorrect-answers">0</span>
+                    </div>
+                    <div class="score-row final-score">
+                        <span class="score-label">Skor Akhir:</span>
+                        <span class="score-value" id="final-score">0%</span>
+                    </div>
+                </div>
+                <button class="btn btn-accent" id="restart-btn">Coba Lagi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Home buttons ke halaman tertentu
+        document.querySelectorAll('.home-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.location.href = 'home.html'; // ubah sesuai URL tujuan
+            });
+        });
+
+        // Quiz logic (tetap sama seperti semula)
+        const startScreen   = document.getElementById('start-screen');
+        const quizContent   = document.getElementById('quiz-content');
+        const endScreen     = document.getElementById('end-screen');
+        const startBtn      = document.getElementById('start-btn');
+        const nextBtn       = document.getElementById('next-btn');
+        const restartBtn    = document.getElementById('restart-btn');
+        const questionNumber= document.getElementById('question-number');
+        const questionText  = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const progressBar   = document.getElementById('progress-bar');
+        const correctAnswers= document.getElementById('correct-answers');
+        const incorrectAnswers = document.getElementById('incorrect-answers');
+        const finalScore    = document.getElementById('final-score');
+        const difficultyBars= document.querySelectorAll('.difficulty-bar');
+
+        let currentQuestionIndex = 0, score = 0, shuffledQuestions = [], answeredQuestions = 0;
+        const questions = {
+            easy: [
+                { question: "Vitamin C banyak ditemukan pada buah?", options: ["Jeruk","Pisang","Apel","Anggur"], answer: 0 },
+                { question: "Sayuran hijau seperti bayam kaya akan mineral?", options: ["Kalsium","Zat Besi","Zinc","Magnesium"], answer: 1 },
+                { question: "Berapa gelas air yang direkomendasikan untuk diminum setiap hari?", options: ["4 gelas","6 gelas","8 gelas","10 gelas"], answer: 2 },
+                { question: "Buah apa yang dikenal sebagai 'raja buah' di Asia Tenggara?", options: ["Nangka","Durian","Mangga","Rambutan"], answer: 1 }
+            ],
+            medium: [
+                { question: "Antioksidan dalam buah beri membantu melawan apa dalam tubuh?", options: ["Virus","Bakteri","Radikal bebas","Kolesterol"], answer: 2 },
+                { question: "Sayuran apa yang mengandung beta-karoten tertinggi?", options: ["Wortel","Brokoli","Paprika","Kubis"], answer: 0 },
+                { question: "Buah apa yang memiliki kandungan kalium tertinggi?", options: ["Apel","Pisang","Jeruk","Anggur"], answer: 1 },
+                { question: "Sayuran cruciferous seperti brokoli dan kembang kol kaya akan senyawa yang dapat membantu mencegah?", options: ["Flu","Kanker","Diabetes","Gangguan pencernaan"], answer: 1 }
+            ],
+            hard: [
+                { question: "Senyawa sulforaphane yang ditemukan dalam brokoli memiliki efek apa?", options: ["Anti-inflamasi","Penurun kolesterol","Anti-kanker","Semua jawaban benar"], answer: 3 },
+                { question: "Buah apa yang memiliki indeks glikemik terendah?", options: ["Ceri","Apel","Pir","Beri"], answer: 3 },
+                { question: "Pigmen antosianin yang memberikan warna ungu pada buah beri memiliki sifat?", options: ["Antibakteri","Antioksidan","Anti-inflamasi","Semua jawaban benar"], answer: 3 },
+                { question: "Apa yang dimaksud dengan istilah 'bioavailabilitas' dalam konteks nutrisi?", options: ["Jumlah nutrisi dalam makanan","Tingkat penyerapan nutrisi dalam tubuh","Waktu yang dibutuhkan untuk mencerna makanan","Proses pengolahan nutrisi menjadi energi"], answer: 1 }
+            ]
+        };
+
+        function initializeQuiz() {
+            const randomEasy   = [...questions.easy].sort(() => 0.5 - Math.random()).slice(0,3);
+            const randomMedium = [...questions.medium].sort(() => 0.5 - Math.random()).slice(0,4);
+            const randomHard   = [...questions.hard].sort(() => 0.5 - Math.random()).slice(0,3);
+            shuffledQuestions  = [...randomEasy, ...randomMedium, ...randomHard];
+            currentQuestionIndex = score = answeredQuestions = 0;
+            nextBtn.disabled = true;
+            progressBar.style.width = '0%';
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = shuffledQuestions[currentQuestionIndex];
+            questionNumber.textContent = `Pertanyaan ${currentQuestionIndex+1} dari ${shuffledQuestions.length}`;
+            questionText.textContent   = q.question;
+            updateDifficultyIndicator();
+            optionsContainer.innerHTML = '';
+            q.options.forEach((opt,i)=>{
+                const el = document.createElement('div');
+                el.classList.add('option');
+                el.textContent = opt;
+                el.dataset.index = i;
+                el.addEventListener('click', selectOption);
+                optionsContainer.appendChild(el);
+            });
+            nextBtn.disabled = true;
+        }
+
+        function updateDifficultyIndicator(){
+            difficultyBars.forEach(bar=>bar.style.backgroundColor='#e5e7eb');
+            let lvl = currentQuestionIndex<3?1:currentQuestionIndex<7?2:3;
+            for(let i=0;i<lvl;i++){
+                difficultyBars[i].style.backgroundColor = i===0?'#10b981':i===1?'#f59e0b':'#ef4444';
+            }
+        }
+
+        function selectOption(){
+            nextBtn.disabled = false;
+            document.querySelectorAll('.option').forEach(o=>o.classList.add('disabled'));
+            const sel = +this.dataset.index;
+            const corr= shuffledQuestions[currentQuestionIndex].answer;
+            if(sel===corr){ this.classList.add('correct'); score++; }
+            else {
+                this.classList.add('incorrect');
+                document.querySelector(`.option[data-index="${corr}"]`).classList.add('correct');
+            }
+            answeredQuestions++;
+        }
+
+        function nextQuestion(){
+            currentQuestionIndex++;
+            progressBar.style.width = `${(currentQuestionIndex/shuffledQuestions.length)*100}%`;
+            currentQuestionIndex<shuffledQuestions.length? loadQuestion(): showResults();
+        }
+
+        function showResults(){
+            quizContent.style.display = 'none';
+            endScreen.style.display   = 'flex';
+            correctAnswers.textContent   = score;
+            incorrectAnswers.textContent = shuffledQuestions.length - score;
+            finalScore.textContent       = `${Math.round((score/shuffledQuestions.length)*100)}%`;
+        }
+
+        startBtn.addEventListener('click', ()=>{
+            startScreen.style.display = 'none';
+            quizContent.style.display = 'block';
+            initializeQuiz();
+        });
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', ()=>{
+            endScreen.style.display = 'none';
+            startScreen.style.display = 'flex';
+        });
+    </script>
+</body>
+</html>
