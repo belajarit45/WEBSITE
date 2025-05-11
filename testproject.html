@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Kampung</title>
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM via CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Firebase SDK via CDN -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <!-- Swiper.js CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+<body class="bg-gray-100">
+  <div id="root"></div>
+  <script>
+    // Inisialisasi Firebase
+    const firebaseConfig = {
+      apiKey: "API_KEY",
+      authDomain: "PROJECT_ID.firebaseapp.com",
+      projectId: "PROJECT_ID",
+      storageBucket: "PROJECT_ID.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // Komponen React sederhana
+    const { useState, useEffect } = React;
+    function App() {
+      const [posts, setPosts] = useState([]);
+      useEffect(() => {
+        db.collection("posts")
+          .orderBy("createdAt", "desc")
+          .onSnapshot(snap => {
+            const arr = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            setPosts(arr);
+            // inisiasi Swiper setelah data load
+            setTimeout(() => new Swiper('.swiper', { spaceBetween: 10, pagination: { el: '.swiper-pagination' } }), 100);
+          });
+      }, []);
+      return (
+        <div className="p-4">
+          <div className="swiper">
+            <div className="swiper-wrapper">
+              {posts.map(p => (
+                <div className="swiper-slide" key={p.id}>
+                  <img src={p.mediaUrl} className="w-full rounded" />
+                  <p className="mt-2">{p.description}</p>
+                </div>
+              ))}
+            </div>
+            <div className="swiper-pagination"></div>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
